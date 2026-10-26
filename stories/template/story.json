@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 5,
+  "revision": 6,
   "phone": {
     "owner": "我",
     "date": "2026-10-25",
@@ -299,10 +299,31 @@
   "variables": {},
   "events": [
     {
-      "id": "dad-video-after-family-chat",
-      "label": "看完家庭群組後爸爸來電",
+      "id": "welcome",
+      "label": "拾獲手機",
+      "type": "start",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "LINE：爸爸 🦖：妳在哪？我去接妳。"
+        }
+      ]
+    },
+    {
+      "id": "dad-video-trigger",
+      "label": "閱讀家庭群組後爸爸來電",
       "event": "read",
       "target": "family-line-7",
+      "next": [
+        "dad-video-delay"
+      ]
+    },
+    {
+      "id": "dad-video-delay",
+      "label": "爸爸視訊來電",
+      "type": "delay",
+      "delayMs": 1200,
       "actions": [
         {
           "type": "call",
@@ -313,55 +334,43 @@
     },
     {
       "id": "dad-video-answered",
-      "label": "接聽爸爸的視訊",
-      "type": "ending",
+      "label": "接聽爸爸視訊",
       "event": "callAnswered",
-      "target": "dad-video-call"
+      "target": "dad-video-call",
+      "next": [
+        "return-phone"
+      ]
     },
     {
-      "id": "dad-video-declined",
-      "label": "拒接爸爸的視訊",
+      "id": "return-phone",
+      "label": "歸還手機",
       "type": "ending",
-      "event": "callDeclined",
-      "target": "dad-video-call"
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "你告訴爸爸手機已找到，約好在服務台歸還。"
+        }
+      ]
     }
   ],
   "tests": [
     {
-      "name": "爸爸視訊來電－接聽",
+      "name": "answer-dad-video",
       "steps": [
-        {
-          "event": "openApp",
-          "target": "line"
-        },
         {
           "event": "read",
           "target": "family-line-7"
+        },
+        {
+          "advanceMs": 1200
         },
         {
           "event": "callAnswered",
           "target": "dad-video-call"
         }
       ],
-      "ending": "接聽爸爸的視訊"
-    },
-    {
-      "name": "爸爸視訊來電－拒接",
-      "steps": [
-        {
-          "event": "openApp",
-          "target": "line"
-        },
-        {
-          "event": "read",
-          "target": "family-line-7"
-        },
-        {
-          "event": "callDeclined",
-          "target": "dad-video-call"
-        }
-      ],
-      "ending": "拒接爸爸的視訊"
+      "ending": "你告訴爸爸手機已找到，約好在服務台歸還。"
     }
   ]
 }
