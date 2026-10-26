@@ -134,6 +134,13 @@ export function MymyKakao(p: SkinProps) {
             </span>
           </header>
           <div className="msgs kk" ref={scroll}>
+            {/^\d{4}-\d{2}-\d{2}/.test(messages[0]?.time || "") && (
+              <div className="chat-time">
+                {new Intl.DateTimeFormat("zh-TW", {
+                  month: "long", day: "numeric", weekday: "long", timeZone: "UTC",
+                }).format(new Date(messages[0].time.slice(0, 10) + "T12:00:00Z"))}
+              </div>
+            )}
             {messages.map((m, i) => {
               const run = messageRun(messages, i);
               return (

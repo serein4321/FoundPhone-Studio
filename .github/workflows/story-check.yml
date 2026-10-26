@@ -16,6 +16,18 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
       - run: npm run story:validate
       - run: npm run story:test
       - run: npm run build
+      - run: npx playwright install --with-deps chrome
+      - run: npx playwright test tests/mymy.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kkt-browser-results
+          path: |
+            outputs/mymy/
+            test-results/
