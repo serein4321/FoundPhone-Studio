@@ -125,3 +125,76 @@ test("mobile Mymy KKT layout and touch controls", async ({ page }) => {
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/mobile-kkt.png" });
 });
+
+const familyStory = JSON.parse(
+  readFileSync(new URL("../stories/template/story.json", import.meta.url), "utf8"),
+);
+for (const answer of [true, false]) {
+  test("family KKT reply triggers mom video: " + (answer ? "answer" : "decline"), async ({ page }) => {
+    await page.setViewportSize({ width: 393, height: 852 });
+    await page.route("**/work.json", (r) =>
+      r.fulfill({ json: compileStory(familyStory).work }),
+    );
+    await page.goto("/");
+    await expect(page.locator(".lock-screen")).toBeVisible();
+    await page.getByRole("button", { name: "轻触解锁" }).click();
+    for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    await open(page, "KakaoTalk");
+    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await expect(page.locator(".chat-time")).toContainText("10月26日");
+    await expect(page.locator(".kzt").first()).toHaveText("09:30");
+    await expect(page.locator(".kzt").nth(1)).toHaveText("09:37");
+    await expect(page.locator(".kzbub")).toHaveCount(2);
+    await expect(page.locator(".incoming-call-screen")).toHaveCount(0);
+    const send = page.getByRole("button", { name: "发送KKT消息" });
+    await expect(send).toBeDisabled();
+    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill("   ");
+    await expect(send).toBeDisabled();
+    const reply = answer ? "想吃牛肉麵，我在這裡！" : "<script>不是程式，只是回覆</script>";
+    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill(reply);
+    await send.click();
+    const call = page.locator(".incoming-call-screen");
+    await expect(call).toBeVisible();
+    await expect(call.locator("h2")).toHaveText("妈妈🐈");
+    await expect(call).toContainText("KKT 视频通话");
+    await page.locator(".phone-screen").screenshot({ path: "outputs/mymy/family-kkt-" + answer + ".png" });
+    if (answer) {
+      await call.getByRole("button", { name: "接听", exact: false }).click();
+      await expect(call).toContainText("视频通话已接通");
+      await call.getByRole("button", { name: "挂断", exact: false }).click();
+    } else {
+      await call.getByRole("button", { name: "拒接", exact: false }).click();
+    }
+    await expect(call).toHaveCount(0);
+    await expect(page.locator(".kzbub").last()).toHaveText(reply);
+    await home(page);
+    await open(page, "KakaoTalk");
+    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await expect(page.locator(".kzbub").last()).toHaveText(reply);
+    await page.waitForFunction(() => new Promise<boolean>((resolve, reject) => {
+      const request = indexedDB.open("foundphone-studio");
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const saved = database.transaction("saves").objectStore("saves").get("shiyi-family-phone");
+        saved.onerror = () => { database.close(); reject(saved.error); };
+        saved.onsuccess = () => {
+          const state = saved.result?.state;
+          resolve(!state?.incomingCall && (state?.ui?.kakao?.mymyKktSent?.length ?? 0) >= 1);
+          database.close();
+        };
+      };
+    }));
+    await page.reload();
+    await page.getByRole("button", { name: "轻触解锁" }).click();
+    for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    await open(page, "KakaoTalk");
+    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await expect(page.locator(".kzbub").last()).toHaveText(reply);
+    await expect(call).toHaveCount(0);
+    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill("再回覆一次");
+    await send.click();
+    await expect(page.locator(".kzbub").last()).toHaveText("再回覆一次");
+    await expect(call).toHaveCount(0);
+  });
+}
