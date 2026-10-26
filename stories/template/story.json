@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 7,
+  "revision": 8,
   "phone": {
     "owner": "我",
     "date": "2026-10-25",
@@ -31,12 +31,12 @@
   "contacts": [
     {
       "id": "mom",
-      "name": "媽咪 🐱",
+      "name": "妈妈🐈",
       "bio": "陳信宏（虛構角色）"
     },
     {
       "id": "dad",
-      "name": "爸爸 🦖",
+      "name": "爸爸🐈‍⬛",
       "bio": "溫尚翊（虛構角色）"
     },
     {
@@ -116,7 +116,7 @@
     {
       "id": "mom-line",
       "app": "line",
-      "title": "媽咪 🐱",
+      "title": "妈妈🐈",
       "participants": [
         "owner",
         "mom"
@@ -157,7 +157,7 @@
     {
       "id": "dad-line",
       "app": "line",
-      "title": "爸爸 🦖",
+      "title": "爸爸🐈‍⬛",
       "participants": [
         "owner",
         "dad"
@@ -279,14 +279,14 @@
     "phone": [
       {
         "id": "dad-call-record",
-        "title": "爸爸 🦖",
+        "title": "爸爸🐈‍⬛",
         "body": "未接來電",
         "kind": "call",
         "time": "2026-10-25 21:47"
       },
       {
         "id": "dad-video-call",
-        "title": "爸爸 🦖",
+        "title": "爸爸🐈‍⬛",
         "body": "視訊通話",
         "kind": "call",
         "meta": {
@@ -306,7 +306,17 @@
         {
           "type": "notification",
           "key": "",
-          "value": "LINE：爸爸 🦖：妳在哪？我去接妳。"
+          "value": "这是全世界最完美的阵容（5）：你们女儿找到没？"
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "妈妈🐈：不要这样玩躲猫猫好不好……"
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "爸爸🐈‍⬛：你去哪儿了还没回家，妈妈和我都在找你"
         }
       ]
     },
@@ -328,7 +338,7 @@
         {
           "type": "call",
           "key": "dad-video-call",
-          "value": "爸爸 🦖"
+          "value": "爸爸🐈‍⬛"
         }
       ]
     },
