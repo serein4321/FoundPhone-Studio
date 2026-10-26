@@ -171,6 +171,27 @@ for (const answer of [true, false]) {
     await open(page, "KakaoTalk");
     await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
+    await page.waitForFunction(() => new Promise<boolean>((resolve, reject) => {
+      const request = indexedDB.open("foundphone-studio");
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const saved = database.transaction("saves").objectStore("saves").get("shiyi-family-phone");
+        saved.onerror = () => { database.close(); reject(saved.error); };
+        saved.onsuccess = () => {
+          const state = saved.result?.state;
+          resolve(!state?.incomingCall && (state?.ui?.kakao?.mymyKktSent?.length ?? 0) >= 1);
+          database.close();
+        };
+      };
+    }));
+    await page.reload();
+    await page.getByRole("button", { name: "轻触解锁" }).click();
+    for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    await open(page, "KakaoTalk");
+    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await expect(page.locator(".kzbub").last()).toHaveText(reply);
+    await expect(call).toHaveCount(0);
     await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill("再回覆一次");
     await send.click();
     await expect(page.locator(".kzbub").last()).toHaveText("再回覆一次");
