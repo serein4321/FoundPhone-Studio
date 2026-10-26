@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 4,
+  "revision": 5,
   "phone": {
     "owner": "我",
     "date": "2026-10-25",
@@ -283,10 +283,85 @@
         "body": "未接來電",
         "kind": "call",
         "time": "2026-10-25 21:47"
+      },
+      {
+        "id": "dad-video-call",
+        "title": "爸爸 🦖",
+        "body": "視訊通話",
+        "kind": "call",
+        "meta": {
+          "callType": "video"
+        },
+        "time": "2026-10-25 21:48"
       }
     ]
   },
   "variables": {},
-  "events": [],
-  "tests": []
+  "events": [
+    {
+      "id": "dad-video-after-family-chat",
+      "label": "看完家庭群組後爸爸來電",
+      "event": "read",
+      "target": "family-line-7",
+      "actions": [
+        {
+          "type": "call",
+          "key": "dad-video-call",
+          "value": "爸爸 🦖"
+        }
+      ]
+    },
+    {
+      "id": "dad-video-answered",
+      "label": "接聽爸爸的視訊",
+      "type": "ending",
+      "event": "callAnswered",
+      "target": "dad-video-call"
+    },
+    {
+      "id": "dad-video-declined",
+      "label": "拒接爸爸的視訊",
+      "type": "ending",
+      "event": "callDeclined",
+      "target": "dad-video-call"
+    }
+  ],
+  "tests": [
+    {
+      "name": "爸爸視訊來電－接聽",
+      "steps": [
+        {
+          "event": "openApp",
+          "target": "line"
+        },
+        {
+          "event": "read",
+          "target": "family-line-7"
+        },
+        {
+          "event": "callAnswered",
+          "target": "dad-video-call"
+        }
+      ],
+      "ending": "接聽爸爸的視訊"
+    },
+    {
+      "name": "爸爸視訊來電－拒接",
+      "steps": [
+        {
+          "event": "openApp",
+          "target": "line"
+        },
+        {
+          "event": "read",
+          "target": "family-line-7"
+        },
+        {
+          "event": "callDeclined",
+          "target": "dad-video-call"
+        }
+      ],
+      "ending": "拒接爸爸的視訊"
+    }
+  ]
 }
