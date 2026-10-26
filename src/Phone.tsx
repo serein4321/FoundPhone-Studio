@@ -318,7 +318,8 @@ function PhoneRuntime({
     >
       <KeyboardContext.Provider value={setKeyboard}>
         <div
-          className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
+          style={safeMedia(work.phone.wallpaper) ? { backgroundImage: `url("${safeMedia(work.phone.wallpaper)}")`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+          className={`phone-screen wallpaper-${safeMedia(work.phone.wallpaper) ? "custom" : work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           data-app={app}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
@@ -384,8 +385,8 @@ function PhoneRuntime({
             }
           }}
         >
-          <div className="wallpaper-orb orb-one" />
-          <div className="wallpaper-orb orb-two" />
+          {!safeMedia(work.phone.wallpaper) && <div className="wallpaper-orb orb-one" />}
+          {!safeMedia(work.phone.wallpaper) && <div className="wallpaper-orb orb-two" />}
           <div className="status-bar">
             <button
               onClick={() =>
@@ -611,11 +612,12 @@ function PhoneRuntime({
           {!creator && s.incomingCall && (
             <div className="incoming-call-screen">
               <small>
+                {work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.meta.callType === "video" ? "KKT 视频通话 · " : ""}
                 {s.incomingCall.status === "ringing" ? "来电" : "通话中"} ·
                 作品内模拟
               </small>
               <div className="incoming-avatar">
-                {s.incomingCall.caller.slice(0, 1)}
+                {safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "") ? <img alt="来电头像" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }} src={safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "")} /> : s.incomingCall.caller.slice(0, 1)}
               </div>
               <h2>{s.incomingCall.caller}</h2>
               {s.incomingCall.status === "answered" &&
@@ -623,7 +625,9 @@ function PhoneRuntime({
                   const record = work.data.phone?.find(
                     (i) => i.id === s.incomingCall?.target,
                   );
-                  return record?.kind === "audio" && safeMedia(record.media) ? (
+                  return record?.meta.callType === "video" ? (
+                    <p>视频通话已接通</p>
+                  ) : record?.kind === "audio" && safeMedia(record.media) ? (
                     <audio controls src={safeMedia(record.media)} />
                   ) : (
                     <p>这是一通虚构来电。</p>
@@ -1302,3 +1306,4 @@ function AppContent({
 function UsersIcon() {
   return <PhoneIcon size={17} />;
 }
+

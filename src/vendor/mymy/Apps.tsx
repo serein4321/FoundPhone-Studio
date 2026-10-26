@@ -101,6 +101,25 @@ export function MymyKakao(p: SkinProps) {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
   }, [p.thread, messages.length]);
+  const onReadRef = useRef(p.onRead);
+  useEffect(() => { onReadRef.current = p.onRead; });
+  useEffect(() => {
+    if (p.creator || !p.thread) return;
+    const last = messages.at(-1);
+    const bubble = scroll.current?.querySelector(".kzm:last-child .kzbub");
+    if (!last || last.meta.incomingCall !== "true" || !bubble) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (timer) clearTimeout(timer);
+      if (entry.isIntersecting) timer = setTimeout(() => {
+        onReadRef.current(last.id);
+        observer.disconnect();
+      }, 600);
+    }, { root: scroll.current, threshold: 1 });
+    observer.observe(bubble);
+    return () => { observer.disconnect(); if (timer) clearTimeout(timer); };
+  // Reobserve when switching chats or when the visible message count changes.
+  }, [p.creator, p.thread, messages.length]);
   return (
     <div className="mymy-ui mymy-kakao" data-mymy="kakao">
       {p.thread ? (
@@ -789,3 +808,4 @@ export function MymyX(p: SkinProps) {
     </div>
   );
 }
+
