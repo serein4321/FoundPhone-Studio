@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 24,
+  "revision": 25,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -441,6 +441,116 @@
           "meta": {
             "afterReplies": "2"
           }
+        },
+        {
+          "id": "perfect-kkt-9",
+          "senderId": "mom",
+          "body": "後天所有人都有時間嗎？",
+          "time": "2026-10-26 10:00",
+          "meta": {
+            "afterReplies": "2",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-10",
+          "senderId": "masha",
+          "body": "我們不是才回來，陳信宏當時說好了要休假幾天呢😕",
+          "time": "2026-10-26 10:02",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-11",
+          "senderId": "dad",
+          "body": "瑪莎你不要說他哦",
+          "time": "2026-10-26 10:03",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-12",
+          "senderId": "masha",
+          "body": "我哪裡在說他啊，溫尚翊你倆又開始了……",
+          "time": "2026-10-26 10:04",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-13",
+          "senderId": "guanyou",
+          "body": "怎麼了嗎阿信，有什麼事？",
+          "time": "2026-10-26 10:06",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-14",
+          "senderId": "stone",
+          "body": "是關於專輯製作的一些東西嗎？",
+          "time": "2026-10-26 10:07",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-15",
+          "senderId": "mom",
+          "body": "啊誰說只有工作我們才能聚一起餒，後天我們去吃火鍋吧，那天吃了一次我覺得好好吃呀🥺",
+          "time": "2026-10-26 10:09",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-16",
+          "senderId": "masha",
+          "body": "你……算了能吃是福吧",
+          "time": "2026-10-26 10:12",
+          "meta": {
+            "afterReplies": "4",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-17",
+          "senderId": "mom",
+          "body": "阿翊，瑪莎他欺負我✋🏻😭🤚🏻",
+          "time": "2026-10-26 10:13",
+          "meta": {
+            "afterReplies": "4",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-18",
+          "senderId": "dad",
+          "body": "沒有啦，到時候多點一份你喜歡的毛肚好不好",
+          "time": "2026-10-26 10:14",
+          "meta": {
+            "afterReplies": "4",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "perfect-kkt-19",
+          "senderId": "mom",
+          "body": "😍😋",
+          "time": "2026-10-26 10:15",
+          "meta": {
+            "afterReplies": "4",
+            "afterCall": "true"
+          }
         }
       ]
     },
@@ -738,6 +848,16 @@
           "callType": "video"
         },
         "time": "2026-10-26 09:38"
+      },
+      {
+        "id": "martha-video-call",
+        "title": "瑪莎叔叔🧹",
+        "body": "視訊通話",
+        "kind": "call",
+        "meta": {
+          "callType": "video"
+        },
+        "time": "2026-10-26 10:00"
       }
     ],
     "taobao": [
@@ -1207,6 +1327,28 @@
           "type": "call",
           "key": "mom-video-call",
           "value": "媽媽🐈"
+        }
+      ]
+    },
+    {
+      "id": "martha-video-trigger",
+      "label": "讀完家庭群組後瑪莎視訊來電",
+      "event": "read",
+      "target": "perfect-kkt-8",
+      "next": [
+        "martha-video-delay"
+      ]
+    },
+    {
+      "id": "martha-video-delay",
+      "label": "瑪莎叔叔視訊來電",
+      "type": "delay",
+      "delayMs": 1200,
+      "actions": [
+        {
+          "type": "call",
+          "key": "martha-video-call",
+          "value": "瑪莎叔叔🧹"
         }
       ]
     }
