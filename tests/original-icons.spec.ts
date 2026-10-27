@@ -74,7 +74,7 @@ test("missing original image safely falls back without losing app action", async
   const probe = await request.get("/icon-assets/camera.png");
   test.skip(!probe.ok(), "公開構建不帶本地圖標");
   await page.route("**/icon-assets/photos.png", (r) => r.abort());
-  await page.goto("/");
+  await page.goto("/?preview=test");
   await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
     page.getByRole("button", { name: "開啟相簿", exact: true }).locator("svg"),
