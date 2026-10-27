@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 14,
+  "revision": 15,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -340,6 +340,221 @@
             "afterReplies": "2"
           },
           "time": "2026-10-26 09:54"
+        }
+      ]
+    },
+    {
+      "id": "mom-kkt-direct",
+      "app": "kakao",
+      "title": "媽媽🐈",
+      "participants": [
+        "owner",
+        "mom"
+      ],
+      "messages": [
+        {
+          "id": "mom-kkt-direct-1",
+          "senderId": "mom",
+          "body": "寶貝，今天有沒有好好吃飯？",
+          "time": "2026-10-26 10:01"
+        },
+        {
+          "id": "mom-kkt-direct-2",
+          "senderId": "owner",
+          "body": "有啦，你不要一直問。",
+          "time": "2026-10-26 10:04"
+        },
+        {
+          "id": "mom-kkt-direct-3",
+          "senderId": "mom",
+          "body": "好，我只是想聽妳回我。晚點我跟爸爸一起回家。",
+          "time": "2026-10-26 10:06",
+          "meta": {
+            "afterReplies": "1",
+            "persona": "溫柔、黏人、以照顧女兒為主"
+          }
+        },
+        {
+          "id": "mom-kkt-direct-4",
+          "senderId": "mom",
+          "body": "如果忙就先忙，看到訊息再回，別餓著。",
+          "time": "2026-10-26 10:08",
+          "meta": {
+            "afterReplies": "2",
+            "persona": "溫柔、黏人、以照顧女兒為主"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dad-kkt-direct",
+      "app": "kakao",
+      "title": "爸爸🐈‍⬛",
+      "participants": [
+        "owner",
+        "dad"
+      ],
+      "messages": [
+        {
+          "id": "dad-kkt-direct-1",
+          "senderId": "dad",
+          "body": "今天練琴順利嗎？",
+          "time": "2026-10-26 10:11"
+        },
+        {
+          "id": "dad-kkt-direct-2",
+          "senderId": "owner",
+          "body": "還行啦。",
+          "time": "2026-10-26 10:14"
+        },
+        {
+          "id": "dad-kkt-direct-3",
+          "senderId": "dad",
+          "body": "那就好。妳想換吉他弦的話跟爸爸說。",
+          "time": "2026-10-26 10:16",
+          "meta": {
+            "afterReplies": "1",
+            "persona": "穩重、寵女兒、用音樂和行動照顧她"
+          }
+        },
+        {
+          "id": "dad-kkt-direct-4",
+          "senderId": "dad",
+          "body": "晚點回家路上記得傳個訊息，媽媽會放心。",
+          "time": "2026-10-26 10:18",
+          "meta": {
+            "afterReplies": "2",
+            "persona": "穩重、寵女兒、用音樂和行動照顧她"
+          }
+        }
+      ]
+    },
+    {
+      "id": "masha-kkt-direct",
+      "app": "kakao",
+      "title": "瑪莎叔叔🧹",
+      "participants": [
+        "owner",
+        "masha"
+      ],
+      "messages": [
+        {
+          "id": "masha-kkt-direct-1",
+          "senderId": "masha",
+          "body": "妳那首新歌的副歌，我又聽了一次。",
+          "time": "2026-10-26 10:21"
+        },
+        {
+          "id": "masha-kkt-direct-2",
+          "senderId": "owner",
+          "body": "有那麼糟嗎？",
+          "time": "2026-10-26 10:24"
+        },
+        {
+          "id": "masha-kkt-direct-3",
+          "senderId": "masha",
+          "body": "沒有，情緒很準。把最後一句再收一點，會更有力。",
+          "time": "2026-10-26 10:26",
+          "meta": {
+            "afterReplies": "1",
+            "persona": "直白、毒舌但可靠，專注音樂建議"
+          }
+        },
+        {
+          "id": "masha-kkt-direct-4",
+          "senderId": "masha",
+          "body": "妳先照自己的想法改，改完再丟給我聽。",
+          "time": "2026-10-26 10:28",
+          "meta": {
+            "afterReplies": "2",
+            "persona": "直白、毒舌但可靠，專注音樂建議"
+          }
+        }
+      ]
+    },
+    {
+      "id": "guanyou-kkt-direct",
+      "app": "kakao",
+      "title": "冠佑叔叔🥁",
+      "participants": [
+        "owner",
+        "guanyou"
+      ],
+      "messages": [
+        {
+          "id": "guanyou-kkt-direct-1",
+          "senderId": "guanyou",
+          "body": "小玫瑰，明天有空嗎？",
+          "time": "2026-10-26 10:31"
+        },
+        {
+          "id": "guanyou-kkt-direct-2",
+          "senderId": "owner",
+          "body": "怎麼突然問這個？",
+          "time": "2026-10-26 10:34"
+        },
+        {
+          "id": "guanyou-kkt-direct-3",
+          "senderId": "guanyou",
+          "body": "想帶妳出去逛逛，順便吃點東西。",
+          "time": "2026-10-26 10:36",
+          "meta": {
+            "afterReplies": "1",
+            "persona": "溫和、慢條斯理，像長輩一樣照顧她"
+          }
+        },
+        {
+          "id": "guanyou-kkt-direct-4",
+          "senderId": "guanyou",
+          "body": "不用排太滿，妳想去哪裡就去哪裡。",
+          "time": "2026-10-26 10:38",
+          "meta": {
+            "afterReplies": "2",
+            "persona": "溫和、慢條斯理，像長輩一樣照顧她"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stone-kkt-direct",
+      "app": "kakao",
+      "title": "石頭叔叔🪨",
+      "participants": [
+        "owner",
+        "stone"
+      ],
+      "messages": [
+        {
+          "id": "stone-kkt-direct-1",
+          "senderId": "stone",
+          "body": "我找到幾把很適合妳的新吉他。",
+          "time": "2026-10-26 10:41"
+        },
+        {
+          "id": "stone-kkt-direct-2",
+          "senderId": "owner",
+          "body": "你先不要跟爸爸搶工作。",
+          "time": "2026-10-26 10:44"
+        },
+        {
+          "id": "stone-kkt-direct-3",
+          "senderId": "stone",
+          "body": "放心，我只是幫妳多看幾把，最後還是妳自己選。",
+          "time": "2026-10-26 10:46",
+          "meta": {
+            "afterReplies": "1",
+            "persona": "溫和、務實，尊重女兒自己的選擇"
+          }
+        },
+        {
+          "id": "stone-kkt-direct-4",
+          "senderId": "stone",
+          "body": "有空過來試琴，手感合不合最重要。",
+          "time": "2026-10-26 10:48",
+          "meta": {
+            "afterReplies": "2",
+            "persona": "溫和、務實，尊重女兒自己的選擇"
+          }
         }
       ]
     }
