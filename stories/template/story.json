@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 23,
+  "revision": 24,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -752,7 +752,8 @@
         "meta": {
           "price": "89",
           "merchant": "百事官方旗艦店",
-          "rating": "4.9"
+          "rating": "4.9",
+          "category": "其他"
         }
       },
       {
@@ -766,7 +767,358 @@
         "meta": {
           "price": "168",
           "merchant": "台味食堂",
-          "rating": "4.8"
+          "rating": "4.8",
+          "category": "其他"
+        }
+      },
+      {
+        "id": "taobao-stayreal-mojo-blindbox",
+        "title": "STAYREAL潮牌MOJO FAMILY毛絨掛件盲盒",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:10",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "99",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-rose-doll",
+        "title": "STAYREAL玫滿的一天玫瑰花毛絨公仔吊牌",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:11",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "159",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-tk-mic",
+        "title": "STAYREAL胡蘿卜TK歌之卜麥克風毛絨吊飾",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:12",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "179",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-rabbit-set",
+        "title": "STAYREAL純真兔兔吊飾學生時代娃娃衣包組",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:13",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "99",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-mojo-head",
+        "title": "STAYREAL魔魔胡蘿卜MOJO大頭毛絨",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:14",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "159",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-blue-mojo",
+        "title": "STAYREAL藍色夢想倔強卜毛絨公仔MOJO胡蘿卜",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:15",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "179",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-grapefruit",
+        "title": "STAYREAL柚初戀了可愛柚毛絨吊飾MOJO玩",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:16",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "179",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-bear",
+        "title": "STAYREAL人生海海摸魚熊毛絨吊飾MOJO玩",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:17",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "179",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-space",
+        "title": "STAYREAL頑固追夢太空卜毛絨公仔吊飾MOJO",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:18",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "199",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-bass",
+        "title": "STAYREAL律動人心貝斯弟毛絨吊飾公仔",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:19",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "135",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-strawberry",
+        "title": "STAYREAL羞羞答答小草莓毛絨吊飾公仔",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:20",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "135",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-bee",
+        "title": "STAYREAL蜂狂世界蜜蜂卜毛絨吊飾MOJO",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:21",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "179",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-team-jacket",
+        "title": "STAYREAL潮牌REAL TEAM格紋剪裁帽夾連帽外套",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:22",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "759",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-real-coat",
+        "title": "阿信同款STAYREAL潮牌REAL襯衫外套無性別長",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:23",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "699",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-smile-vest",
+        "title": "阿信同款STAYREAL潮牌SMILE笑臉丹寧背心純棉",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:24",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "509",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-stayreal-sunday",
+        "title": "STAYREAL潮牌SUNDAY CLUB半開襟厚棉上衣",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:25",
+        "sender": "STAYREAL官方店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "493",
+          "category": "STAYREAL",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-fujifilm-x100vi",
+        "title": "Fujifilm X100VI 復古數位相機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:26",
+        "sender": "富士影像官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "10999",
+          "category": "相機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-sony-a7cii",
+        "title": "Sony α7C II 全片幅無反相機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:27",
+        "sender": "Sony官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "13999",
+          "category": "相機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-canon-r50",
+        "title": "Canon EOS R50 微單相機套機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:28",
+        "sender": "Canon官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "4999",
+          "category": "相機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-iphone16",
+        "title": "Apple iPhone 16 128GB",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:29",
+        "sender": "Apple官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "5999",
+          "category": "手機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-huawei-pura70",
+        "title": "HUAWEI Pura 70 智慧型手機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:30",
+        "sender": "華為官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "5499",
+          "category": "手機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-airpods-pro2",
+        "title": "Apple AirPods Pro 2 主動降噪耳機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:31",
+        "sender": "Apple官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "1899",
+          "category": "耳機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-sony-xm5",
+        "title": "Sony WH-1000XM5 降噪耳機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:32",
+        "sender": "Sony官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "1999",
+          "category": "耳機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-bose-qc-ultra",
+        "title": "Bose QuietComfort Ultra 頭戴式耳機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:33",
+        "sender": "Bose官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "3499",
+          "category": "耳機",
+          "priceSource": "公開參考價"
+        }
+      },
+      {
+        "id": "taobao-beats-studio-pro",
+        "title": "Beats Studio Pro 無線頭戴式耳機",
+        "body": "公開商品截圖／零售參考價，作品內模擬商品，不代表即時售價。",
+        "time": "2026-10-27 15:34",
+        "sender": "Beats官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "2299",
+          "category": "耳機",
+          "priceSource": "公開參考價"
         }
       }
     ]

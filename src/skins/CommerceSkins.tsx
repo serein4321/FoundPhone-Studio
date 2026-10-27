@@ -97,6 +97,7 @@ export function AlipaySkin(p: Props) {
 export function TaobaoSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商品");
   const [status, setStatus] = useState("全部");
+  const [category, setCategory] = useState("全部");
   const [selected, setSelected] = useState<Item | null>(null);
   const [cart, setCart] = useState<Item[]>([]);
   const [checkout, setCheckout] = useState(false);
@@ -112,7 +113,13 @@ export function TaobaoSkin(p: Props) {
         ? i.folder !== "訂單" && i.folder !== "物流"
         : i.folder === tab,
     )
-    .filter((i) => status === "全部" || meta(i, "status") === status);
+    .filter((i) => status === "全部" || meta(i, "status") === status)
+    .filter(
+      (i) =>
+        tab !== "商品" ||
+        category === "全部" ||
+        meta(i, "category", "") === category,
+    );
   const closePanel = () => {
     setSelected(null);
     setCheckout(false);
@@ -150,7 +157,19 @@ export function TaobaoSkin(p: Props) {
       </div>
       <div className="catalog-scroll">
         {tab === "商品" ? (
-          <div className="taobao-products">
+          <>
+            <div className="taobao-category-tabs">
+              {["全部", "STAYREAL", "相機", "手機", "耳機", "其他"].map((name) => (
+                <button
+                  className={category === name ? "selected" : ""}
+                  key={name}
+                  onClick={() => setCategory(name)}
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <div className="taobao-products">
             {list.map((i) => (
               <button key={i.id} onClick={() => setSelected(i)}>
                 <Media item={i} />
@@ -161,7 +180,8 @@ export function TaobaoSkin(p: Props) {
                 <small>{i.sender}</small>
               </button>
             ))}
-          </div>
+            </div>
+          </>
         ) : (
           <>
             <div className="taobao-status">
@@ -227,6 +247,7 @@ export function TaobaoSkin(p: Props) {
         set={(t) => {
           setTab(t);
           setStatus("全部");
+          setCategory("全部");
         }}
         icons={[<Home />, <ShoppingBag />, <Truck />]}
       />
