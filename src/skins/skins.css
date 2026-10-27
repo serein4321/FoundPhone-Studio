@@ -4130,3 +4130,92 @@
 .catalog-slot[hidden] {
   display: none;
 }
+
+.taobao-cart-count {
+  color: #fff;
+  font-size: 9px;
+  margin-left: auto;
+  padding: 0 10px 3px;
+}
+.taobao-panel {
+  position: absolute;
+  inset: 42px 0 0;
+  z-index: 5;
+  overflow: auto;
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 -4px 18px rgba(80, 45, 18, 0.16);
+}
+.taobao-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.taobao-panel-header strong {
+  font-size: 14px;
+}
+.taobao-panel-header button {
+  color: #8a6549;
+}
+.taobao-panel > .catalog-art,
+.taobao-panel > img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.taobao-panel h2 {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 12px 0 5px;
+}
+.taobao-panel > p {
+  color: #777;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.taobao-panel-price {
+  display: block;
+  color: #e77c35;
+  font-size: 21px;
+  margin: 12px 0;
+}
+.taobao-panel-actions,
+.taobao-payment {
+  display: grid;
+  gap: 9px;
+  margin-top: 15px;
+}
+.taobao-panel-actions button,
+.taobao-payment button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  border: 1px solid #efc6a5;
+  border-radius: 7px;
+  color: #bd6c2c;
+  background: #fff8f1;
+  font-size: 11px;
+}
+.taobao-panel-actions .primary,
+.taobao-payment .primary {
+  color: #fff;
+  background: #ed9146;
+  border-color: #ed9146;
+}
+.taobao-payment small {
+  color: #8f765e;
+  font-size: 9px;
+  line-height: 1.6;
+}
+.taobao-payment button.selected {
+  color: #fff;
+  background: #e9873d;
+  border-color: #e9873d;
+}
+.simulated-order {
+  border: 1px solid #f0b47d;
+}
