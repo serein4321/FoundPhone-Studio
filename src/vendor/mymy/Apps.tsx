@@ -118,7 +118,31 @@ export function MymyKakao(p: SkinProps) {
       stagedVisible ?? Number.POSITIVE_INFINITY,
       Boolean(p.incomingCall),
     ),
-    scroll = useRef<HTMLDivElement>(null);
+    scroll = useRef<HTMLDivElement>(null),
+    wasInCall = useRef(Boolean(p.incomingCall));
+  useEffect(() => {
+    const active = Boolean(p.incomingCall);
+    const ended = wasInCall.current && !active;
+    if (ended && p.thread && !p.creator) {
+      const stage = replyCount(p.thread);
+      const pending = p.items.some(
+        (m) =>
+          m.title === p.thread &&
+          m.meta.afterCall === "true" &&
+          Number(m.meta.afterReplies || 0) === stage,
+      );
+      if (pending) {
+        const alreadyVisible = p.items.filter(
+          (m) =>
+            m.title === p.thread &&
+            m.meta.afterCall !== "true" &&
+            Number(m.meta.afterReplies || 0) === stage,
+        ).length;
+        setStagedVisible(alreadyVisible);
+      }
+    }
+    wasInCall.current = active;
+  }, [p.incomingCall, p.thread, p.creator, p.items, sent.length]);
   useEffect(() => {
     if (stagedVisible === null || !p.thread || p.incomingCall) return;
     const stage = replyCount(p.thread);
