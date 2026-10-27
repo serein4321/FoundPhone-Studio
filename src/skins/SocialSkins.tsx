@@ -36,15 +36,15 @@ function Actions({ p, item }: { p: Props; item: Item }) {
     [saved, setSaved] = useSkinState<boolean>(p, `saved-${item.id}`, false);
   return (
     <div className="social-actions">
-      <button aria-label={`喜欢${item.title}`} onClick={() => setLiked(!liked)}>
+      <button aria-label={`喜歡${item.title}`} onClick={() => setLiked(!liked)}>
         <Heart size={17} fill={liked ? "currentColor" : "none"} />
         {item.likes + (liked ? 1 : 0) || ""}
       </button>
-      <button aria-label={`评论${item.title}`} onClick={() => p.onItem(item)}>
+      <button aria-label={`評論${item.title}`} onClick={() => p.onItem(item)}>
         <MessageCircle size={17} />
         {item.comments.length || ""}
       </button>
-      <button aria-label={`详情${item.title}`} onClick={() => p.onItem(item)}>
+      <button aria-label={`詳情${item.title}`} onClick={() => p.onItem(item)}>
         <Repeat2 size={17} />
         {meta(item, "reposts")}
       </button>
@@ -69,34 +69,34 @@ function WeiboActions({ p, item }: { p: Props; item: Item }) {
   const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false);
   return (
     <div className="social-actions weibo-actions">
-      <button aria-label={`转发${item.title}`} onClick={() => p.onItem(item)}>
+      <button aria-label={`轉發${item.title}`} onClick={() => p.onItem(item)}>
         <Share2 size={17} />
-        {meta(item, "reposts", "转发")}
+        {meta(item, "reposts", "轉發")}
       </button>
-      <button aria-label={`评论${item.title}`} onClick={() => p.onItem(item)}>
+      <button aria-label={`評論${item.title}`} onClick={() => p.onItem(item)}>
         <MessageCircle size={17} />
-        {item.comments.length || "评论"}
+        {item.comments.length || "評論"}
       </button>
       <button
-        aria-label={`喜欢${item.title}`}
+        aria-label={`喜歡${item.title}`}
         aria-pressed={liked}
         onClick={() => setLiked(!liked)}
       >
         <ThumbsUp size={17} fill={liked ? "currentColor" : "none"} />
-        {item.likes + (liked ? 1 : 0) || "赞"}
+        {item.likes + (liked ? 1 : 0) || "贊"}
       </button>
     </div>
   );
 }
 export function WeiboSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "关注");
+  const { tab, setTab, q, setQ, items } = useContent(p, "關注");
   const [feed, setFeed] = useState("全部");
   const list = feed === "全部" ? items : items.filter((i) => i.folder === feed);
   return (
     <div className="catalog-skin weibo-ui">
       <Header p={p} />
       <div className="weibo-sections">
-        {["关注", "发现", "我"].map((t) => (
+        {["關注", "發現", "我"].map((t) => (
           <button
             key={t}
             className={tab === t ? "selected" : ""}
@@ -111,13 +111,13 @@ export function WeiboSkin(p: Props) {
           <div className="weibo-profile">
             <Avatar name={p.owner ?? "我"} />
             <h2>{p.owner ?? "我"}</h2>
-            <span>{items.length} 条微博</span>
+            <span>{items.length} 條微博</span>
           </div>
         ) : (
           <>
             <SearchBox value={q} set={setQ} />
             <div className="weibo-feed-filter">
-              {["全部", ...groupItems(items).filter((g) => g !== "未分类")].map(
+              {["全部", ...groupItems(items).filter((g) => g !== "未分類")].map(
                 (g) => (
                   <button key={g} onClick={() => setFeed(g)}>
                     {g}
@@ -143,28 +143,28 @@ export function WeiboSkin(p: Props) {
   );
 }
 export function XSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "为你推荐");
+  const { tab, setTab, q, setQ, items } = useContent(p, "為你推薦");
   return (
     <div className="catalog-skin x-ui">
       <Header p={p} />
       <div className="x-feed-tabs">
         <button
-          className={tab === "为你推荐" ? "selected" : ""}
-          onClick={() => setTab("为你推荐")}
+          className={tab === "為你推薦" ? "selected" : ""}
+          onClick={() => setTab("為你推薦")}
         >
-          为你推荐
+          為你推薦
         </button>
         <button
-          className={tab === "正在关注" ? "selected" : ""}
-          onClick={() => setTab("正在关注")}
+          className={tab === "正在關注" ? "selected" : ""}
+          onClick={() => setTab("正在關注")}
         >
-          正在关注
+          正在關注
         </button>
       </div>
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
         {items
-          .filter((i) => tab === "为你推荐" || i.folder === "正在关注")
+          .filter((i) => tab === "為你推薦" || i.folder === "正在關注")
           .map((i) => (
             <article className="x-post" key={i.id}>
               <Avatar name={i.sender} />
@@ -185,7 +185,7 @@ export function XSkin(p: Props) {
           ))}
       </div>
       <Tabs
-        tabs={["为你推荐", "正在关注"]}
+        tabs={["為你推薦", "正在關注"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Users />]}
@@ -194,22 +194,22 @@ export function XSkin(p: Props) {
   );
 }
 export function ThreadsSkin(p: Props) {
-  const { tab, setTab, items } = useContent(p, "为你推荐");
+  const { tab, setTab, items } = useContent(p, "為你推薦");
   return (
     <div className="catalog-skin threads-ui">
       <Header p={p} />
       <div className="threads-title">
         <AtSign size={30} />
         <button
-          onClick={() => setTab(tab === "为你推荐" ? "正在关注" : "为你推荐")}
+          onClick={() => setTab(tab === "為你推薦" ? "正在關注" : "為你推薦")}
         >
           {tab} ⌄
         </button>
       </div>
       <div className="catalog-scroll">
-        {(tab === "个人主页"
+        {(tab === "個人首頁"
           ? items
-          : items.filter((i) => tab !== "正在关注" || i.folder === "正在关注")
+          : items.filter((i) => tab !== "正在關注" || i.folder === "正在關注")
         ).map((i) => (
           <article className="threads-post" key={i.id}>
             <div className="thread-avatar">
@@ -227,7 +227,7 @@ export function ThreadsSkin(p: Props) {
               </button>
               <Actions p={p} item={i} />
               <button className="thread-replies" onClick={() => p.onItem(i)}>
-                {i.comments.length} 条回复
+                {i.comments.length} 條回復
               </button>
             </div>
           </article>
@@ -235,7 +235,7 @@ export function ThreadsSkin(p: Props) {
         <Empty items={items} />
       </div>
       <Tabs
-        tabs={["为你推荐", "正在关注", "个人主页"]}
+        tabs={["為你推薦", "正在關注", "個人首頁"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Users />, <User />]}
@@ -244,20 +244,20 @@ export function ThreadsSkin(p: Props) {
   );
 }
 export function FacebookSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "动态");
+  const { tab, setTab, q, setQ, items } = useContent(p, "動態");
   const stories = items.filter((i) => i.folder === "Story");
   return (
     <div className="catalog-skin facebook-ui">
       <Header p={p} />
       <Tabs
-        tabs={["动态", "好友", "个人主页"]}
+        tabs={["動態", "好友", "個人首頁"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Users />, <User />]}
       />
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
-        {tab === "动态" ? (
+        {tab === "動態" ? (
           <>
             <button
               className="fb-compose"
@@ -265,7 +265,7 @@ export function FacebookSkin(p: Props) {
               onClick={p.onAdd}
             >
               <Avatar name={p.owner ?? "我"} />
-              分享新动态
+              分享新動態
             </button>
             <div className="fb-stories">
               {stories.map((i) => (
@@ -308,7 +308,7 @@ export function FacebookSkin(p: Props) {
               <h1>{p.owner ?? "我"}</h1>
             </div>
             {items
-              .filter((i) => i.folder === "个人主页")
+              .filter((i) => i.folder === "個人首頁")
               .map((i) => (
                 <button
                   key={i.id}
@@ -326,18 +326,18 @@ export function FacebookSkin(p: Props) {
   );
 }
 export function RedbookSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "发现");
+  const { tab, setTab, q, setQ, items } = useContent(p, "發現");
   const list =
     tab === "收藏"
       ? items.filter((i) => i.favorite)
-      : tab === "关注"
-        ? items.filter((i) => i.folder === "关注")
+      : tab === "關注"
+        ? items.filter((i) => i.folder === "關注")
         : items;
   return (
     <div className="catalog-skin redbook-ui">
       <Header p={p} />
       <div className="redbook-top">
-        {["关注", "发现", "收藏"].map((t) => (
+        {["關注", "發現", "收藏"].map((t) => (
           <button
             key={t}
             className={tab === t ? "selected" : ""}
@@ -366,7 +366,7 @@ export function RedbookSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["发现", "收藏"]}
+        tabs={["發現", "收藏"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Bookmark />]}
@@ -375,10 +375,10 @@ export function RedbookSkin(p: Props) {
   );
 }
 export function PinterestSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "发现");
+  const { tab, setTab, q, setQ, items } = useContent(p, "發現");
   const [board, setBoard] = useState("");
   const list = board
-    ? items.filter((i) => (i.folder || "未分类") === board)
+    ? items.filter((i) => (i.folder || "未分類") === board)
     : items;
   return (
     <div className="catalog-skin pinterest-ui">
@@ -391,7 +391,7 @@ export function PinterestSkin(p: Props) {
               {groupItems(items).map((g) => (
                 <button key={g} onClick={() => setBoard(g)}>
                   <Media
-                    item={items.find((i) => (i.folder || "未分类") === g)!}
+                    item={items.find((i) => (i.folder || "未分類") === g)!}
                   />
                   <strong>{g}</strong>
                 </button>
@@ -422,7 +422,7 @@ export function PinterestSkin(p: Props) {
         )}
       </div>
       <Tabs
-        tabs={["发现", "收藏板"]}
+        tabs={["發現", "收藏板"]}
         value={tab}
         set={(t) => {
           setTab(t);
@@ -434,17 +434,17 @@ export function PinterestSkin(p: Props) {
   );
 }
 export function RedditSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "首页");
+  const { tab, setTab, q, setQ, items } = useContent(p, "首頁");
   const [sort, setSort] = useState("最新");
   const list = [...items].sort((a, b) =>
-    sort === "热门" ? b.likes - a.likes : b.time.localeCompare(a.time),
+    sort === "熱門" ? b.likes - a.likes : b.time.localeCompare(a.time),
   );
   return (
     <div className="catalog-skin reddit-ui">
       <Header p={p} />
       <div className="reddit-community">
         <Hash size={21} />
-        <button onClick={() => setTab(tab === "首页" ? "社区" : "首页")}>
+        <button onClick={() => setTab(tab === "首頁" ? "社區" : "首頁")}>
           {tab} ⌄
         </button>
         <select
@@ -453,25 +453,25 @@ export function RedditSkin(p: Props) {
           onChange={(e) => setSort(e.target.value)}
         >
           <option>最新</option>
-          <option>热门</option>
+          <option>熱門</option>
         </select>
       </div>
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
-        {tab === "社区"
+        {tab === "社區"
           ? groupItems(items).map((g) => (
               <button
                 className="reddit-sub"
                 key={g}
                 onClick={() => {
-                  setQ(g === "未分类" ? "" : g);
-                  setTab("首页");
+                  setQ(g === "未分類" ? "" : g);
+                  setTab("首頁");
                 }}
               >
                 <Hash size={22} />
                 {g}
                 <small>
-                  {items.filter((i) => (i.folder || "未分类") === g).length} 帖
+                  {items.filter((i) => (i.folder || "未分類") === g).length} 帖
                 </small>
               </button>
             ))
@@ -479,7 +479,7 @@ export function RedditSkin(p: Props) {
         <Empty items={items} />
       </div>
       <Tabs
-        tabs={["首页", "社区"]}
+        tabs={["首頁", "社區"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Users />]}
@@ -501,21 +501,21 @@ function RedditPost({ p, item: i }: { p: Props; item: Item }) {
       </button>
       <div className="reddit-actions">
         <button
-          aria-label={`赞同${i.title}`}
+          aria-label={`贊同${i.title}`}
           onClick={() => setVote(vote === 1 ? 0 : 1)}
         >
           <ArrowUp size={17} />
         </button>
         <span>{Number(meta(i, "votes", String(i.likes))) + vote}</span>
         <button
-          aria-label={`反对${i.title}`}
+          aria-label={`反對${i.title}`}
           onClick={() => setVote(vote === -1 ? 0 : -1)}
         >
           <ArrowDown size={17} />
         </button>
         <button onClick={() => p.onItem(i)}>
           <MessageCircle size={16} />
-          {i.comments.length} 评论
+          {i.comments.length} 評論
         </button>
       </div>
     </article>
@@ -525,19 +525,19 @@ export function ForumSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "帖子");
   const [board, setBoard] = useState("");
   const list = board
-    ? items.filter((i) => (i.folder || "未分类") === board)
+    ? items.filter((i) => (i.folder || "未分類") === board)
     : items;
   return (
     <div className="catalog-skin forum-ui">
       <Header p={p} />
       <div className="forum-banner">
         <Hash size={27} />
-        <strong>{board || "论坛"}</strong>
-        <span>{items.length} 个主题</span>
+        <strong>{board || "論壇"}</strong>
+        <span>{items.length} 個主題</span>
       </div>
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
-        {tab === "版块"
+        {tab === "版塊"
           ? groupItems(items).map((g) => (
               <button
                 className="forum-board"
@@ -551,8 +551,8 @@ export function ForumSkin(p: Props) {
                 <div>
                   <strong>{g}</strong>
                   <small>
-                    {items.filter((i) => (i.folder || "未分类") === g).length}{" "}
-                    个主题
+                    {items.filter((i) => (i.folder || "未分類") === g).length}{" "}
+                    個主題
                   </small>
                 </div>
                 <ChevronRight size={16} />
@@ -574,14 +574,14 @@ export function ForumSkin(p: Props) {
                     {i.sender} · {i.time.slice(5, 16)}
                   </span>
                   <span>
-                    {meta(i, "views", "—")} 浏览 · {i.comments.length} 回复
+                    {meta(i, "views", "—")} 瀏覽 · {i.comments.length} 回復
                   </span>
                 </div>
               </button>
             ))}
       </div>
       <Tabs
-        tabs={["帖子", "版块"]}
+        tabs={["帖子", "版塊"]}
         value={tab}
         set={(t) => {
           setTab(t);
@@ -599,8 +599,8 @@ export function SnapchatSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "快拍");
   const [index, setIndex] = useState(0);
   const list = items.filter((i) =>
-    tab === "回忆"
-      ? i.favorite || i.folder === "回忆"
+    tab === "回憶"
+      ? i.favorite || i.folder === "回憶"
       : tab === "聊天"
         ? i.folder === "聊天"
         : i.folder !== "聊天",
@@ -632,7 +632,7 @@ export function SnapchatSkin(p: Props) {
             </button>
             <button
               className="snap-next"
-              aria-label="下一条快拍"
+              aria-label="下一條快拍"
               onClick={() => {
                 setIndex((n) => n + 1);
                 p.onRead(i.id);
@@ -645,11 +645,11 @@ export function SnapchatSkin(p: Props) {
             </button>
           </>
         ) : (
-          <p className="catalog-empty">暂无{tab}</p>
+          <p className="catalog-empty">暫無{tab}</p>
         )}
       </div>
       <Tabs
-        tabs={["聊天", "快拍", "回忆"]}
+        tabs={["聊天", "快拍", "回憶"]}
         value={tab}
         set={(t) => {
           setTab(t);

@@ -51,10 +51,10 @@ export function NativeComposer({
   return (
     <button
       className="native-compose-field"
-      aria-label={creator ? "添加消息" : "输入消息"}
+      aria-label={creator ? "新增訊息" : "輸入訊息"}
       onClick={() => (creator ? onAdd() : open(true))}
     >
-      {creator ? "添加消息" : ""}
+      {creator ? "新增訊息" : ""}
     </button>
   );
 }
@@ -113,7 +113,7 @@ export function DeviceLock({
           <div className="lock-clock-block">
             <LockKeyhole size={18} />
             <p>
-              {new Intl.DateTimeFormat("zh-CN", {
+              {new Intl.DateTimeFormat("zh-TW", {
                 month: "long",
                 day: "numeric",
                 weekday: "long",
@@ -138,7 +138,7 @@ export function DeviceLock({
           <UnlockHandle onUnlock={open} />
 
           <div className="lock-tools">
-            <button onClick={onLight} aria-label="手电筒">
+            <button onClick={onLight} aria-label="手電筒">
               <Flashlight size={23} />
             </button>
             <button
@@ -146,7 +146,7 @@ export function DeviceLock({
               disabled={
                 !work.apps.some((a) => a.installed && a.id === "camera")
               }
-              aria-label="相机"
+              aria-label="相機"
             >
               <Camera size={25} />
             </button>
@@ -155,10 +155,10 @@ export function DeviceLock({
       ) : (
         <div className="device-passcode">
           <LockKeyhole size={22} />
-          <h2>输入密码</h2>
+          <h2>輸入密碼</h2>
           <div
             className={"passcode-dots " + (error ? "pin-shake" : "")}
-            aria-label={"已输入" + code.length + "位密码"}
+            aria-label={"已輸入" + code.length + "位密碼"}
           >
             {Array.from({ length: work.phone.passcode.length }, (_, i) => (
               <i key={i} className={i < code.length ? "filled" : ""} />
@@ -170,7 +170,7 @@ export function DeviceLock({
                 ? "accessible-pin"
                 : "legacy-passcode"
             }
-            aria-label="锁屏密码"
+            aria-label="鎖屏密碼"
             autoComplete="off"
             inputMode="numeric"
             type="password"
@@ -184,7 +184,7 @@ export function DeviceLock({
                 n ? (
                   <button
                     key={i}
-                    aria-label={"密码键" + n}
+                    aria-label={"密碼鍵" + n}
                     onClick={() => digit(n)}
                   >
                     <b>{n}</b>
@@ -214,15 +214,15 @@ export function DeviceLock({
             {error}
           </span>
           {!/^[0-9]+$/.test(work.phone.passcode) && (
-            <button onClick={() => onUnlock(code)}>解锁</button>
+            <button onClick={() => onUnlock(code)}>解鎖</button>
           )}
           <div className="pin-footer">
             <button onClick={() => setPinOpen(false)}>取消</button>
             <button
-              aria-label="删除一位密码"
+              aria-label="刪除一位密碼"
               onClick={() => (code ? digit("⌫") : setPinOpen(false))}
             >
-              {code ? "删除" : "取消"}
+              {code ? "刪除" : "取消"}
             </button>
           </div>
         </div>
@@ -252,13 +252,13 @@ export function ControlCenter({
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -100, opacity: 0 }}
     >
-      <button className="cc-close" aria-label="关闭控制中心" onClick={close}>
+      <button className="cc-close" aria-label="關閉控制中心" onClick={close}>
         <Power />
       </button>
       <button
         className="cc-edit"
-        aria-label="控制中心编辑"
-        onClick={() => setTool("编辑控制")}
+        aria-label="控制中心編輯"
+        onClick={() => setTool("編輯控制")}
       >
         <Plus />
       </button>
@@ -268,26 +268,26 @@ export function ControlCenter({
         </span>
         控制中心 <ChevronRight size={16} />
       </div>
-      <div className="cc-status" aria-label={"蜂窝网络 " + network}>
+      <div className="cc-status" aria-label={"行動網路 " + network}>
         <div>
           <span>
             <Signal size={18} />
-            <small>主号</small> 中国移动 <Wifi size={17} />
+            <small>主號</small> 中華電信 <Wifi size={17} />
           </span>
           <span>
             <Signal size={18} />
-            <small>副号</small> 中国电信
+            <small>副號</small> 臺灣大哥大
           </span>
         </div>
         <span>
           <Lock size={13} /> {battery}% <Battery size={27} />
         </span>
       </div>
-      <nav className="cc-page-rail" aria-label="控制中心分类">
+      <nav className="cc-page-rail" aria-label="控制中心分類">
         {[Heart, Music2, House, Radio].map((Icon, i) => (
           <button
             key={i}
-            aria-label={["常用控制", "媒体控制", "家庭控制", "连接控制"][i]}
+            aria-label={["常用控制", "媒體控制", "家庭控制", "連接控制"][i]}
             onClick={() =>
               document
                 .querySelector(
@@ -310,15 +310,15 @@ export function ControlCenter({
             <Airplay size={21} />
           </div>
           <div className="cc-media-title">
-            <strong>{playing ? "测试播放" : "未在播放"}</strong>
-            <small>音乐</small>
+            <strong>{playing ? "測試播放" : "未在播放"}</strong>
+            <small>音樂</small>
           </div>
           <div>
             <button aria-label="上一首">
               <SkipForward style={{ transform: "rotate(180deg)" }} />
             </button>
             <button
-              aria-label={playing ? "暂停" : "播放"}
+              aria-label={playing ? "暫停" : "播放"}
               onClick={() => setPlaying(!playing)}
             >
               <Play fill="currentColor" />
@@ -330,7 +330,7 @@ export function ControlCenter({
         </div>
         <button
           className={"cc-square " + (rotation ? "cc-white" : "")}
-          aria-label="旋转锁定"
+          aria-label="旋轉鎖定"
           aria-pressed={rotation}
           onClick={() => setRotation(!rotation)}
         >
@@ -341,8 +341,8 @@ export function ControlCenter({
         </button>
         <button
           className="cc-square"
-          onClick={() => setTool(tool ? "" : "屏幕镜像")}
-          aria-label="屏幕镜像"
+          onClick={() => setTool(tool ? "" : "螢幕鏡像")}
+          aria-label="螢幕鏡像"
         >
           <Monitor />
         </button>
@@ -358,20 +358,20 @@ export function ControlCenter({
           onClick={() => setFocus(!focus)}
         >
           <Moon />
-          <span>专注模式</span>
+          <span>專注模式</span>
           <ChevronDown size={14} />
         </button>
         <button className="cc-home" onClick={() => setTool("家庭")}>
           <House size={38} />
-          <span>未设置家庭</span>
+          <span>未設定家庭</span>
         </button>
         {[Flashlight, Timer, Calculator, Camera].map((Icon, i) => (
           <button
             className={"cc-square cc-tool-" + i}
-            aria-label={["手电筒", "计时器", "计算器", "相机"][i]}
+            aria-label={["手電筒", "計時器", "計算器", "相機"][i]}
             key={i}
             onClick={() =>
-              setTool(tool ? "" : ["手电筒", "计时器", "计算器", "相机"][i])
+              setTool(tool ? "" : ["手電筒", "計時器", "計算器", "相機"][i])
             }
           >
             <Icon />
@@ -381,8 +381,8 @@ export function ControlCenter({
           <button
             key={i}
             className={"cc-square cc-bottom-tool cc-bottom-" + i}
-            aria-label={["扫码", "屏幕录制", "声音识别"][i]}
-            onClick={() => setTool(["扫码", "屏幕录制", "声音识别"][i])}
+            aria-label={["掃碼", "螢幕錄制", "聲音識別"][i]}
+            onClick={() => setTool(["掃碼", "螢幕錄制", "聲音識別"][i])}
           >
             <Icon />
           </button>
@@ -392,13 +392,13 @@ export function ControlCenter({
         <div className="cc-tool">
           <strong>{tool}</strong>
           <p>
-            {tool === "屏幕镜像" ? "正在搜索作品中的设备…" : "作品内快捷控制"}
+            {tool === "螢幕鏡像" ? "正在搜尋作品中的設備…" : "作品內快捷控制"}
           </p>
           <button onClick={() => setTool("")}>完成</button>
         </div>
       )}
       <button className="cc-dismiss" onClick={close}>
-        轻扫以关闭
+        輕掃以關閉
         <ChevronUp size={16} />
       </button>
     </motion.div>
@@ -409,16 +409,16 @@ export function DeviceKeyboard({ close }: { close: () => void }) {
     [shift, setShift] = useState(false),
     [numbers, setNumbers] = useState(false);
   return (
-    <div className="device-keyboard" role="dialog" aria-label="屏幕键盘">
+    <div className="device-keyboard" role="dialog" aria-label="螢幕鍵盤">
       <div className="keyboard-draft">
         <input
           autoFocus
-          aria-label="消息草稿"
+          aria-label="訊息草稿"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="输入消息"
+          placeholder="輸入訊息"
         />
-        <button aria-label="收起键盘" onClick={close}>
+        <button aria-label="收起鍵盤" onClick={close}>
           <ChevronDown />
         </button>
       </div>
@@ -439,7 +439,7 @@ export function DeviceKeyboard({ close }: { close: () => void }) {
           {i === 2 && (
             <button
               className="key-special"
-              aria-label="切换大小写"
+              aria-label="切換大小寫"
               onClick={() => setShift(!shift)}
             >
               <ArrowUp size={19} />

@@ -16,14 +16,14 @@ import "./qq-detail.css";
 export function QQThread(p: Props) {
   const [panel, setPanel] = useState("");
   const messages = p.items.filter(
-    (i) => i.title === p.thread && i.folder !== "空间" && i.kind !== "post",
+    (i) => i.title === p.thread && i.folder !== "空間" && i.kind !== "post",
   );
   const read = (i: (typeof messages)[number]) =>
     p.creator || i.password ? p.onItem(i) : p.onRead(i.id);
   return (
     <div className="qq-native-thread">
       <header className="qq-thread-nav">
-        <button aria-label="返回QQ消息" onClick={() => p.onThread("")}>
+        <button aria-label="返回QQ訊息" onClick={() => p.onThread("")}>
           <ChevronLeft size={26} />
         </button>
         <div>
@@ -31,8 +31,8 @@ export function QQThread(p: Props) {
           <small>{meta(messages.at(-1), "status", "聊天")}</small>
         </div>
         <button
-          aria-label="QQ聊天信息"
-          onClick={() => setPanel(panel ? "" : "聊天信息")}
+          aria-label="QQ聊天資訊"
+          onClick={() => setPanel(panel ? "" : "聊天資訊")}
         >
           <Menu size={24} />
         </button>
@@ -77,11 +77,11 @@ export function QQThread(p: Props) {
                                 /^\d+(\.\d+)?$/.test(i.body) ? i.body : "—",
                               )}
                             </strong>
-                            <p>转账</p>
+                            <p>轉帳</p>
                           </div>
                         </div>
                         <footer>
-                          {meta(i, "transferStatus", "转账记录")}
+                          {meta(i, "transferStatus", "轉帳記錄")}
                           <small>QQ支付</small>
                         </footer>
                       </>
@@ -108,16 +108,16 @@ export function QQThread(p: Props) {
             </div>
           );
         })}
-        {!messages.length && <p className="qq-thread-empty">暂无消息</p>}
+        {!messages.length && <p className="qq-thread-empty">暫無訊息</p>}
       </div>
       <div className="qq-native-composer">
         <NativeComposer creator={p.creator} onAdd={p.onAdd} />
         <div>
           {[
-            [Mic, "语音"],
-            [Image, "图片"],
-            [Camera, "相机"],
-            [Video, "视频"],
+            [Mic, "語音"],
+            [Image, "圖片"],
+            [Camera, "相機"],
+            [Video, "視訊"],
             [Smile, "表情"],
             [Plus, "更多"],
           ].map(([Icon, label]) => {
@@ -143,7 +143,7 @@ export function QQThread(p: Props) {
             </button>
             <strong>{panel}</strong>
           </header>
-          {panel === "聊天信息" ? (
+          {panel === "聊天資訊" ? (
             <div className="qq-member-list">
               {[...new Set(messages.map((i) => i.sender))].map((name) => (
                 <div key={name}>
@@ -161,16 +161,16 @@ export function QQThread(p: Props) {
                     <Media item={i} />
                     <span>
                       {i.kind === "audio"
-                        ? "语音"
+                        ? "語音"
                         : i.kind === "image"
-                          ? "图片"
-                          : "视频"}
+                          ? "圖片"
+                          : "視訊"}
                     </span>
                   </button>
                 ))}
               {!messages.some((i) =>
                 ["image", "audio", "video"].includes(i.kind),
-              ) && <p>暂无内容</p>}
+              ) && <p>暫無內容</p>}
             </div>
           )}
         </div>

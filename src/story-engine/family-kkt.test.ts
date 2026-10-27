@@ -13,10 +13,10 @@ it("only a saved reply in the family KKT triggers one mom call", () => {
   };
   send("別的群", "你好");
   expect(state.incomingCall).toBeNull();
-  send("一对恩爱夫夫和我（3）", "想吃麵");
+  send("一對恩愛夫夫和我（3）", "想吃麵");
   expect(state.incomingCall?.target).toBe("mom-video-call");
-  expect(state.incomingCall?.caller).toBe("妈妈🐈");
+  expect(state.incomingCall?.caller).toBe("媽媽🐈");
   state = dispatch(work, { ...state, incomingCall: null }, "callDeclined", "mom-video-call");
-  send("一对恩爱夫夫和我（3）", "再回一次");
+  send("一對恩愛夫夫和我（3）", "再回一次");
   expect(state.incomingCall).toBeNull();
 });

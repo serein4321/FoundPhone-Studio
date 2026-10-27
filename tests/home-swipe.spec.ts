@@ -1,13 +1,13 @@
 import { test, expect } from "@playwright/test";
 async function ready(page: import("@playwright/test").Page) {
   await page.goto("/?preview=test");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(page.locator(".lock-screen")).toHaveCount(0);
   await expect(page.locator(".interactive-home")).toHaveCSS("opacity", "1");
 }
 async function settled(page: import("@playwright/test").Page, n: number) {
   await expect(
-    page.getByRole("button", { name: "前往桌面第" + n + "页", exact: true }),
+    page.getByRole("button", { name: "前往桌面第" + n + "頁", exact: true }),
   ).toHaveAttribute("aria-current", "page");
   await expect
     .poll(() =>
@@ -58,7 +58,7 @@ test("touch swipe over app icons and empty desktop flips both directions", async
   try {
     const page = await context.newPage();
     await page.goto("http://127.0.0.1:4173/?preview=test");
-    await page.getByRole("button", { name: "轻触解锁" }).click();
+    await page.getByRole("button", { name: "輕觸解鎖" }).click();
     await expect(page.locator(".lock-screen")).toHaveCount(0);
     await expect(page.locator(".interactive-home")).toHaveCSS("opacity", "1");
     const cdp = await context.newCDPSession(page);

@@ -28,12 +28,12 @@ describe("independent app coverage and authored attributes", () => {
     const w = createWork();
     w.data.alipay = [
       makeItem({
-        title: "书店收款",
-        meta: { amount: "-38.00", status: "交易成功", merchant: "城南旧书店" },
+        title: "書店收款",
+        meta: { amount: "-38.00", status: "交易成功", merchant: "城南舊書店" },
       }),
     ];
     w.data.discord = [
-      makeItem({ meta: { server: "夜班", status: "离线" }, folder: "线索" }),
+      makeItem({ meta: { server: "夜班", status: "離線" }, folder: "線索" }),
     ];
     const copy = validateWork(JSON.parse(JSON.stringify(w)));
     expect(copy.data.alipay[0].meta.amount).toBe("-38.00");

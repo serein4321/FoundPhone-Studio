@@ -47,7 +47,7 @@ function apply(a: Action, s: Runtime, w: Work) {
       s.notifications.push(String(a.value));
       break;
     case "call":
-      s.notifications.push(`${String(a.value)} 来电`);
+      s.notifications.push(`${String(a.value)} 來電`);
       s.incomingCall = {
         caller: String(a.value),
         target: a.key,
@@ -73,7 +73,7 @@ function apply(a: Action, s: Runtime, w: Work) {
         ...(s.messages[a.key] ?? []),
         makeItem({
           id: `event-${a.key}-${s.completed.length}-${s.messages[a.key]?.length ?? 0}`,
-          title: "新消息",
+          title: "新訊息",
           sender: w.phone.owner,
           body: String(a.value),
         }),
@@ -260,9 +260,9 @@ export function validateGraph(nodes: StoryNode[]) {
   for (const n of nodes) {
     for (const id of n.next)
       if (!nodes.some((x) => x.id === id))
-        errors.push(`${n.label} 引用了不存在的节点 ${id}`);
+        errors.push(`${n.label} 引用了不存在的節點 ${id}`);
     if (n.next.includes(n.id))
-      errors.push(`${n.label} 存在自环（运行时会阻止循环）`);
+      errors.push(`${n.label} 存在自環（運行時會阻止循環）`);
   }
   const reachable = new Set<string>();
   const visit = (id: string) => {
@@ -275,7 +275,7 @@ export function validateGraph(nodes: StoryNode[]) {
     .forEach((n) => visit(n.id));
   nodes
     .filter((n) => n.type !== "comment" && !reachable.has(n.id))
-    .forEach((n) => errors.push(`${n.label} 不可达`));
+    .forEach((n) => errors.push(`${n.label} 不可達`));
   return errors;
 }
 export function visible(

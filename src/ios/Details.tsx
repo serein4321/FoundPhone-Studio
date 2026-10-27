@@ -38,18 +38,18 @@ export function NativeDetail({
   const media = safeMedia(item.media),
     name =
       app === "notes"
-        ? "备忘录"
+        ? "備忘錄"
         : app === "contacts"
-          ? "通讯录"
+          ? "通訊錄"
           : app === "photos"
             ? "所有照片"
             : app === "phone"
-              ? "最近通话"
+              ? "最近通話"
               : app === "calendar"
-                ? "日历"
+                ? "日歷"
                 : app === "files"
-                  ? "浏览"
-                  : "书签";
+                  ? "瀏覽"
+                  : "書籤";
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(item.body);
@@ -74,7 +74,7 @@ export function NativeDetail({
         <div className="native-action-sheet">
           <button onClick={copy}>
             <Copy size={18} />
-            复制文字
+            復制文字
           </button>
           <button onClick={() => setCopied(false)}>取消</button>
         </div>
@@ -92,7 +92,7 @@ export function NativeDetail({
             )}
           </div>
           <footer className="native-detail-toolbar">
-            <button aria-label="分享照片说明" onClick={copy}>
+            <button aria-label="分享照片說明" onClick={copy}>
               <Share />
             </button>
             <button
@@ -101,7 +101,7 @@ export function NativeDetail({
             >
               <Heart fill={favorite ? "#007aff" : "none"} />
             </button>
-            <span>{copied ? "已复制" : item.title}</span>
+            <span>{copied ? "已復制" : item.title}</span>
           </footer>
         </>
       ) : app === "contacts" || app === "phone" ? (
@@ -112,9 +112,9 @@ export function NativeDetail({
           </div>
           <div className="native-contact-actions">
             {[
-              [MessageCircle, "信息"],
+              [MessageCircle, "資訊"],
               [Phone, "呼叫"],
-              [Video, "视频"],
+              [Video, "視訊"],
             ].map(([Icon, label]) => {
               const Glyph = Icon as typeof Phone;
               return (
@@ -126,17 +126,17 @@ export function NativeDetail({
             })}
           </div>
           <div className="native-detail-group">
-            <small>手机</small>
-            <p className="native-blue">{item.meta.phone || "未设置号码"}</p>
+            <small>手機</small>
+            <p className="native-blue">{item.meta.phone || "未設定號碼"}</p>
           </div>
           <div className="native-detail-group">
-            <small>备注</small>
+            <small>備注</small>
             <p>{item.body}</p>
           </div>
           {call && (
             <div className="native-detail-group">
-              <p>作品内模拟 · {item.title}</p>
-              <button onClick={() => setCall(false)}>结束</button>
+              <p>作品內模擬 · {item.title}</p>
+              <button onClick={() => setCall(false)}>結束</button>
             </div>
           )}
         </div>
@@ -148,11 +148,11 @@ export function NativeDetail({
             <RichText value={item.richText} fallback={item.body} />
           </div>
           <footer className="native-detail-toolbar">
-            <button aria-label="返回文件夹" onClick={back}>
+            <button aria-label="返回資料夾" onClick={back}>
               <Folder />
             </button>
             <span />
-            <button aria-label="复制备忘录" onClick={copy}>
+            <button aria-label="復制備忘錄" onClick={copy}>
               {copied ? <Check /> : <Share />}
             </button>
           </footer>
@@ -190,7 +190,7 @@ export function NativeDetail({
           <h2>{item.title}</h2>
           <p>{item.body}</p>
           <small>{item.time}</small>
-          <button onClick={copy}>复制内容</button>
+          <button onClick={copy}>復制內容</button>
         </div>
       )}
     </div>

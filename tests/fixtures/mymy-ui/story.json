@@ -1,10 +1,10 @@
 {
   "scriptVersion": 1,
   "id": "mymy-ui-regression",
-  "title": "UI测试",
+  "title": "UI測試",
   "revision": 1,
   "phone": {
-    "owner": "测试机主",
+    "owner": "測試機主",
     "date": "2026-10-25",
     "time": "09:41",
     "wallpaper": "silver"
@@ -24,14 +24,14 @@
   "contacts": [
     {
       "id": "tester",
-      "name": "测试联系人"
+      "name": "測試聯絡人"
     }
   ],
   "chats": [
     {
       "id": "test-kkt-thread",
       "app": "kakao",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "tester"
@@ -40,12 +40,12 @@
         {
           "id": "kkt-first",
           "senderId": "tester",
-          "body": "这是测试消息。"
+          "body": "這是測試訊息。"
         },
         {
           "id": "kkt-last",
           "senderId": "owner",
-          "body": "点击这条测试消息触发来电。"
+          "body": "點擊這條測試訊息觸發來電。"
         }
       ]
     }
@@ -54,47 +54,47 @@
     "instagram": [
       {
         "id": "ig-test-post",
-        "title": "测试帖子",
-        "body": "这是一条测试动态。",
-        "sender": "测试用户",
+        "title": "測試帖子",
+        "body": "這是一條測試動態。",
+        "sender": "測試用戶",
         "comments": [
-          "测试评论"
+          "測試評論"
         ],
         "likes": 1
       },
       {
         "id": "ig-after-call",
-        "title": "联动测试",
-        "body": "挂断后出现的测试动态。",
+        "title": "聯動測試",
+        "body": "掛斷後出現的測試動態。",
         "hidden": true,
-        "sender": "测试用户"
+        "sender": "測試用戶"
       },
       {
         "id": "ig-test-story",
-        "title": "测试快拍",
-        "body": "这是测试快拍。",
-        "sender": "测试用户",
+        "title": "測試快拍",
+        "body": "這是測試快拍。",
+        "sender": "測試用戶",
         "meta": {
           "story": "true"
         }
       },
       {
         "id": "ig-test-dm",
-        "title": "测试私信",
-        "body": "这是一条测试私信。",
-        "sender": "测试用户",
+        "title": "測試私信",
+        "body": "這是一條測試私信。",
+        "sender": "測試用戶",
         "folder": "私信"
       }
     ],
     "twitter": [
       {
         "id": "x-test-post",
-        "title": "测试帖子",
-        "body": "这是一条X测试动态。",
-        "sender": "测试用户",
+        "title": "測試帖子",
+        "body": "這是一條X測試動態。",
+        "sender": "測試用戶",
         "likes": 2,
         "comments": [
-          "测试回复"
+          "測試回復"
         ]
       }
     ]
@@ -102,20 +102,20 @@
   "events": [
     {
       "id": "read-last",
-      "label": "测试来电",
+      "label": "測試來電",
       "event": "read",
       "target": "kkt-last",
       "actions": [
         {
           "type": "call",
           "key": "test-call",
-          "value": "测试联系人"
+          "value": "測試聯絡人"
         }
       ]
     },
     {
       "id": "end-call",
-      "label": "测试联动",
+      "label": "測試聯動",
       "event": "callEnded",
       "target": "test-call",
       "actions": [
@@ -128,14 +128,14 @@
     },
     {
       "id": "read-linked",
-      "label": "联动测试完成",
+      "label": "聯動測試完成",
       "event": "read",
       "target": "ig-after-call",
       "actions": [
         {
           "type": "ending",
           "key": "",
-          "value": "测试通过"
+          "value": "測試通過"
         }
       ]
     }
@@ -161,7 +161,7 @@
           "target": "ig-after-call"
         }
       ],
-      "ending": "测试通过",
+      "ending": "測試通過",
       "expectUnlocked": [
         "ig-after-call"
       ]

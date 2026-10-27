@@ -11,5 +11,5 @@ export function calculate(a: number, b: number, op: string) {
             : NaN;
   return Number.isFinite(result)
     ? String(Number(result.toPrecision(12)))
-    : "错误";
+    : "錯誤";
 }

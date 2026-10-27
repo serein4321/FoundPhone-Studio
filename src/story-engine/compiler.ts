@@ -9,7 +9,7 @@ import {
 } from "../schema";
 import { registry } from "../registry";
 import { validateGraph } from "../engine";
-const id = z.string().regex(/^[a-zA-Z][a-zA-Z0-9_.-]*$/, "需要稳定的英文 ID");
+const id = z.string().regex(/^[a-zA-Z][a-zA-Z0-9_.-]*$/, "需要穩定的英文 ID");
 const content = itemSchema
   .partial()
   .extend({ id, title: z.string().default(""), body: z.string().default("") })
@@ -113,7 +113,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
   };
   const names = new Set<string>();
   const unique = (v: string, p: string) => {
-    if (names.has(v)) fail(p, "重复 ID: " + v);
+    if (names.has(v)) fail(p, "重復 ID: " + v);
     names.add(v);
   };
   const contacts = new Map(s.contacts.map((c) => [c.id, c]));
@@ -127,10 +127,10 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
       .map((a) => (typeof a === "string" ? a : a.id)),
   );
   if (new Set(configuredIds).size !== s.installedApps.length)
-    fail("installedApps", "App 重复");
+    fail("installedApps", "App 重復");
   s.installedApps.forEach((a, i) => {
     if (!registry.some((r) => r.id === (typeof a === "string" ? a : a.id)))
-      fail(`installedApps.${i}`, "未注册的 App");
+      fail(`installedApps.${i}`, "未注冊的 App");
   });
   const data: Work["data"] = {};
   const add = (
@@ -138,7 +138,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     raw: Partial<z.infer<typeof itemSchema>>,
     p: string,
   ) => {
-    if (!installed.has(app)) fail(p, `App ${app} 未安装`);
+    if (!installed.has(app)) fail(p, `App ${app} 未安裝`);
     unique(raw.id!, p + ".id");
     const item = itemSchema.parse({
       time: s.phone.date + " " + (s.phone.time || "21:41"),
@@ -147,15 +147,15 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     });
     for (const k of ["media", "avatar"] as const)
       if (item[k] && !safeMedia(item[k]))
-        fail(p + "." + k, "仅允许受支持的内嵌媒体，不允许脚本或远程资源");
+        fail(p + "." + k, "僅允許受支持的內嵌媒體，不允許腳本或遠程資源");
     if (item.richText) {
       let doc;
       try {
         doc = JSON.parse(item.richText);
       } catch {
-        fail(p + ".richText", "必须是结构化富文本 JSON，不能导入 HTML");
+        fail(p + ".richText", "必須是結構化富文本 JSON，不能導入 HTML");
       }
-      if (!doc || typeof doc !== "object") fail(p + ".richText", "无效富文本");
+      if (!doc || typeof doc !== "object") fail(p + ".richText", "無效富文本");
     }
     (data[app] ??= []).push(item);
   };
@@ -163,7 +163,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     items.forEach((i, n) => add(app, i, `content.${app}.${n}`));
   s.contacts.forEach((c, n) => {
     if (c.avatar && !safeMedia(c.avatar))
-      fail(`contacts.${n}.avatar`, "无效头像");
+      fail(`contacts.${n}.avatar`, "無效頭像");
     if (installed.has("contacts"))
       add(
         "contacts",
@@ -183,7 +183,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
       fail(`chats.${n}.app`, "需要聊天 App");
     chat.participants.forEach((c, j) => {
       if (!contacts.has(c) && c !== "owner")
-        fail(`chats.${n}.participants.${j}`, "联系人不存在: " + c);
+        fail(`chats.${n}.participants.${j}`, "聯絡人不存在: " + c);
     });
     chat.messages.forEach((m, j) => {
       if (
@@ -191,7 +191,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
         m.senderId !== "owner" &&
         !chat.participants.includes(m.senderId)
       )
-        fail(`chats.${n}.messages.${j}.senderId`, "发信人不在会话中");
+        fail(`chats.${n}.messages.${j}.senderId`, "發信人不在會話中");
       const { senderId, ...item } = m;
       add(
         chat.app,
@@ -237,27 +237,27 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     nodeIds = new Set(nodes.map((n) => n.id));
   nodes.forEach((n, i) => {
     n.next.forEach((x, j) => {
-      if (!nodeIds.has(x)) fail(`events.${i}.next.${j}`, "不存在的节点: " + x);
+      if (!nodeIds.has(x)) fail(`events.${i}.next.${j}`, "不存在的節點: " + x);
     });
     if (n.event === "read" && n.target && !itemIds.has(n.target))
-      fail(`events.${i}.target`, "不存在的内容");
+      fail(`events.${i}.target`, "不存在的內容");
     if (n.event === "openApp" && n.target && !installed.has(n.target))
-      fail(`events.${i}.target`, "事件 App 未安装");
+      fail(`events.${i}.target`, "事件 App 未安裝");
     n.actions.forEach((a, j) => {
       if (["unlock", "hide"].includes(a.type) && !itemIds.has(a.key))
-        fail(`events.${i}.actions.${j}.key`, "不存在的内容");
+        fail(`events.${i}.actions.${j}.key`, "不存在的內容");
       if (a.type === "message" && !installed.has(a.key))
-        fail(`events.${i}.actions.${j}.key`, "消息 App 未安装");
+        fail(`events.${i}.actions.${j}.key`, "訊息 App 未安裝");
       if (a.type === "choice" && !nodeIds.has(a.key))
-        fail(`events.${i}.actions.${j}.key`, "选项节点不存在");
+        fail(`events.${i}.actions.${j}.key`, "選項節點不存在");
     });
     n.conditions.forEach((c, j) => {
       const [scope, ...rest] = c.key.split(":");
       const key = rest.join(":");
       if (["read", "unlocked"].includes(scope) && !itemIds.has(key))
-        fail(`events.${i}.conditions.${j}.key`, "条件内容不存在");
+        fail(`events.${i}.conditions.${j}.key`, "條件內容不存在");
       if (scope === "visited" && !installed.has(key))
-        fail(`events.${i}.conditions.${j}.key`, "条件 App 未安装");
+        fail(`events.${i}.conditions.${j}.key`, "條件 App 未安裝");
     });
   });
   const errors = validateGraph(nodes);
@@ -267,7 +267,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
     id: s.id,
     title: s.title,
     description: s.description,
-    category: "互动手机故事",
+    category: "互動手機故事",
     cover: "",
     updatedAt: s.revision,
     phone: {

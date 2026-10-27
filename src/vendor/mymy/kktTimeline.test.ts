@@ -1,0 +1,12 @@
+import { expect, it } from "vitest";
+import { kktTimeline } from "./Apps";
+import { makeItem } from "../../schema";
+const items = [0, 1, 2].map((n) => makeItem({ id: "stage-" + n, title: "群組", body: "階段" + n, meta: { afterReplies: String(n) } }));
+it("reveals stages only after replies in that group and preserves conversation order", () => {
+  const reply = (text: string) => JSON.stringify(["群組", text, "10:00"]);
+  expect(kktTimeline(items, [], "群組", "我").map((m) => m.id)).toEqual(["stage-0"]);
+  expect(kktTimeline(items, [JSON.stringify(["別群", "你好", "10:00"])], "群組", "我")).toHaveLength(1);
+  expect(kktTimeline(items, [reply("一")], "群組", "我").map((m) => m.body)).toEqual(["階段0", "一", "階段1"]);
+  expect(kktTimeline(items, [reply("一"), reply("二")], "群組", "我").map((m) => m.body)).toEqual(["階段0", "一", "階段1", "二", "階段2"]);
+  expect(kktTimeline(items, ["bad", reply("一"), reply("二")], "群組", "我")).toHaveLength(5);
+});

@@ -1,11 +1,11 @@
 {
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
-  "title": "测试预览",
-  "description": "仅用于界面测试，不含剧情",
+  "title": "測試預覽",
+  "description": "僅用於介面測試，不含劇情",
   "revision": 2,
   "phone": {
-    "owner": "机主",
+    "owner": "機主",
     "date": "2026-10-25",
     "time": "09:41",
     "battery": 94,
@@ -38,7 +38,7 @@
     "photos",
     {
       "id": "camera",
-      "name": "相机",
+      "name": "相機",
       "installed": true,
       "visible": true,
       "dock": true,
@@ -90,16 +90,16 @@
   "contacts": [
     {
       "id": "test-contact",
-      "name": "测试联系人",
+      "name": "測試聯絡人",
       "phone": "",
-      "bio": "这是一条测试内容。"
+      "bio": "這是一條測試內容。"
     }
   ],
   "chats": [
     {
       "id": "test-chat-messages",
       "app": "messages",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -107,7 +107,7 @@
       "messages": [
         {
           "id": "test-message-messages",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -115,7 +115,7 @@
     {
       "id": "test-chat-wechat",
       "app": "wechat",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -123,7 +123,7 @@
       "messages": [
         {
           "id": "test-message-wechat",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -131,7 +131,7 @@
     {
       "id": "test-chat-qq",
       "app": "qq",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -139,7 +139,7 @@
       "messages": [
         {
           "id": "test-message-qq",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -147,7 +147,7 @@
     {
       "id": "test-chat-whatsapp",
       "app": "whatsapp",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -155,7 +155,7 @@
       "messages": [
         {
           "id": "test-message-whatsapp",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -163,7 +163,7 @@
     {
       "id": "test-chat-telegram",
       "app": "telegram",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -171,7 +171,7 @@
       "messages": [
         {
           "id": "test-message-telegram",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -179,7 +179,7 @@
     {
       "id": "test-chat-discord",
       "app": "discord",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -187,7 +187,7 @@
       "messages": [
         {
           "id": "test-message-discord",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -195,7 +195,7 @@
     {
       "id": "test-chat-line",
       "app": "line",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -203,7 +203,7 @@
       "messages": [
         {
           "id": "test-message-line",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -211,7 +211,7 @@
     {
       "id": "test-chat-messenger",
       "app": "messenger",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -219,7 +219,7 @@
       "messages": [
         {
           "id": "test-message-messenger",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         }
       ]
@@ -227,7 +227,7 @@
     {
       "id": "test-chat-kakao",
       "app": "kakao",
-      "title": "测试会话",
+      "title": "測試會話",
       "participants": [
         "owner",
         "test-contact"
@@ -235,12 +235,12 @@
       "messages": [
         {
           "id": "test-message-kakao",
-          "body": "这是一条测试消息。",
+          "body": "這是一條測試訊息。",
           "senderId": "test-contact"
         },
         {
           "id": "test-reply-kakao",
-          "body": "这是一条测试回复。",
+          "body": "這是一條測試回復。",
           "senderId": "owner"
         }
       ]
@@ -250,9 +250,9 @@
     "phone": [
       {
         "id": "test-item-phone",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -260,9 +260,9 @@
     "contacts": [
       {
         "id": "test-item-contacts",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -270,9 +270,9 @@
     "photos": [
       {
         "id": "test-item-photos",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -280,9 +280,9 @@
     "camera": [
       {
         "id": "test-item-camera",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -290,9 +290,9 @@
     "safari": [
       {
         "id": "test-item-safari",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -300,9 +300,9 @@
     "notes": [
       {
         "id": "test-item-notes",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -310,9 +310,9 @@
     "calendar": [
       {
         "id": "test-item-calendar",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -320,9 +320,9 @@
     "mail": [
       {
         "id": "test-item-mail",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -330,9 +330,9 @@
     "clock": [
       {
         "id": "test-item-clock",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -340,9 +340,9 @@
     "reminders": [
       {
         "id": "test-item-reminders",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -350,9 +350,9 @@
     "files": [
       {
         "id": "test-item-files",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -360,9 +360,9 @@
     "music": [
       {
         "id": "test-item-music",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -370,9 +370,9 @@
     "maps": [
       {
         "id": "test-item-maps",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -380,9 +380,9 @@
     "weather": [
       {
         "id": "test-item-weather",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -390,9 +390,9 @@
     "wallet": [
       {
         "id": "test-item-wallet",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -400,9 +400,9 @@
     "health": [
       {
         "id": "test-item-health",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -410,9 +410,9 @@
     "find": [
       {
         "id": "test-item-find",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -420,9 +420,9 @@
     "calculator": [
       {
         "id": "test-item-calculator",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -430,9 +430,9 @@
     "settings": [
       {
         "id": "test-item-settings",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -440,9 +440,9 @@
     "weibo": [
       {
         "id": "test-item-weibo",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -450,9 +450,9 @@
     "redbook": [
       {
         "id": "test-item-redbook",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -460,9 +460,9 @@
     "douyin": [
       {
         "id": "test-item-douyin",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -470,9 +470,9 @@
     "bilibili": [
       {
         "id": "test-item-bilibili",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -480,9 +480,9 @@
     "alipay": [
       {
         "id": "test-item-alipay",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -490,9 +490,9 @@
     "taobao": [
       {
         "id": "test-item-taobao",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -500,9 +500,9 @@
     "netease": [
       {
         "id": "test-item-netease",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -510,9 +510,9 @@
     "delivery": [
       {
         "id": "test-item-delivery",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -520,9 +520,9 @@
     "forum": [
       {
         "id": "test-item-forum",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -530,9 +530,9 @@
     "instagram": [
       {
         "id": "test-item-instagram",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -540,9 +540,9 @@
     "tiktok": [
       {
         "id": "test-item-tiktok",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -550,9 +550,9 @@
     "twitter": [
       {
         "id": "test-item-twitter",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -560,9 +560,9 @@
     "youtube": [
       {
         "id": "test-item-youtube",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -570,9 +570,9 @@
     "snapchat": [
       {
         "id": "test-item-snapchat",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -580,9 +580,9 @@
     "facebook": [
       {
         "id": "test-item-facebook",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -590,9 +590,9 @@
     "reddit": [
       {
         "id": "test-item-reddit",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -600,9 +600,9 @@
     "spotify": [
       {
         "id": "test-item-spotify",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -610,9 +610,9 @@
     "netflix": [
       {
         "id": "test-item-netflix",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -620,9 +620,9 @@
     "pinterest": [
       {
         "id": "test-item-pinterest",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       }
@@ -630,56 +630,56 @@
     "threads": [
       {
         "id": "test-item-threads",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "title": "測試內容",
+        "body": "這是一條測試內容。",
+        "sender": "測試用戶",
         "kind": "text",
         "meta": {}
       },
       {
         "id": "test-threads-message-1",
-        "title": "测试会话1",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人1",
+        "title": "測試會話1",
+        "body": "這是一條測試訊息。",
+        "sender": "測試聯絡人1",
         "folder": "私信"
       },
       {
         "id": "test-threads-activity-1",
-        "title": "测试动态1",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户1",
+        "title": "測試動態1",
+        "body": "這是一條測試回復動態。",
+        "sender": "測試用戶1",
         "meta": {
           "activityType": "reply"
         }
       },
       {
         "id": "test-threads-message-2",
-        "title": "测试会话2",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人2",
+        "title": "測試會話2",
+        "body": "這是一條測試訊息。",
+        "sender": "測試聯絡人2",
         "folder": "私信"
       },
       {
         "id": "test-threads-activity-2",
-        "title": "测试动态2",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户2",
+        "title": "測試動態2",
+        "body": "這是一條測試回復動態。",
+        "sender": "測試用戶2",
         "meta": {
           "activityType": "reply"
         }
       },
       {
         "id": "test-threads-message-3",
-        "title": "测试会话3",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人3",
+        "title": "測試會話3",
+        "body": "這是一條測試訊息。",
+        "sender": "測試聯絡人3",
         "folder": "私信"
       },
       {
         "id": "test-threads-activity-3",
-        "title": "测试动态3",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户3",
+        "title": "測試動態3",
+        "body": "這是一條測試回復動態。",
+        "sender": "測試用戶3",
         "meta": {
           "activityType": "reply"
         }
@@ -688,8 +688,8 @@
     "appstore": [
       {
         "id": "test-appstore",
-        "title": "测试内容",
-        "body": "这是一条测试内容。"
+        "title": "測試內容",
+        "body": "這是一條測試內容。"
       }
     ]
   },

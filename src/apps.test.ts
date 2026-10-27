@@ -65,7 +65,7 @@ describe("optional app lifecycle", () => {
     const w = createWork();
     installApp(w, "wechat");
     const a = w.apps.find((a) => a.id === "wechat")!;
-    a.name = "私人消息";
+    a.name = "私人訊息";
     a.icon = "信";
     a.folder = "社交";
     moveApp(w, "wechat", "phone");
@@ -77,9 +77,9 @@ describe("optional app lifecycle", () => {
   });
   it("retains custom app identity across uninstall and reinstall", () => {
     const w = createWork();
-    const id = newCustomApp(w, "调查");
+    const id = newCustomApp(w, "調查");
     uninstallApp(w, id, true);
     installApp(w, id);
-    expect(w.apps.find((a) => a.id === id)?.name).toBe("调查");
+    expect(w.apps.find((a) => a.id === id)?.name).toBe("調查");
   });
 });

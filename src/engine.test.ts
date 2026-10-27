@@ -39,7 +39,7 @@ describe("story progression", () => {
     const s = dispatch(w, initialRuntime(w), "start");
     expect(s.notifications).toHaveLength(1);
     expect(dispatch(w, s, "start").notifications).toHaveLength(1);
-    expect(validateGraph(w.nodes).some((e) => e.includes("自环"))).toBe(true);
+    expect(validateGraph(w.nodes).some((e) => e.includes("自環"))).toBe(true);
   });
   it("supports typed AND/OR/NOT and scoped conditions", () => {
     const w = createWork(),
@@ -65,7 +65,7 @@ describe("story progression", () => {
       next: ["missing"],
     });
     expect(validateGraph(w.nodes).join()).toContain("missing");
-    expect(validateGraph(w.nodes).join()).toContain("不可达");
+    expect(validateGraph(w.nodes).join()).toContain("不可達");
   });
   it("free exploration bypasses story effects", () => {
     const w = createWork();
@@ -93,7 +93,7 @@ describe("import and schema safety", () => {
   });
   it("parses script and explains invalid lines", () => {
     const r = parseChat(
-      "[2026-09-01 08:30] 小林：你到学校了吗？\n[2026-09-01 08:31] 我：快到了\ninvalid",
+      "[2026-09-01 08:30] 小林：你到學校了嗎？\n[2026-09-01 08:31] 我：快到了\ninvalid",
     );
     expect(r.items).toHaveLength(2);
     expect(r.items[1].outgoing).toBe(true);

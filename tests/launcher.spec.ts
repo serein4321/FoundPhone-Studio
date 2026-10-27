@@ -9,30 +9,30 @@ test.beforeEach(async ({ page }) => {
 });
 async function unlock(page: Page) {
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(page.locator(".lock-screen")).toHaveCount(0);
 }
 async function library(page: Page) {
   await page
-    .getByRole("button", { name: "打开App Store", exact: true })
+    .getByRole("button", { name: "開啟App Store", exact: true })
     .click();
-  await expect(page.getByPlaceholder("搜索全部App")).toBeVisible();
+  await expect(page.getByPlaceholder("搜尋全部App")).toBeVisible();
 }
 async function add(page: Page, name: string) {
-  await page.getByPlaceholder("搜索全部App").fill(name);
+  await page.getByPlaceholder("搜尋全部App").fill(name);
   const row = page.locator(".runtime-library-row").filter({
     has: page.locator(".library-app-title strong", { hasText: name }),
   });
-  await row.getByRole("button", { name: "获取", exact: true }).click();
+  await row.getByRole("button", { name: "獲取", exact: true }).click();
   await expect(
-    row.getByRole("button", { name: "打开", exact: true }),
+    row.getByRole("button", { name: "開啟", exact: true }),
   ).toBeVisible();
 }
 async function close(page: Page) {
-  await page.getByRole("button", { name: "关闭App管理" }).click();
+  await page.getByRole("button", { name: "關閉App管理" }).click();
 }
 async function open(page: Page, name: string) {
-  await page.getByRole("button", { name: "打开" + name, exact: true }).click();
+  await page.getByRole("button", { name: "開啟" + name, exact: true }).click();
   await expect(page.locator(".app-screen:not([inert])")).toHaveCSS(
     "transform",
     "none",
@@ -51,24 +51,24 @@ test("all apps available, install, remove vs uninstall, refresh and reinstall", 
   await page.getByRole("button", { name: "返回桌面", exact: true }).click();
   await expect(page.locator(".app-screen")).toHaveCount(0);
   await page.reload();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("button", { name: "打开微信", exact: true }),
+    page.getByRole("button", { name: "開啟微信", exact: true }),
   ).toBeVisible();
   await library(page);
-  await page.getByPlaceholder("搜索全部App").fill("微信");
+  await page.getByPlaceholder("搜尋全部App").fill("微信");
   await page.locator(".library-app-title").click();
-  await page.getByRole("button", { name: "从桌面移除", exact: true }).click();
+  await page.getByRole("button", { name: "從桌面移除", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "打开微信", exact: true }),
+    page.getByRole("button", { name: "開啟微信", exact: true }),
   ).toHaveCount(0);
   await library(page);
-  await page.getByPlaceholder("搜索全部App").fill("微信");
-  await page.getByRole("button", { name: "添加到桌面" }).click();
+  await page.getByPlaceholder("搜尋全部App").fill("微信");
+  await page.getByRole("button", { name: "新增到桌面" }).click();
   await page.locator(".library-app-title").click();
-  await page.getByRole("button", { name: "卸载App", exact: true }).click();
+  await page.getByRole("button", { name: "卸載App", exact: true }).click();
   await expect(page.getByRole("checkbox")).toBeChecked();
-  await page.getByRole("button", { name: "确认卸载", exact: true }).click();
+  await page.getByRole("button", { name: "確認卸載", exact: true }).click();
   await library(page);
   await add(page, "微信");
   await page
@@ -96,29 +96,29 @@ test("pointer drag reorders apps, widgets pack and persist, folders and Dock", a
     .locator(".home-app-grid [data-home-key]")
     .evaluateAll((es) => es.map((e) => e.getAttribute("data-home-key")));
   expect(after).not.toEqual(before);
-  await page.getByRole("button", { name: "添加小组件", exact: true }).click();
+  await page.getByRole("button", { name: "新增小組件", exact: true }).click();
   await page
-    .getByRole("button", { name: "添加日历小组件", exact: true })
+    .getByRole("button", { name: "新增日歷小組件", exact: true })
     .click();
   await expect(
-    page.getByRole("button", { name: "日历小组件", exact: true }),
+    page.getByRole("button", { name: "日歷小組件", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "完成", exact: true }).click();
   await page.reload();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("button", { name: "日历小组件", exact: true }),
+    page.getByRole("button", { name: "日歷小組件", exact: true }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.8/widgets-home.png" });
   await library(page);
-  await page.getByPlaceholder("搜索全部App").fill("相册");
+  await page.getByPlaceholder("搜尋全部App").fill("相簿");
   await page.locator(".library-app-title").click();
-  await page.getByRole("textbox", { name: "文件夹名称" }).fill("工具");
+  await page.getByRole("textbox", { name: "資料夾名稱" }).fill("工具");
   await close(page);
   await expect(
-    page.getByRole("button", { name: "打开文件夹工具" }),
+    page.getByRole("button", { name: "開啟資料夾工具" }),
   ).toBeVisible();
   await expect(page.locator(".launcher-sheet")).toHaveCount(0);
   await expect(page.locator(".interactive-home")).toHaveCSS("opacity", "1");
@@ -135,7 +135,7 @@ test("pointer drag reorders apps, widgets pack and persist, folders and Dock", a
   ).toBeVisible();
   await page.getByRole("button", { name: "布局", exact: true }).click();
   const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "导出布局JSON" }).click();
+  await page.getByRole("button", { name: "導出布局JSON" }).click();
   const download = await downloadPromise;
   const exported = JSON.parse(readFileSync((await download.path())!, "utf8"));
   expect(
@@ -145,7 +145,7 @@ test("pointer drag reorders apps, widgets pack and persist, folders and Dock", a
     ),
   ).toHaveLength(4);
   expect(exported.widgets).toHaveLength(1);
-  await page.locator('input[aria-label="导入桌面布局"]').setInputFiles({
+  await page.locator('input[aria-label="導入桌面布局"]').setInputFiles({
     name: "layout.json",
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(exported)),
@@ -157,9 +157,9 @@ test("new three reference screens, calculator operations, health tabs and weathe
 }) => {
   await unlock(page);
   await library(page);
-  for (const name of ["计算器", "健康", "天气"]) await add(page, name);
+  for (const name of ["計算器", "健康", "天氣"]) await add(page, name);
   await close(page);
-  await open(page, "计算器");
+  await open(page, "計算器");
   await page.getByRole("button", { name: "AC", exact: true }).click();
   await page
     .locator(".phone-screen")
@@ -167,7 +167,7 @@ test("new three reference screens, calculator operations, health tabs and weathe
   for (const name of ["7", "+", "5", "="])
     await page.getByRole("button", { name, exact: true }).click();
   await expect(page.locator(".calculator>output")).toHaveText("12");
-  await page.getByRole("button", { name: "计算历史" }).click();
+  await page.getByRole("button", { name: "計算歷史" }).click();
   await expect(
     page.getByRole("button", { name: "7 + 5 = 12", exact: true }),
   ).toBeVisible();
@@ -179,19 +179,19 @@ test("new three reference screens, calculator operations, health tabs and weathe
     .screenshot({ path: "outputs/v0.8/health.png" });
   await page
     .locator(".health-floating-tabs button")
-    .filter({ hasText: "浏览" })
+    .filter({ hasText: "瀏覽" })
     .click();
   await expect(
-    page.getByRole("button", { name: "经期追踪", exact: false }),
+    page.getByRole("button", { name: "經期追蹤", exact: false }),
   ).toBeVisible();
   await page.getByRole("button", { name: "返回桌面", exact: true }).click();
   await expect(page.locator(".app-screen")).toHaveCount(0);
-  await open(page, "天气");
+  await open(page, "天氣");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.8/weather.png" });
   await page.getByRole("button", { name: "城市列表" }).click();
-  await expect(page.getByText("暂无城市", { exact: true })).toBeVisible();
+  await expect(page.getByText("暫無城市", { exact: true })).toBeVisible();
 });
 
 import { makeItem } from "../src/schema";
@@ -243,7 +243,7 @@ test("mobile long press supports free cell placement and drag-created folder", a
       .toEqual({ page: 0, x: 2, y: 3 });
     await page.getByRole("button", { name: "完成", exact: true }).click();
     await page.reload();
-    await page.getByRole("button", { name: "轻触解锁" }).click();
+    await page.getByRole("button", { name: "輕觸解鎖" }).click();
     const moved = await page.locator('[data-home-key="photos"]').boundingBox();
     expect(moved!.y).toBeGreaterThan(original!.y + 200 * scale);
     await page.screenshot({ path: "outputs/v0.8/mobile-free-layout.png" });
@@ -256,7 +256,7 @@ test("mobile long press supports free cell placement and drag-created folder", a
     await page.waitForTimeout(720);
     await page.mouse.up();
     await expect(
-      page.getByRole("button", { name: "打开文件夹文件夹" }),
+      page.getByRole("button", { name: "開啟資料夾資料夾" }),
     ).toBeVisible();
   } finally {
     await context.close();
@@ -277,12 +277,12 @@ test("QQ chat and independent X/Weibo detail interactions preserve player state"
   w.data.twitter = [
     makeItem({
       id: "x-detail-test",
-      title: "测试动态",
-      sender: "测试作者",
-      body: "此内容仅用于界面回归测试。",
+      title: "測試動態",
+      sender: "測試作者",
+      body: "此內容僅用於介面回歸測試。",
       kind: "post",
       likes: 12,
-      comments: ["测试用户：测试评论"],
+      comments: ["測試用戶：測試評論"],
       meta: { handle: "@test", views: "120", reposts: "2" },
     }),
   ];
@@ -290,17 +290,17 @@ test("QQ chat and independent X/Weibo detail interactions preserve player state"
   w.data.qq = [
     makeItem({
       id: "qq-transfer-test",
-      title: "测试联系人",
-      sender: "测试联系人",
+      title: "測試聯絡人",
+      sender: "測試聯絡人",
       body: "100",
       kind: "transfer",
       meta: { amount: "100.00", transferStatus: "已收款" },
     }),
     makeItem({
       id: "qq-message-test",
-      title: "测试联系人",
-      sender: "测试联系人",
-      body: "引用消息测试",
+      title: "測試聯絡人",
+      sender: "測試聯絡人",
+      body: "引用訊息測試",
       meta: { replyTo: "qq-transfer-test" },
     }),
   ];
@@ -309,14 +309,14 @@ test("QQ chat and independent X/Weibo detail interactions preserve player state"
   await open(page, "X");
   await page.locator(".kzxx").first().click();
   await expect(page.locator(".x-post-detail")).toBeVisible();
-  await page.getByRole("button", { name: "喜欢帖子" }).click();
-  await expect(page.getByRole("button", { name: "喜欢帖子" })).toHaveAttribute(
+  await page.getByRole("button", { name: "喜歡帖子" }).click();
+  await expect(page.getByRole("button", { name: "喜歡帖子" })).toHaveAttribute(
     "aria-pressed",
     "true",
   );
-  await page.getByRole("textbox", { name: "回复帖子" }).fill("测试回复");
-  await page.getByRole("button", { name: "发送回复" }).click();
-  await expect(page.locator(".post-detail-comments")).toContainText("测试回复");
+  await page.getByRole("textbox", { name: "回復帖子" }).fill("測試回復");
+  await page.getByRole("button", { name: "傳送回復" }).click();
+  await expect(page.locator(".post-detail-comments")).toContainText("測試回復");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.8/x-detail-fixture.png" });

@@ -18,12 +18,12 @@ test("development preview contains generic placeholders", async ({
   for (const app of preview.apps)
     expect(preview.data[app.id]?.length).toBeGreaterThan(0);
   await page.goto("/?preview=test");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await page
-    .getByRole("button", { name: "打开App Store", exact: true })
+    .getByRole("button", { name: "開啟App Store", exact: true })
     .click();
   await expect(page.locator(".runtime-library-row")).toHaveCount(49);
-  await page.getByRole("button", { name: "关闭App管理" }).click();
+  await page.getByRole("button", { name: "關閉App管理" }).click();
   await page.getByRole("button", { name: "控制中心", exact: true }).click();
   await expect(page.locator(".device-control")).toHaveCSS("opacity", "1");
   await expect(page.locator(".cc-small-connections button")).toHaveCount(4);
@@ -39,7 +39,7 @@ test("development preview contains generic placeholders", async ({
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.9/control-center.png" });
-  await page.getByRole("button", { name: "关闭控制中心" }).click();
+  await page.getByRole("button", { name: "關閉控制中心" }).click();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.9/test-home.png" });

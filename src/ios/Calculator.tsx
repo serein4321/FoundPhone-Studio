@@ -27,7 +27,7 @@ export function NativeCalculator(p: {
       return;
     }
     if (k === "⌫") {
-      set(value === "错误" || value.length < 2 ? "0" : value.slice(0, -1));
+      set(value === "錯誤" || value.length < 2 ? "0" : value.slice(0, -1));
       return;
     }
     if (k === "±") {
@@ -66,7 +66,7 @@ export function NativeCalculator(p: {
       }
       return;
     }
-    if (fresh || value === "错误") {
+    if (fresh || value === "錯誤") {
       set(k === "." ? "0." : k);
       setFresh(false);
     } else if (!(k === "." && value.includes(".")))
@@ -75,10 +75,10 @@ export function NativeCalculator(p: {
   return (
     <div className="calculator native-calculator">
       <header className="calc-toolbar">
-        <button aria-label="计算历史" onClick={() => setPanel("history")}>
+        <button aria-label="計算歷史" onClick={() => setPanel("history")}>
           <Clock size={26} />
         </button>
-        <button aria-label="计算器模式" onClick={() => setPanel("mode")}>
+        <button aria-label="計算器模式" onClick={() => setPanel("mode")}>
           <Calculator size={25} />
         </button>
       </header>
@@ -118,7 +118,7 @@ export function NativeCalculator(p: {
               (i % 4 === 3 ? "calc-operator " : "") +
               (op === k ? "calc-selected" : "")
             }
-            aria-label={k === "⌫" ? "退格" : k === "±" ? "正负切换" : k}
+            aria-label={k === "⌫" ? "退格" : k === "±" ? "正負切換" : k}
             onClick={() => press(k)}
           >
             {k === "⌫" ? <Delete size={32} /> : k}
@@ -132,7 +132,7 @@ export function NativeCalculator(p: {
               <ChevronLeft />
               返回
             </button>
-            <strong>{panel === "history" ? "历史记录" : "计算器"}</strong>
+            <strong>{panel === "history" ? "歷史記錄" : "計算器"}</strong>
             {panel === "history" && (
               <button onClick={() => setHistory([])}>清除</button>
             )}
@@ -159,7 +159,7 @@ export function NativeCalculator(p: {
                     {i.title}
                   </button>
                 ))}
-                {!history.length && !p.items.length && <p>暂无计算记录</p>}
+                {!history.length && !p.items.length && <p>暫無計算記錄</p>}
               </div>
             </>
           ) : (

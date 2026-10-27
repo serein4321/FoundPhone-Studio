@@ -110,8 +110,8 @@ function Studio() {
     return (
       <div className="boot">
         <Smartphone size={40} />
-        <h1>捡手机</h1>
-        <p>{store.error || "正在打开你的故事工作室…"}</p>
+        <h1>撿手機</h1>
+        <p>{store.error || "正在開啟你的故事工作室…"}</p>
       </div>
     );
   const count = Object.values(work.data).reduce(
@@ -141,22 +141,22 @@ function Studio() {
   return (
     <div className="studio">
       <aside className="sidebar">
-        <a className="brand" href="#" aria-label="FoundPhone 首页">
+        <a className="brand" href="#" aria-label="FoundPhone 首頁">
           <span className="brand-mark">
             <Smartphone size={25} />
           </span>
           <span>
-            捡手机<small>FOUNDPHONE STUDIO</small>
+            撿手機<small>FOUNDPHONE STUDIO</small>
           </span>
         </a>
         <div className="workspace-label">
-          创作空间 <span>LOCAL</span>
+          創作空間 <span>LOCAL</span>
         </div>
         <nav>
           {[
-            { id: "phone", icon: Smartphone, label: "手机创作" },
-            { id: "story", icon: GitBranch, label: "剧情编排" },
-            { id: "assets", icon: FolderOpen, label: "素材与内容" },
+            { id: "phone", icon: Smartphone, label: "手機創作" },
+            { id: "story", icon: GitBranch, label: "劇情編排" },
+            { id: "assets", icon: FolderOpen, label: "素材與內容" },
             { id: "works", icon: LayoutGrid, label: "我的作品" },
           ].map((t) => (
             <button
@@ -172,7 +172,7 @@ function Studio() {
         </nav>
         <div className="sidebar-divider" />
         <div className="section-label">
-          <span>当前作品</span>
+          <span>目前作品</span>
           <button aria-label="新建作品" onClick={() => void store.add()}>
             <Plus size={15} />
           </button>
@@ -191,22 +191,22 @@ function Studio() {
         <div className="sidebar-bottom">
           <button onClick={() => setModal("guide")}>
             <BookOpen size={17} />
-            创作指南 <ArrowUpRight size={13} />
+            創作指南 <ArrowUpRight size={13} />
           </button>
           <button onClick={() => setModal("about")}>
             <Info size={17} />
-            关于捡手机
+            關於撿手機
           </button>
           <div className="local-status">
             <span />
-            本地优先 · 无需登录
+            本地優先 · 無需登入
           </div>
         </div>
       </aside>
       <div className="main-workspace">
         <header className="topbar">
           <div className="breadcrumb">
-            创作空间 <ChevronRight size={13} />
+            創作空間 <ChevronRight size={13} />
             <button onClick={() => setModal("metadata")}>
               {work.title}
               <ChevronDown size={13} />
@@ -223,7 +223,7 @@ function Studio() {
             </button>
             <span className="toolbar-divider" />
             <button
-              aria-label="撤销"
+              aria-label="撤銷"
               disabled={!store.past.length}
               onClick={store.undo}
             >
@@ -238,19 +238,19 @@ function Studio() {
             </button>
             <button className="secondary compact" onClick={startPreview}>
               <Play size={14} />
-              预览
+              預覽
             </button>
             <button
               className="primary compact"
               onClick={() => setModal("export")}
             >
               <Download size={14} />
-              导出作品
+              導出作品
             </button>
           </div>
         </header>
         {view === "story" ? (
-          <Suspense fallback={<div className="boot">正在加载剧情编辑器…</div>}>
+          <Suspense fallback={<div className="boot">正在載入劇情編輯器…</div>}>
             <StoryEditor work={work} onChange={change} />
           </Suspense>
         ) : view === "works" ? (
@@ -283,7 +283,7 @@ function Studio() {
                       <>
                         <small>FOUND PHONE STORY</small>
                         <h2>{w.title}</h2>
-                        <span>{w.phone.owner} 的手机</span>
+                        <span>{w.phone.owner} 的手機</span>
                       </>
                     )}
                   </button>
@@ -291,7 +291,7 @@ function Studio() {
                     <h3>{w.title}</h3>
                     <p>
                       {w.category} ·{" "}
-                      {new Date(w.updatedAt).toLocaleDateString("zh-CN")}
+                      {new Date(w.updatedAt).toLocaleDateString("zh-TW")}
                     </p>
                     <div>
                       <button
@@ -300,10 +300,10 @@ function Studio() {
                           setModal("metadata");
                         }}
                       >
-                        编辑信息
+                        編輯資訊
                       </button>
                       <button
-                        aria-label={`复制${w.title}`}
+                        aria-label={`復制${w.title}`}
                         onClick={() =>
                           void store.add({ ...w, title: `${w.title} 副本` })
                         }
@@ -311,7 +311,7 @@ function Studio() {
                         <Copy size={15} />
                       </button>
                       <button
-                        aria-label={`删除${w.title}`}
+                        aria-label={`刪除${w.title}`}
                         className="danger"
                         onClick={() => setConfirmDelete(w.id)}
                       >
@@ -326,29 +326,29 @@ function Studio() {
                 onClick={() => input.current?.click()}
               >
                 <Upload size={26} />
-                <strong>导入作品</strong>
+                <strong>導入作品</strong>
                 <span>JSON 或 ZIP 作品包</span>
               </button>
             </div>
             <p className="storage-note">
-              清理浏览器数据会删除本地草稿，更换设备不会自动同步。请定期导出 ZIP
-              备份。
+              清理瀏覽器資料會刪除本地草稿，更換設備不會自動同步。請定期導出 ZIP
+              備份。
             </p>
           </div>
         ) : view === "assets" ? (
           <div className="library-page">
             <div className="page-title">
               <div>
-                <h1>素材与内容</h1>
+                <h1>素材與內容</h1>
               </div>
               <button className="primary" onClick={() => add(app)}>
                 <Plus size={16} />
-                添加内容
+                新增內容
               </button>
             </div>
             <div className="asset-toolbar">
               <select
-                aria-label="选择内容 App"
+                aria-label="選擇內容 App"
                 value={app}
                 onChange={(e) => setApp(e.target.value)}
               >
@@ -359,34 +359,34 @@ function Studio() {
                 ))}
               </select>
               <input
-                placeholder="搜索故事内容"
+                placeholder="搜尋故事內容"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
               <button className="secondary" onClick={() => setModal("batch")}>
-                批量导入聊天
+                批量導入聊天
               </button>
             </div>
             <div className="content-table">
               <div className="table-header">
-                <span>标题 / 会话</span>
-                <span>内容</span>
-                <span>时间</span>
+                <span>標題 / 會話</span>
+                <span>內容</span>
+                <span>時間</span>
                 <span>操作</span>
               </div>
               {items.map((i) => (
                 <div key={i.id}>
                   <button onClick={() => edit(app, i)}>
                     <strong>{i.title}</strong>
-                    {i.hidden && <small>隐藏</small>}
+                    {i.hidden && <small>隱藏</small>}
                   </button>
                   <p>{i.body.slice(0, 85)}</p>
                   <small>{i.time}</small>
                   <button
-                    aria-label={`编辑${i.title}`}
+                    aria-label={`編輯${i.title}`}
                     onClick={() => edit(app, i)}
                   >
-                    编辑 <ArrowUpRight size={14} />
+                    編輯 <ArrowUpRight size={14} />
                   </button>
                 </div>
               ))}
@@ -397,19 +397,19 @@ function Studio() {
             <section className="phone-stage">
               <div className="stage-heading">
                 <div>
-                  <h1>手机创作</h1>
+                  <h1>手機創作</h1>
                 </div>
                 <button
                   className="secondary"
-                  aria-label="打开 App 库"
+                  aria-label="開啟 App 庫"
                   onClick={() => setModal("apps")}
                 >
                   <LayoutGrid size={15} />
-                  App 库
+                  App 庫
                 </button>
                 <button
                   className="stage-settings"
-                  aria-label="手机设置"
+                  aria-label="手機設定"
                   onClick={() => setModal("settings")}
                 >
                   <Settings2 size={19} />
@@ -429,13 +429,13 @@ function Studio() {
               <div className="stage-footer">
                 <span className="mode-pill">
                   <span />
-                  创作模式
+                  創作模式
                 </span>
                 <button onClick={startPreview}>
-                  切换玩家视角 <ArrowUpRight size={13} />
+                  切換玩家視角 <ArrowUpRight size={13} />
                 </button>
                 <button
-                  aria-label="显示属性面板"
+                  aria-label="顯示屬性面板"
                   onClick={() => setSide(!side)}
                 >
                   <PanelRightClose size={16} />
@@ -446,9 +446,9 @@ function Studio() {
               <aside className="inspector">
                 <div className="inspector-section">
                   <div className="section-label">
-                    <strong>作品概览</strong>
+                    <strong>作品概覽</strong>
                     <button onClick={() => setModal("metadata")}>
-                      编辑 <ArrowUpRight size={12} />
+                      編輯 <ArrowUpRight size={12} />
                     </button>
                   </div>
                   <div className="overview-grid">
@@ -456,15 +456,15 @@ function Studio() {
                       <strong>
                         {work.apps.filter((a) => a.installed).length}
                       </strong>
-                      <span>已安装 App</span>
+                      <span>已安裝 App</span>
                     </div>
                     <div>
                       <strong>{count}</strong>
-                      <span>内容片段</span>
+                      <span>內容片段</span>
                     </div>
                     <div>
                       <strong>{work.nodes.length}</strong>
-                      <span>剧情节点</span>
+                      <span>劇情節點</span>
                     </div>
                   </div>
                   <div className="story-mode">
@@ -479,13 +479,13 @@ function Studio() {
                     >
                       <option value="mixed">混合模式</option>
                       <option value="explore">自由探索</option>
-                      <option value="story">互动剧情</option>
+                      <option value="story">互動劇情</option>
                     </select>
                   </div>
                 </div>
                 <div className="inspector-section">
                   <div className="section-label">
-                    <strong>手机个性化</strong>
+                    <strong>手機個性化</strong>
                     <Settings2 size={14} />
                   </div>
                   <button
@@ -496,7 +496,7 @@ function Studio() {
                       <Smartphone size={16} />
                     </span>
                     <span>
-                      机主与锁屏<small>{work.phone.owner} 的 iPhone</small>
+                      機主與鎖屏<small>{work.phone.owner} 的 iPhone</small>
                     </span>
                     <ChevronRight size={15} />
                   </button>
@@ -508,9 +508,9 @@ function Studio() {
                       className={`wallpaper-swatch wallpaper-${work.phone.wallpaper}`}
                     />
                     <span>
-                      壁纸与外观
+                      壁紙與外觀
                       <small>
-                        柔雾 · {work.phone.theme === "light" ? "浅色" : "深色"}
+                        柔霧 · {work.phone.theme === "light" ? "淺色" : "深色"}
                         模式
                       </small>
                     </span>
@@ -523,15 +523,15 @@ function Studio() {
                     <span className="round-icon">
                       <LayoutGrid size={16} />
                     </span>
-                    <span>App 库</span>
+                    <span>App 庫</span>
                     <ChevronRight size={15} />
                   </button>
                 </div>
                 <div className="inspector-section">
                   <div className="section-label">
-                    <strong>正在编辑 · {getApp(app).name}</strong>
+                    <strong>正在編輯 · {getApp(app).name}</strong>
                     <button
-                      aria-label="添加当前 App 内容"
+                      aria-label="新增目前 App 內容"
                       onClick={() => add(app)}
                     >
                       <Plus size={16} />
@@ -554,19 +554,19 @@ function Studio() {
                     onClick={() => setModal("batch")}
                   >
                     <Upload size={14} />
-                    批量导入聊天记录
+                    批量導入聊天記錄
                   </button>
                   <button
                     className="text-button all-content"
                     onClick={() => setView("assets")}
                   >
-                    管理全部内容 <ArrowUpRight size={12} />
+                    管理全部內容 <ArrowUpRight size={12} />
                   </button>
                 </div>
 
                 <div className="inspector-bottom">
                   <ShieldCheck size={14} />
-                  <span>仅保存在你的浏览器中</span>
+                  <span>僅儲存在你的瀏覽器中</span>
                 </div>
               </aside>
             )}
@@ -585,7 +585,7 @@ function Studio() {
               const imported = await importWork(file);
               await store.add(imported);
               setPhoneKey((k) => k + 1);
-            }, "作品已导入");
+            }, "作品已導入");
           e.target.value = "";
         }}
       />
@@ -605,7 +605,7 @@ function Studio() {
             setEditing(null);
           }}
           onDelete={() => {
-            if (confirm("删除这条内容？可使用撤销恢复。")) {
+            if (confirm("刪除這條內容？可使用撤銷恢復。")) {
               change((w) => {
                 w.data[editing.app] = (w.data[editing.app] ?? []).filter(
                   (i) => i.id !== editing.item.id,
@@ -638,57 +638,57 @@ function Studio() {
               w.data[app] = [...(w.data[app] ?? []), ...items];
             });
             setModal("");
-            setNotice(`已向 ${getApp(app).name} 导入 ${items.length} 条消息`);
+            setNotice(`已向 ${getApp(app).name} 導入 ${items.length} 條訊息`);
           }}
         />
       )}
       {modal === "export" && (
-        <Modal title="导出作品" onClose={() => setModal("")}>
-          <p className="modal-intro">选择导出格式。</p>
+        <Modal title="導出作品" onClose={() => setModal("")}>
+          <p className="modal-intro">選擇導出格式。</p>
           <div className="export-options">
             <button
               disabled={busy}
               onClick={() => {
                 jsonExport(work);
-                setNotice("JSON 已导出");
+                setNotice("JSON 已導出");
               }}
             >
               <FileJson />
               <span>
                 <strong>作品 JSON</strong>
-                <small>完整数据与内嵌素材，可再次导入编辑。</small>
+                <small>完整資料與內嵌素材，可再次導入編輯。</small>
               </span>
               <Download size={16} />
             </button>
             <button
               disabled={busy}
-              onClick={() => void run(() => backup(work), "ZIP 备份已导出")}
+              onClick={() => void run(() => backup(work), "ZIP 備份已導出")}
             >
               <Package />
               <span>
-                <strong>完整 ZIP 备份</strong>
-                <small>保存作品与素材，适合长期备份和迁移。</small>
+                <strong>完整 ZIP 備份</strong>
+                <small>儲存作品與素材，適合長期備份和遷移。</small>
               </span>
               <Download size={16} />
             </button>
             <button
               disabled={busy}
               onClick={() =>
-                void run(() => staticExport(work), "独立玩家网页已导出")
+                void run(() => staticExport(work), "獨立玩家網頁已導出")
               }
             >
               <Globe />
               <span>
-                <strong>独立玩家网页</strong>
-                <small>静态运行器 + 作品，无创作后台。需生产构建。</small>
+                <strong>獨立玩家網頁</strong>
+                <small>靜態運行器 + 作品，無創作後臺。需生產構建。</small>
               </span>
               <Download size={16} />
             </button>
           </div>
           <p className="storage-note">
-            当前作品约{" "}
+            目前作品約{" "}
             {(new Blob([JSON.stringify(work)]).size / 1024).toFixed(1)}{" "}
-            KB。素材版权由作者自行确认。部署说明见 docs/DEPLOYMENT.md。
+            KB。素材版權由作者自行確認。部署說明見 docs/DEPLOYMENT.md。
           </p>
           <footer>
             <button
@@ -696,9 +696,9 @@ function Studio() {
               onClick={() => input.current?.click()}
             >
               <Upload size={15} />
-              导入作品
+              導入作品
             </button>
-            <span>{busy ? "正在打包…" : "所有导出均在本地完成"}</span>
+            <span>{busy ? "正在打包…" : "所有導出均在本地完成"}</span>
           </footer>
         </Modal>
       )}
@@ -714,37 +714,37 @@ function Studio() {
       )}
       {(modal === "guide" || modal === "about") && (
         <Modal
-          title={modal === "guide" ? "创作指南" : "捡手机 FoundPhone Studio"}
+          title={modal === "guide" ? "創作指南" : "撿手機 FoundPhone Studio"}
           onClose={() => setModal("")}
         >
           <div className="guide-content">
             {modal === "guide" ? (
               <ol>
-                <li>打开手机中的 App，点击内容编辑；右上角 ＋ 新建。</li>
-                <li>在“素材与内容”管理会话、帖子和记录，批量导入聊天。</li>
+                <li>開啟手機中的 App，點擊內容編輯；右上角 ＋ 新建。</li>
+                <li>在“素材與內容”管理會話、帖子和記錄，批量導入聊天。</li>
                 <li>
-                  使用“剧情编排”连接事件与动作，用内容 ID
-                  解锁照片、设置选项与结局。
+                  使用“劇情編排”連接事件與動作，用內容 ID
+                  解鎖照片、設定選項與結局。
                 </li>
-                <li>点“预览”以玩家身份探索。预览不会修改作者草稿。</li>
-                <li>导出 JSON / ZIP 备份，或构建后导出独立玩家静态网页。</li>
+                <li>點“預覽”以玩家身份探索。預覽不會修改作者草稿。</li>
+                <li>導出 JSON / ZIP 備份，或構建後導出獨立玩家靜態網頁。</li>
               </ol>
             ) : (
               <>
-                <p>免费、开源、本地优先的虚拟手机故事创作工具。</p>
+                <p>免費、開源、本地優先的虛擬手機故事創作工具。</p>
                 <p>
-                  当前版本 0.2.0：47 个 App
-                  注册入口，共用六类内容引擎。品牌专属完整交互、真实延时调度与完整移动端验收仍在开发。
+                  目前版本 0.2.0：47 個 App
+                  注冊入口，共用六類內容引擎。品牌專屬完整交互、真實延時調度與完整移動端驗收仍在開發。
                 </p>
                 <p>
-                  所有品牌名称仅用于非官方模拟参考。默认图标来自
-                  Lucide；内置画面与人物为原创虚构内容。
+                  所有品牌名稱僅用於非官方模擬參考。預設圖標來自
+                  Lucide；內置畫面與人物為原創虛構內容。
                 </p>
               </>
             )}
             <p className="storage-note">
-              清理浏览器数据可能丢失草稿。设备间不会同步，请定期导出 ZIP
-              备份。源码采用 MIT，用户作品不自动采用 MIT。
+              清理瀏覽器資料可能丟失草稿。設備間不會同步，請定期導出 ZIP
+              備份。源碼採用 MIT，用戶作品不自動採用 MIT。
             </p>
           </div>
         </Modal>
@@ -756,11 +756,11 @@ function Studio() {
               <h3>{preview.title}</h3>
             </div>
             <span>
-              {runtime?.clues.length ?? 0} 条线索 ·{" "}
-              {runtime?.endings.length ?? 0} 个结局
+              {runtime?.clues.length ?? 0} 條線索 ·{" "}
+              {runtime?.endings.length ?? 0} 個結局
             </span>
             <button className="secondary" onClick={() => setPreview(null)}>
-              退出预览
+              退出預覽
             </button>
           </header>
           <Phone
@@ -770,7 +770,7 @@ function Studio() {
             onRuntime={setRuntime}
           />
           <div className="debug-trace">
-            <span>剧情调试</span>
+            <span>劇情調試</span>
             {runtime?.trace.slice(-3).map((t, i) => (
               <small key={i}>{t}</small>
             ))}
@@ -778,9 +778,9 @@ function Studio() {
         </div>
       )}
       {confirmDelete && (
-        <Modal title="删除这部作品？" onClose={() => setConfirmDelete("")}>
+        <Modal title="刪除這部作品？" onClose={() => setConfirmDelete("")}>
           <p className="modal-intro">
-            此操作会删除本机上的作品与玩家进度。请先导出备份。
+            此操作會刪除本機上的作品與玩家進度。請先導出備份。
           </p>
           <footer>
             <button className="secondary" onClick={() => setConfirmDelete("")}>
@@ -789,11 +789,11 @@ function Studio() {
             <button
               className="primary danger-bg"
               onClick={() => {
-                void run(() => store.remove(confirmDelete), "作品已删除");
+                void run(() => store.remove(confirmDelete), "作品已刪除");
                 setConfirmDelete("");
               }}
             >
-              确认删除
+              確認刪除
             </button>
           </footer>
         </Modal>
@@ -802,7 +802,7 @@ function Studio() {
         <div className="toast" role="status">
           <Check size={17} />
           <span>{notice}</span>
-          <button aria-label="关闭提示" onClick={() => setNotice("")}>
+          <button aria-label="關閉提示" onClick={() => setNotice("")}>
             ×
           </button>
         </div>
@@ -825,10 +825,10 @@ function Metadata({
     [cover, setCover] = useState(work.cover),
     [error, setError] = useState("");
   return (
-    <Modal title="作品信息" onClose={onClose}>
+    <Modal title="作品資訊" onClose={onClose}>
       <div className="editor-fields">
         <label>
-          作品名称
+          作品名稱
           <input
             maxLength={200}
             value={title}
@@ -836,7 +836,7 @@ function Metadata({
           />
         </label>
         <label>
-          简介
+          簡介
           <textarea
             rows={4}
             maxLength={5000}
@@ -845,7 +845,7 @@ function Metadata({
           />
         </label>
         <label>
-          分类
+          分類
           <input
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -878,7 +878,7 @@ function Metadata({
             onSave({ title: title.trim(), description, category, cover })
           }
         >
-          保存信息
+          儲存資訊
         </button>
       </footer>
     </Modal>

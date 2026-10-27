@@ -6,7 +6,7 @@ export function parseChat(text: string): { items: Item[]; errors: string[] } {
     if (!line.trim()) return;
     const match = line.match(/^\[([^\]]+)\]\s*([^：:]+)[：:]\s*(.+)$/);
     if (!match) {
-      errors.push(`第 ${index + 1} 行：应为 [时间] 发送者：消息`);
+      errors.push(`第 ${index + 1} 行：應為 [時間] 傳送者：訊息`);
       return;
     }
     const [, time, sender, body] = match;
@@ -46,11 +46,11 @@ export function parseCsv(text: string): { items: Item[]; errors: string[] } {
   }
   row.push(field);
   if (row.some(Boolean)) rows.push(row);
-  if (quoted) return { items: [], errors: ["CSV 引号未闭合"] };
+  if (quoted) return { items: [], errors: ["CSV 引號未閉合"] };
   const header = rows.shift()?.map((s) => s.trim()) ?? [];
   const indexes = ["time", "sender", "body"].map((k) => header.indexOf(k));
   if (indexes.includes(-1))
-    return { items: [], errors: ["CSV 必须包含 time,sender,body 列"] };
+    return { items: [], errors: ["CSV 必須包含 time,sender,body 列"] };
   return {
     items: rows.map((r) =>
       makeItem({

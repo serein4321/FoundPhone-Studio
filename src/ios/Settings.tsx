@@ -25,24 +25,24 @@ import { NavigationPage, useNavigation } from "./Navigation";
 type Row = [ComponentType<{ size?: number }>, string, string];
 const groups: Row[][] = [
   [
-    [Plane, "飞行模式", "#ff9500"],
-    [Wifi, "无线局域网", "#007aff"],
-    [Bluetooth, "蓝牙", "#007aff"],
-    [Signal, "蜂窝网络", "#34c759"],
-    [Link, "个人热点", "#65ce88"],
-    [Battery, "电池", "#34c759"],
+    [Plane, "飛行模式", "#ff9500"],
+    [Wifi, "無線局域網", "#007aff"],
+    [Bluetooth, "藍牙", "#007aff"],
+    [Signal, "行動網路", "#34c759"],
+    [Link, "個人熱點", "#65ce88"],
+    [Battery, "電池", "#34c759"],
     [Globe, "VPN", "#007aff"],
   ],
   [
     [Settings, "通用", "#8e8e93"],
-    [Accessibility, "辅助功能", "#007aff"],
-    [Image, "墙纸", "#32ade6"],
+    [Accessibility, "輔助功能", "#007aff"],
+    [Image, "牆紙", "#32ade6"],
   ],
   [
     [Bell, "通知", "#ff3b30"],
-    [Volume2, "声音与触感", "#ff2d55"],
-    [Moon, "专注模式", "#5856d6"],
-    [Shield, "面容 ID 与密码", "#34c759"],
+    [Volume2, "聲音與觸感", "#ff2d55"],
+    [Moon, "專注模式", "#5856d6"],
+    [Shield, "面容 ID 與密碼", "#34c759"],
   ],
 ];
 export function NativeSettings({
@@ -82,28 +82,28 @@ export function NativeSettings({
       case "通用":
         return (
           <div className="settings-group">
-            {row("关于本机", "", () => nav.push("关于本机"))}
-            {row("软件更新", "iOS 18.0", () => nav.push("软件更新"))}
-            {row("iPhone 储存空间", "", () => nav.push("iPhone 储存空间"))}
-            {row("日期与时间", "", () => nav.push("日期与时间"))}
-            {row("语言与地区", "简体中文", () => nav.push("语言与地区"))}
+            {row("關於本機", "", () => nav.push("關於本機"))}
+            {row("軟體更新", "iOS 18.0", () => nav.push("軟體更新"))}
+            {row("iPhone 儲存空間", "", () => nav.push("iPhone 儲存空間"))}
+            {row("日期與時間", "", () => nav.push("日期與時間"))}
+            {row("語言與地區", "簡體中文", () => nav.push("語言與地區"))}
           </div>
         );
-      case "关于本机":
+      case "關於本機":
         return (
           <div className="settings-group">
-            {row("名称", work.phone.owner + "的 iPhone")}
+            {row("名稱", work.phone.owner + "的 iPhone")}
             {row("iOS 版本", "18.0")}
-            {row("机型名称", "iPhone 15 Pro")}
+            {row("機型名稱", "iPhone 15 Pro")}
             {row("照片", String(work.data.photos?.length || 0))}
             {row(
-              "应用程序",
+              "應用程序",
               String(work.apps.filter((a) => a.installed).length),
             )}
           </div>
         );
       case "Wi-Fi":
-      case "无线局域网":
+      case "無線局域網":
         return (
           <>
             <div className="settings-group">
@@ -111,7 +111,7 @@ export function NativeSettings({
             </div>
             {wifi && (
               <>
-                <p className="settings-section-label">我的网络</p>
+                <p className="settings-section-label">我的網路</p>
                 <div className="settings-group">
                   <div className="settings-native-row">
                     <Check size={18} color="#007aff" />
@@ -120,55 +120,55 @@ export function NativeSettings({
                   </div>
                 </div>
                 <p className="settings-page-caption">
-                  连接状态仅用于作品中的虚拟手机。
+                  連接狀態僅用於作品中的虛擬手機。
                 </p>
               </>
             )}
           </>
         );
-      case "蓝牙":
+      case "藍牙":
         return (
           <>
             <div className="settings-group">
-              {toggle("蓝牙", bluetooth, setBluetooth)}
+              {toggle("藍牙", bluetooth, setBluetooth)}
             </div>
             <p className="settings-page-caption">
-              {bluetooth ? "我的设备" : "蓝牙已关闭"}
+              {bluetooth ? "我的設備" : "藍牙已關閉"}
             </p>
           </>
         );
-      case "电池":
+      case "電池":
         return (
           <>
             <div className="settings-group">
-              {row("电池电量", work.phone.battery + "%")}
-              {toggle("低电量模式", lowPower, setLowPower)}
+              {row("電池電量", work.phone.battery + "%")}
+              {toggle("低電量模式", lowPower, setLowPower)}
             </div>
             <p className="settings-page-caption">
-              低电量模式仅改变虚拟设备状态。
+              低電量模式僅改變虛擬設備狀態。
             </p>
           </>
         );
-      case "日期与时间":
+      case "日期與時間":
         return (
           <div className="settings-group">
             {row("日期", work.phone.date || "2026-09-01")}
-            {row("时间", work.phone.time)}
-            {row("时区", "中国标准时间")}
+            {row("時間", work.phone.time)}
+            {row("時區", "中國標準時間")}
           </div>
         );
-      case "iPhone 储存空间":
+      case "iPhone 儲存空間":
         return (
           <div className="settings-group">
             {work.apps
               .filter((a) => a.installed)
-              .map((a) => row(a.name, `${work.data[a.id]?.length || 0} 项`))}
+              .map((a) => row(a.name, `${work.data[a.id]?.length || 0} 項`))}
           </div>
         );
-      case "软件更新":
+      case "軟體更新":
         return (
           <p className="settings-page-caption">
-            iOS 18.0 · 此为作品中的虚拟系统，不下载系统更新。
+            iOS 18.0 · 此為作品中的虛擬系統，不下載系統更新。
           </p>
         );
       default:
@@ -177,15 +177,15 @@ export function NativeSettings({
             <div className="settings-group">
               {row(
                 nav.page,
-                nav.page === "面容 ID 与密码"
+                nav.page === "面容 ID 與密碼"
                   ? work.phone.passcode
-                    ? "已设置密码"
-                    : "未设置密码"
+                    ? "已設定密碼"
+                    : "未設定密碼"
                   : "",
               )}
             </div>
             {!items.some((i) => i.folder === nav.page) && (
-              <p className="settings-page-caption">此作品没有配置更多选项。</p>
+              <p className="settings-page-caption">此作品沒有配置更多選項。</p>
             )}
           </>
         );
@@ -196,13 +196,13 @@ export function NativeSettings({
       <NavigationPage
         page={nav.page}
         back={nav.pop}
-        title={nav.depth > 1 ? "通用" : "设置"}
+        title={nav.depth > 1 ? "通用" : "設定"}
       >
         {nav.page ? (
           sub()
         ) : (
           <>
-            <h1>设置</h1>
+            <h1>設定</h1>
             {!query && (
               <button
                 className="settings-account"
@@ -211,7 +211,7 @@ export function NativeSettings({
                 <span>{work.phone.owner.slice(0, 1)}</span>
                 <div>
                   <strong>{work.phone.owner}</strong>
-                  <small>Apple 账户、iCloud 与更多</small>
+                  <small>Apple 賬戶、iCloud 與更多</small>
                 </div>
                 <ChevronRight size={17} />
               </button>
@@ -224,13 +224,13 @@ export function NativeSettings({
                     <div
                       key={name}
                       className="settings-native-row"
-                      role={name === "飞行模式" ? undefined : "button"}
-                      tabIndex={name === "飞行模式" ? undefined : 0}
+                      role={name === "飛行模式" ? undefined : "button"}
+                      tabIndex={name === "飛行模式" ? undefined : 0}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") nav.push(name);
                       }}
                       onClick={() => {
-                        if (name !== "飞行模式") nav.push(name);
+                        if (name !== "飛行模式") nav.push(name);
                       }}
                     >
                       <span
@@ -240,27 +240,27 @@ export function NativeSettings({
                         <Icon size={21} />
                       </span>
                       <span>{name}</span>
-                      {name === "飞行模式" ? (
+                      {name === "飛行模式" ? (
                         <IOSToggle
-                          label="飞行模式"
+                          label="飛行模式"
                           checked={airplane}
                           onChange={setAirplane}
                         />
                       ) : (
                         <>
                           <small>
-                            {name === "无线局域网"
+                            {name === "無線局域網"
                               ? wifi
-                                ? "未连接"
-                                : "关闭"
-                              : name === "蓝牙"
+                                ? "未連接"
+                                : "關閉"
+                              : name === "藍牙"
                                 ? bluetooth
-                                  ? "打开"
-                                  : "关闭"
+                                  ? "開啟"
+                                  : "關閉"
                                 : name === "VPN"
-                                  ? "未连接"
-                                  : name === "蜂窝网络" || name === "个人热点"
-                                    ? "关闭"
+                                  ? "未連接"
+                                  : name === "行動網路" || name === "個人熱點"
+                                    ? "關閉"
                                     : ""}
                           </small>
                           <ChevronRight size={16} />
@@ -285,7 +285,7 @@ export function NativeSettings({
           ))}
         {creator && (
           <button className="phone-add" onClick={onSettings}>
-            编辑系统配置
+            編輯系統配置
           </button>
         )}
       </NavigationPage>
@@ -293,8 +293,8 @@ export function NativeSettings({
         <label className="settings-search">
           <Search size={23} />
           <input
-            aria-label="搜索设置"
-            placeholder="搜索"
+            aria-label="搜尋設定"
+            placeholder="搜尋"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />

@@ -7,89 +7,89 @@ test("creator edits, saves, restores, exports and reimports", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "手机创作" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "手機創作" })).toBeVisible();
   await expect(page.locator(".home-screen")).toHaveCSS("opacity", "1");
   await page.screenshot({
     path: "outputs/v0.5/studio-desktop.png",
     fullPage: true,
   });
-  await page.getByRole("button", { name: "手机设置", exact: true }).click();
-  await page.getByLabel("机主名称").fill("测试机主");
-  await page.getByRole("button", { name: "选择sand壁纸" }).click();
-  await page.getByRole("button", { name: "保存设置", exact: true }).click();
-  await expect(page.getByText("测试机主 的 iPhone")).toBeVisible();
-  await page.getByRole("button", { name: "已保存到本机" }).click();
+  await page.getByRole("button", { name: "手機設定", exact: true }).click();
+  await page.getByLabel("機主名稱").fill("測試機主");
+  await page.getByRole("button", { name: "選擇sand壁紙" }).click();
+  await page.getByRole("button", { name: "儲存設定", exact: true }).click();
+  await expect(page.getByText("測試機主 的 iPhone")).toBeVisible();
+  await page.getByRole("button", { name: "已儲存到本機" }).click();
   await page.reload();
-  await expect(page.getByText("测试机主 的 iPhone")).toBeVisible();
-  await page.getByRole("button", { name: "批量导入聊天记录" }).click();
-  await page.getByRole("button", { name: "确认导入", exact: true }).click();
-  await expect(page.getByRole("status")).toContainText("2 条");
-  await page.getByRole("button", { name: "关闭提示" }).click();
-  await page.getByRole("button", { name: "素材与内容", exact: true }).click();
-  await page.getByRole("button", { name: "添加内容", exact: true }).click();
-  await page.getByLabel("会话名称").fill("测试会话");
-  await page.getByLabel("故事内容").fill("这是一条经过浏览器验证的消息");
-  await page.getByRole("button", { name: "保存内容", exact: true }).click();
-  await expect(page.getByText("测试会话", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "导出作品", exact: true }).click();
+  await expect(page.getByText("測試機主 的 iPhone")).toBeVisible();
+  await page.getByRole("button", { name: "批量導入聊天記錄" }).click();
+  await page.getByRole("button", { name: "確認導入", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("2 條");
+  await page.getByRole("button", { name: "關閉提示" }).click();
+  await page.getByRole("button", { name: "素材與內容", exact: true }).click();
+  await page.getByRole("button", { name: "新增內容", exact: true }).click();
+  await page.getByLabel("會話名稱").fill("測試會話");
+  await page.getByLabel("故事內容").fill("這是一條經過瀏覽器驗證的訊息");
+  await page.getByRole("button", { name: "儲存內容", exact: true }).click();
+  await expect(page.getByText("測試會話", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "導出作品", exact: true }).click();
   const downloaded = page.waitForEvent("download");
-  await page.getByRole("button", { name: /完整 ZIP 备份/ }).click();
+  await page.getByRole("button", { name: /完整 ZIP 備份/ }).click();
   const file = await downloaded;
   const zip = await JSZip.loadAsync(await readFile((await file.path())!));
   const w = JSON.parse(await zip.file("work.json")!.async("string"));
-  expect(w.phone.owner).toBe("测试机主");
+  expect(w.phone.owner).toBe("測試機主");
   expect(
     w.data.messages.some((i: { body: string }) =>
-      i.body.includes("浏览器验证"),
+      i.body.includes("瀏覽器驗證"),
     ),
   ).toBe(true);
-  await page.getByRole("button", { name: "关闭", exact: true }).click();
+  await page.getByRole("button", { name: "關閉", exact: true }).click();
   await page.locator('input[accept=".json,.zip"]').setInputFiles({
     name: "roundtrip.zip",
     mimeType: "application/zip",
     buffer: await zip.generateAsync({ type: "nodebuffer" }),
   });
-  await expect(page.getByRole("status")).toContainText("作品已导入");
+  await expect(page.getByRole("status")).toContainText("作品已導入");
   expect(errors).toEqual([]);
 });
 test("preview progresses through clues and an ending without editing draft", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "预览", exact: true }).click();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "預覽", exact: true }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   const preview = page.locator(".preview-overlay");
   await preview
-    .getByRole("button", { name: "打开备忘录", exact: true })
+    .getByRole("button", { name: "開啟備忘錄", exact: true })
     .click();
-  await preview.getByRole("button", { name: /如果我忘记了/ }).click();
+  await preview.getByRole("button", { name: /如果我忘記了/ }).click();
   await expect(
-    preview.getByRole("heading", { name: "你会如何选择？" }),
+    preview.getByRole("heading", { name: "你會如何選擇？" }),
   ).toBeVisible();
-  await preview.getByRole("button", { name: "赴约 · 雨停了" }).click();
+  await preview.getByRole("button", { name: "赴約 · 雨停了" }).click();
   await expect(
-    page.getByRole("heading", { name: "故事在这里停泊。" }),
+    page.getByRole("heading", { name: "故事在這裡停泊。" }),
   ).toBeVisible();
   await page.screenshot({
     path: "outputs/v0.2/player-ending.png",
     fullPage: true,
   });
-  await page.getByRole("button", { name: "退出预览" }).click();
-  await expect(page.getByRole("heading", { name: "手机创作" })).toBeVisible();
+  await page.getByRole("button", { name: "退出預覽" }).click();
+  await expect(page.getByRole("heading", { name: "手機創作" })).toBeVisible();
 });
 test("static export contains player and can run from subdirectory", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "导出作品", exact: true }).click();
+  await page.getByRole("button", { name: "導出作品", exact: true }).click();
   const wait = page.waitForEvent("download");
-  await page.getByRole("button", { name: /独立玩家网页/ }).click();
+  await page.getByRole("button", { name: /獨立玩家網頁/ }).click();
   const file = await wait;
   const zip = await JSZip.loadAsync(await readFile((await file.path())!));
   expect(zip.file("index.html")).not.toBeNull();
   expect(zip.file("work.json")).not.toBeNull();
   expect(await zip.file("player.js")!.async("string")).not.toContain(
-    "从一部手机开始",
+    "從一部手機開始",
   );
   await page.route("**/exported/**", async (route) => {
     const name =
@@ -111,16 +111,16 @@ test("static export contains player and can run from subdirectory", async ({
     });
   });
   await page.goto("http://127.0.0.1:4180/exported/index.html");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
-  await page.getByRole("button", { name: "打开备忘录", exact: true }).click();
-  await page.getByRole("button", { name: /如果我忘记了/ }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
+  await page.getByRole("button", { name: "開啟備忘錄", exact: true }).click();
+  await page.getByRole("button", { name: /如果我忘記了/ }).click();
   await expect(
-    page.getByRole("heading", { name: "你会如何选择？" }),
+    page.getByRole("heading", { name: "你會如何選擇？" }),
   ).toBeVisible();
   await page.reload();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("heading", { name: "你会如何选择？" }),
+    page.getByRole("heading", { name: "你會如何選擇？" }),
   ).toBeVisible();
 });
 test("mobile workspace stays within viewport and graph loads", async ({
@@ -128,7 +128,7 @@ test("mobile workspace stays within viewport and graph loads", async ({
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "手机创作" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "手機創作" })).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth),
   ).toBeLessThanOrEqual(390);
@@ -137,12 +137,12 @@ test("mobile workspace stays within viewport and graph loads", async ({
     path: "outputs/v0.2/studio-mobile.png",
     fullPage: true,
   });
-  await page.getByRole("button", { name: "剧情编排", exact: true }).click();
+  await page.getByRole("button", { name: "劇情編排", exact: true }).click();
   await expect(
-    page.getByText("图结构检查通过", { exact: false }),
+    page.getByText("圖結構檢查通過", { exact: false }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "添加节点", exact: true }).click();
-  await expect(page.getByLabel("名称", { exact: true })).toHaveValue(
+  await page.getByRole("button", { name: "新增節點", exact: true }).click();
+  await expect(page.getByLabel("名稱", { exact: true })).toHaveValue(
     "新的事件",
   );
 });
@@ -156,23 +156,23 @@ test("all registered app templates open and expose editable saved content", asyn
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   const phone = page.locator(".phone-stage .phone-shell");
-  await page.getByRole("button", { name: "打开 App 库", exact: true }).click();
+  await page.getByRole("button", { name: "開啟 App 庫", exact: true }).click();
   for (const app of registry) {
     const b = page.getByRole("button", {
-      name: `安装${app.name}`,
+      name: `安裝${app.name}`,
       exact: true,
     });
     if (await b.count()) await b.click();
   }
   await page.getByRole("button", { name: "完成", exact: true }).click();
   for (const app of registry) {
-    await phone.getByRole("button", { name: "搜索", exact: true }).click();
-    await phone.getByPlaceholder("App 名称").fill(app.name);
+    await phone.getByRole("button", { name: "搜尋", exact: true }).click();
+    await phone.getByPlaceholder("App 名稱").fill(app.name);
     await phone.getByRole("button", { name: app.name, exact: true }).click();
     await expect(phone.locator(".app-nav strong")).toHaveText(app.name);
-    await phone.getByRole("button", { name: "新增内容", exact: true }).click();
+    await phone.getByRole("button", { name: "新增內容", exact: true }).click();
     await expect(page.getByRole("dialog")).toBeVisible();
-    await page.getByRole("button", { name: "保存内容", exact: true }).click();
+    await page.getByRole("button", { name: "儲存內容", exact: true }).click();
     await expect(page.getByRole("dialog")).not.toBeVisible();
     await phone.getByRole("button", { name: "返回桌面", exact: true }).click();
   }
@@ -183,12 +183,12 @@ test("photo upload and structured note formatting survive save and reload", asyn
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "素材与内容", exact: true }).click();
+  await page.getByRole("button", { name: "素材與內容", exact: true }).click();
   await page
-    .getByRole("combobox", { name: "选择内容 App" })
+    .getByRole("combobox", { name: "選擇內容 App" })
     .selectOption("photos");
-  await page.getByRole("button", { name: "添加内容", exact: true }).click();
-  await page.getByLabel("标题", { exact: true }).fill("上传的线索照片");
+  await page.getByRole("button", { name: "新增內容", exact: true }).click();
+  await page.getByLabel("標題", { exact: true }).fill("上傳的線索照片");
   await page
     .getByRole("dialog")
     .locator("input[type=file]")
@@ -201,33 +201,33 @@ test("photo upload and structured note formatting survive save and reload", asyn
       ),
     });
   await expect(page.getByRole("button", { name: "移除素材" })).toBeVisible();
-  await page.getByRole("button", { name: "保存内容", exact: true }).click();
+  await page.getByRole("button", { name: "儲存內容", exact: true }).click();
   await page
-    .getByRole("combobox", { name: "选择内容 App" })
+    .getByRole("combobox", { name: "選擇內容 App" })
     .selectOption("notes");
-  await page.getByRole("button", { name: "添加内容", exact: true }).click();
-  await page.getByLabel("标题", { exact: true }).fill("加粗的约定");
-  await page.locator(".tiptap").fill("请记住这个约定");
+  await page.getByRole("button", { name: "新增內容", exact: true }).click();
+  await page.getByLabel("標題", { exact: true }).fill("加粗的約定");
+  await page.locator(".tiptap").fill("請記住這個約定");
   await page.locator(".tiptap").selectText();
-  await page.getByRole("button", { name: "粗体", exact: true }).click();
-  await page.getByRole("button", { name: "保存内容", exact: true }).click();
-  await page.getByRole("button", { name: "已保存到本机", exact: true }).click();
+  await page.getByRole("button", { name: "粗體", exact: true }).click();
+  await page.getByRole("button", { name: "儲存內容", exact: true }).click();
+  await page.getByRole("button", { name: "已儲存到本機", exact: true }).click();
   await page.reload();
-  await page.getByRole("button", { name: "素材与内容", exact: true }).click();
+  await page.getByRole("button", { name: "素材與內容", exact: true }).click();
   await page
-    .getByRole("combobox", { name: "选择内容 App" })
+    .getByRole("combobox", { name: "選擇內容 App" })
     .selectOption("notes");
-  await page.getByRole("button", { name: "加粗的约定", exact: true }).click();
-  await expect(page.locator(".tiptap strong")).toContainText("请记住这个约定");
-  await page.getByRole("button", { name: "关闭", exact: true }).click();
-  await page.getByRole("button", { name: "导出作品", exact: true }).click();
+  await page.getByRole("button", { name: "加粗的約定", exact: true }).click();
+  await expect(page.locator(".tiptap strong")).toContainText("請記住這個約定");
+  await page.getByRole("button", { name: "關閉", exact: true }).click();
+  await page.getByRole("button", { name: "導出作品", exact: true }).click();
   const wait = page.waitForEvent("download");
   await page.getByRole("button", { name: /作品 JSON/ }).click();
   const file = await wait;
   const work = JSON.parse(await readFile((await file.path())!, "utf8"));
   expect(
     work.data.photos.find(
-      (i: { title: string }) => i.title === "上传的线索照片",
+      (i: { title: string }) => i.title === "上傳的線索照片",
     ).media,
   ).toMatch(/^data:image\/webp;base64,/);
 });
@@ -241,7 +241,7 @@ test("rejects invalid work versions and unsafe ZIP paths", async ({ page }) => {
     buffer: Buffer.from(JSON.stringify({ formatVersion: 999 })),
   });
   await expect(page.getByRole("status")).toContainText("formatVersion");
-  await page.getByRole("button", { name: "关闭提示" }).click();
+  await page.getByRole("button", { name: "關閉提示" }).click();
   const zip = new JSZip();
   zip.file("../work.json", "{}");
   await input.setInputFiles({
@@ -249,5 +249,5 @@ test("rejects invalid work versions and unsafe ZIP paths", async ({ page }) => {
     mimeType: "application/zip",
     buffer: await zip.generateAsync({ type: "nodebuffer" }),
   });
-  await expect(page.getByRole("status")).toContainText("不安全路径");
+  await expect(page.getByRole("status")).toContainText("不安全路徑");
 });

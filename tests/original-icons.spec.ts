@@ -10,11 +10,11 @@ test("published icons match source bytes and decode on desktop and App Store", a
   const manifestFile = existsSync("assets/app-icons/manifest.json")
     ? "assets/app-icons/manifest.json"
     : "work/original-icons/sources.json";
-  test.skip(!existsSync(manifestFile), "未安装图标");
+  test.skip(!existsSync(manifestFile), "未安裝圖標");
   const probe = await request.get("/icon-assets/camera.png");
   test.skip(
     !probe.ok() || !probe.headers()["content-type"]?.startsWith("image/"),
-    "公开构建不带本地图标",
+    "公開構建不帶本地圖標",
   );
   const manifest = JSON.parse(readFileSync(manifestFile, "utf8")).results;
   await Promise.all(
@@ -37,7 +37,7 @@ test("published icons match source bytes and decode on desktop and App Store", a
     }),
   );
   await page.goto("/?preview=test");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(page.locator("[data-original-icon]")).toHaveCount(48);
   await page.waitForFunction(() =>
     [
@@ -56,9 +56,9 @@ test("published icons match source bytes and decode on desktop and App Store", a
     .locator(".phone-screen")
     .screenshot({ path: "outputs/original-icons/home-original.png" });
   await page
-    .getByRole("button", { name: "打开App Store", exact: true })
+    .getByRole("button", { name: "開啟App Store", exact: true })
     .click();
-  await page.getByPlaceholder("搜索全部App").fill("QQ");
+  await page.getByPlaceholder("搜尋全部App").fill("QQ");
   await expect(
     page.locator(".runtime-library-row [data-original-icon=qq]"),
   ).toBeVisible();
@@ -72,13 +72,13 @@ test("missing original image safely falls back without losing app action", async
   request,
 }) => {
   const probe = await request.get("/icon-assets/camera.png");
-  test.skip(!probe.ok(), "公开构建不带本地图标");
+  test.skip(!probe.ok(), "公開構建不帶本地圖標");
   await page.route("**/icon-assets/photos.png", (r) => r.abort());
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("button", { name: "打开相册", exact: true }).locator("svg"),
+    page.getByRole("button", { name: "開啟相簿", exact: true }).locator("svg"),
   ).toBeVisible();
-  await page.getByRole("button", { name: "打开相册", exact: true }).click();
+  await page.getByRole("button", { name: "開啟相簿", exact: true }).click();
   await expect(page.locator(".app-screen")).toBeVisible();
 });

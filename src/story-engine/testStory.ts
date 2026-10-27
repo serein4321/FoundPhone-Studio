@@ -4,7 +4,7 @@ import type { Story } from "./compiler";
 export function testStory(story: Story, work: Work) {
   const errors: string[] = [];
   if (work.nodes.some((n) => n.type !== "comment") && !story.tests.length)
-    errors.push("tests: 至少提供一个通关路径");
+    errors.push("tests: 至少提供一個通關路徑");
   const reached = new Set<string>();
   for (const t of story.tests) {
     let state = dispatch(work, initialRuntime(work), "start");
@@ -16,7 +16,7 @@ export function testStory(story: Story, work: Work) {
           .flat()
           .find((x) => x.id === step.target);
         if (!item || item.password !== step.password) {
-          errors.push(at + ": 密码不正确");
+          errors.push(at + ": 密碼不正確");
           continue;
         }
         unlocked.add(item.id);
@@ -30,13 +30,13 @@ export function testStory(story: Story, work: Work) {
           !visible(item, state) ||
           (item.password && !unlocked.has(item.id))
         ) {
-          errors.push(at + ": 内容不可读或未解密");
+          errors.push(at + ": 內容不可讀或未解密");
           continue;
         }
       }
       if (step.choose) {
         if (!state.choices.some((c) => c.target === step.choose))
-          errors.push(at + ": 选项不可达");
+          errors.push(at + ": 選項不可達");
         state = choose(work, state, step.choose);
       }
       if (step.advanceMs !== undefined)
@@ -44,10 +44,10 @@ export function testStory(story: Story, work: Work) {
       if (step.event) state = dispatch(work, state, step.event, step.target);
     }
     if (!state.endings.includes(t.ending))
-      errors.push(t.name + ": 未到达结局 " + t.ending);
+      errors.push(t.name + ": 未到達結局 " + t.ending);
     else reached.add(t.ending);
     for (const id of t.expectUnlocked)
-      if (!state.unlocked.includes(id)) errors.push(t.name + ": 未解锁 " + id);
+      if (!state.unlocked.includes(id)) errors.push(t.name + ": 未解鎖 " + id);
   }
   for (const n of work.nodes.filter((n) => n.type === "ending")) {
     const ending = String(
@@ -57,7 +57,7 @@ export function testStory(story: Story, work: Work) {
       errors.push(
         "events." +
           work.nodes.indexOf(n) +
-          ": 结局没有可通过的测试路径: " +
+          ": 結局沒有可通過的測試路徑: " +
           ending,
       );
   }

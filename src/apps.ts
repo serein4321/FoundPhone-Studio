@@ -34,13 +34,13 @@ const systemApps = new Set([
   "settings",
 ]);
 export function category(id: string) {
-  if (systemApps.has(id)) return "系统";
+  if (systemApps.has(id)) return "系統";
   const app = registry.find((a) => a.id === id);
-  if (!app) return "自定义";
+  if (!app) return "自定義";
   return (
     (
       {
-        messaging: "通讯",
+        messaging: "通訊",
         social: "社交",
         media: "影音",
         records: "生活",

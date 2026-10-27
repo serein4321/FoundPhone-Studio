@@ -74,17 +74,17 @@ export function defaultLayout(input: Work): DeviceLayout {
 export function validateLayout(raw: unknown, input: Work) {
   const w = ensureAppStore(input);
   const layout = layoutSchema.parse(raw);
-  if (layout.workId !== w.id) throw Error("布局属于其他作品");
+  if (layout.workId !== w.id) throw Error("布局屬於其他作品");
   const known = new Set(w.apps.map((a) => a.id));
-  if (layout.apps.some((a) => !known.has(a.id))) throw Error("布局含未注册App");
+  if (layout.apps.some((a) => !known.has(a.id))) throw Error("布局含未注冊App");
   if (new Set(layout.apps.map((a) => a.id)).size !== layout.apps.length)
-    throw Error("App ID重复");
+    throw Error("App ID重復");
   if (new Set(layout.widgets.map((a) => a.id)).size !== layout.widgets.length)
-    throw Error("小组件ID重复");
+    throw Error("小組件ID重復");
   if (layout.apps.filter((a) => a.installed && a.visible && a.dock).length > 4)
-    throw Error("Dock最多4个App");
+    throw Error("Dock最多4個App");
   if (layout.widgets.some((w) => known.has(w.id)))
-    throw Error("小组件与App ID冲突");
+    throw Error("小組件與App ID衝突");
   layout.apps.push(
     ...w.apps.filter((a) => !layout.apps.some((b) => b.id === a.id)),
   );
@@ -99,7 +99,7 @@ export function validateLayout(raw: unknown, input: Work) {
     for (const app of layout.apps) {
       if (
         visibleApps.includes(app.id) ||
-        ["中国", "国内", "国际", "海外", "国内App", "国际App"].includes(
+        ["中國", "國內", "國際", "海外", "國內App", "國際App"].includes(
           app.folder,
         )
       ) {
@@ -127,7 +127,7 @@ export function validateLayout(raw: unknown, input: Work) {
       (c) => c.entry.key === entry.key,
     );
     if (!actual || actual.x !== requested.x || actual.y !== requested.y)
-      throw Error("桌面位置冲突或超出范围");
+      throw Error("桌面位置衝突或超出範圍");
   }
   return layout;
 }
@@ -151,7 +151,7 @@ export function useDeviceLayout(authored: Work, creator = false) {
     try {
       localStorage.setItem(key, JSON.stringify(layout));
     } catch {
-      setError("桌面布局保存失败，请检查本地存储空间");
+      setError("桌面布局儲存失敗，請檢查本地儲存空間");
     }
   }, [layout, key, creator]);
   const change = (fn: (draft: DeviceLayout) => void) =>

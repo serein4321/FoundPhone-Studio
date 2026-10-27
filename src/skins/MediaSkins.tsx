@@ -51,7 +51,7 @@ function TrackPlayer({
       {item.kind === "audio" && safeMedia(item.media) ? (
         <AudioPlayer p={p} item={item} />
       ) : (
-        <button onClick={() => p.onItem(item)}>查看</button>
+        <button onClick={() => p.onItem(item)}>檢視</button>
       )}
       <button aria-label="下一首" onClick={onNext}>
         <SkipForward size={19} />
@@ -60,11 +60,11 @@ function TrackPlayer({
   );
 }
 export function SpotifySkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "首页");
+  const { tab, setTab, q, setQ, items } = useContent(p, "首頁");
   const [playlist, setPlaylist] = useState(""),
     [track, setTrack] = useTrack(p, items);
   const list = playlist
-    ? items.filter((i) => (i.folder || "我的音乐") === playlist)
+    ? items.filter((i) => (i.folder || "我的音樂") === playlist)
     : items;
   return (
     <div className="catalog-skin spotify-ui">
@@ -73,23 +73,23 @@ export function SpotifySkin(p: Props) {
         <div className="spotify-heading">
           <Avatar name={p.owner ?? "我"} />
           <button
-            className={tab === "首页" ? "selected" : ""}
-            onClick={() => setTab("首页")}
+            className={tab === "首頁" ? "selected" : ""}
+            onClick={() => setTab("首頁")}
           >
-            音乐
+            音樂
           </button>
           <button
-            className={tab === "音乐库" ? "selected" : ""}
-            onClick={() => setTab("音乐库")}
+            className={tab === "音樂庫" ? "selected" : ""}
+            onClick={() => setTab("音樂庫")}
           >
-            音乐库
+            音樂庫
           </button>
         </div>
-        {tab === "搜索" && <SearchBox value={q} set={setQ} />}
-        <h1>{playlist || (tab === "音乐库" ? "音乐库" : "为你收藏")}</h1>
+        {tab === "搜尋" && <SearchBox value={q} set={setQ} />}
+        <h1>{playlist || (tab === "音樂庫" ? "音樂庫" : "為你收藏")}</h1>
         {!playlist && (
           <div className="spotify-playlists">
-            {groupItems(items, "我的音乐").map((g) => (
+            {groupItems(items, "我的音樂").map((g) => (
               <button key={g} onClick={() => setPlaylist(g)}>
                 <Music size={29} />
                 <strong>{g}</strong>
@@ -99,7 +99,7 @@ export function SpotifySkin(p: Props) {
         )}
         {playlist && (
           <button className="playlist-back" onClick={() => setPlaylist("")}>
-            返回全部音乐
+            返回全部音樂
           </button>
         )}
         <div className="spotify-tracks">
@@ -137,7 +137,7 @@ export function SpotifySkin(p: Props) {
         />
       )}
       <Tabs
-        tabs={["首页", "搜索", "音乐库"]}
+        tabs={["首頁", "搜尋", "音樂庫"]}
         value={tab}
         set={(t) => {
           setTab(t);
@@ -149,25 +149,25 @@ export function SpotifySkin(p: Props) {
   );
 }
 export function NeteaseSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "发现");
+  const { tab, setTab, q, setQ, items } = useContent(p, "發現");
   const [folder, setFolder] = useState(""),
     [track, setTrack] = useTrack(p, items);
   const list = folder
-    ? items.filter((i) => (i.folder || "我的歌单") === folder)
+    ? items.filter((i) => (i.folder || "我的歌單") === folder)
     : items;
   return (
     <div className="catalog-skin netease-ui">
       <Header p={p} />
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
-        {tab === "发现" ? (
+        {tab === "發現" ? (
           <>
             <div className="netease-feature">
               <Music size={44} />
-              <h2>推荐歌单</h2>
+              <h2>推薦歌單</h2>
             </div>
             <div className="netease-shelves">
-              {groupItems(items, "我的歌单").map((g) => (
+              {groupItems(items, "我的歌單").map((g) => (
                 <button
                   key={g}
                   onClick={() => {
@@ -185,9 +185,9 @@ export function NeteaseSkin(p: Props) {
           <>
             <div className="netease-profile">
               <Avatar name={p.owner ?? "我"} />
-              <h2>{p.owner ?? "我的音乐"}</h2>
+              <h2>{p.owner ?? "我的音樂"}</h2>
             </div>
-            <h3>{folder || "我的歌单"}</h3>
+            <h3>{folder || "我的歌單"}</h3>
           </>
         )}
         {list.map((i, n) => (
@@ -206,7 +206,7 @@ export function NeteaseSkin(p: Props) {
               </div>
             </button>
             <button
-              aria-label={`歌曲详情${i.title}`}
+              aria-label={`歌曲詳情${i.title}`}
               onClick={() => p.onItem(i)}
             >
               <MessageCircle size={18} />
@@ -229,7 +229,7 @@ export function NeteaseSkin(p: Props) {
         />
       )}
       <Tabs
-        tabs={["发现", "我的"]}
+        tabs={["發現", "我的"]}
         value={tab}
         set={(t) => {
           setTab(t);
@@ -241,15 +241,15 @@ export function NeteaseSkin(p: Props) {
   );
 }
 export function YouTubeSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "首页");
+  const { tab, setTab, q, setQ, items } = useContent(p, "首頁");
   const [category, setCategory] = useState("全部");
   const list = items.filter((i) =>
     tab === "Shorts"
       ? i.folder === "Shorts"
-      : tab === "订阅"
-        ? i.folder === "订阅"
-        : tab === "播放列表"
-          ? i.favorite || i.folder === "播放列表"
+      : tab === "訂閱"
+        ? i.folder === "訂閱"
+        : tab === "播放清單"
+          ? i.favorite || i.folder === "播放清單"
           : category === "全部" || i.folder === category,
   );
   return (
@@ -257,7 +257,7 @@ export function YouTubeSkin(p: Props) {
       <Header p={p} />
       <SearchBox value={q} set={setQ} />
       <div className="youtube-chips">
-        {["全部", ...groupItems(items).filter((g) => g !== "未分类")].map(
+        {["全部", ...groupItems(items).filter((g) => g !== "未分類")].map(
           (g) => (
             <button
               className={category === g ? "selected" : ""}
@@ -292,7 +292,7 @@ export function YouTubeSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["首页", "Shorts", "订阅", "播放列表"]}
+        tabs={["首頁", "Shorts", "訂閱", "播放清單"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Video />, <Users />, <User />]}
@@ -301,14 +301,14 @@ export function YouTubeSkin(p: Props) {
   );
 }
 export function BilibiliSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "首页");
-  const [category, setCategory] = useState("推荐");
+  const { tab, setTab, q, setQ, items } = useContent(p, "首頁");
+  const [category, setCategory] = useState("推薦");
   const list =
-    tab === "历史"
-      ? items.filter((i) => i.folder === "历史")
-      : tab === "动态"
-        ? items.filter((i) => i.folder === "动态")
-        : category === "推荐"
+    tab === "歷史"
+      ? items.filter((i) => i.folder === "歷史")
+      : tab === "動態"
+        ? items.filter((i) => i.folder === "動態")
+        : category === "推薦"
           ? items
           : items.filter((i) => i.folder === category);
   return (
@@ -319,7 +319,7 @@ export function BilibiliSkin(p: Props) {
         <SearchBox value={q} set={setQ} />
       </div>
       <div className="bili-categories">
-        {["推荐", "动画", "音乐", "生活"].map((c) => (
+        {["推薦", "動畫", "音樂", "生活"].map((c) => (
           <button
             key={c}
             className={category === c ? "selected" : ""}
@@ -349,7 +349,7 @@ export function BilibiliSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["首页", "动态", "历史"]}
+        tabs={["首頁", "動態", "歷史"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <MessageCircle />, <User />]}
@@ -371,13 +371,13 @@ function VerticalVideo({ p, item }: { p: Props; item: Item }) {
           <Avatar name={item.sender} />
         </button>
         <button
-          aria-label={`喜欢${item.title}`}
+          aria-label={`喜歡${item.title}`}
           onClick={() => setLiked(!liked)}
         >
           <Heart size={29} fill={liked ? "#f44368" : "white"} />
           <small>{item.likes + (liked ? 1 : 0)}</small>
         </button>
-        <button aria-label={`评论${item.title}`} onClick={() => p.onItem(item)}>
+        <button aria-label={`評論${item.title}`} onClick={() => p.onItem(item)}>
           <MessageCircle size={29} />
           <small>{item.comments.length}</small>
         </button>
@@ -400,13 +400,13 @@ function VerticalVideo({ p, item }: { p: Props; item: Item }) {
   );
 }
 export function DouyinSkin(p: Props) {
-  const { tab, setTab, items } = useContent(p, "推荐");
-  const list = tab === "推荐" ? items : items.filter((i) => i.folder === tab);
+  const { tab, setTab, items } = useContent(p, "推薦");
+  const list = tab === "推薦" ? items : items.filter((i) => i.folder === tab);
   return (
     <div className="catalog-skin douyin-ui">
       <Header p={p} />
       <div className="douyin-top">
-        {["同城", "关注", "推荐"].map((t) => (
+        {["同城", "關注", "推薦"].map((t) => (
           <button
             className={tab === t ? "selected" : ""}
             key={t}
@@ -423,7 +423,7 @@ export function DouyinSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["推荐", "关注", "我"]}
+        tabs={["推薦", "關注", "我"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Users />, <User />]}
@@ -437,8 +437,8 @@ export function TikTokSkin(p: Props) {
     tab === "For You"
       ? items
       : tab === "Following"
-        ? items.filter((i) => i.folder === "关注" || i.folder === "Following")
-        : items.filter((i) => i.folder === "个人主页");
+        ? items.filter((i) => i.folder === "關注" || i.folder === "Following")
+        : items.filter((i) => i.folder === "個人首頁");
   return (
     <div className="catalog-skin tiktok-ui">
       <Header p={p} />
@@ -472,10 +472,10 @@ export function TikTokSkin(p: Props) {
   );
 }
 export function NetflixSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "首页");
+  const { tab, setTab, q, setQ, items } = useContent(p, "首頁");
   const [saved, setSaved] = useSkinState<string[]>(p, "saved", []);
   const list =
-    tab === "我的片单"
+    tab === "我的片單"
       ? items.filter((i) => i.favorite || saved.includes(i.id))
       : items;
   const featured = list[0];
@@ -484,7 +484,7 @@ export function NetflixSkin(p: Props) {
       <Header p={p} />
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
-        {featured && tab === "首页" && (
+        {featured && tab === "首頁" && (
           <div className="netflix-feature">
             <Media item={featured} />
             <div>
@@ -495,7 +495,7 @@ export function NetflixSkin(p: Props) {
               </small>
               <button onClick={() => p.onItem(featured)}>
                 <Play size={16} />
-                播放 / 详情
+                播放 / 詳情
               </button>
               <button
                 onClick={() =>
@@ -511,7 +511,7 @@ export function NetflixSkin(p: Props) {
                 ) : (
                   <Plus size={16} />
                 )}
-                我的片单
+                我的片單
               </button>
             </div>
           </div>
@@ -534,7 +534,7 @@ export function NetflixSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["首页", "我的片单"]}
+        tabs={["首頁", "我的片單"]}
         value={tab}
         set={setTab}
         icons={[<Home />, <Bookmark />]}

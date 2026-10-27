@@ -15,11 +15,11 @@ import { test, expect, type Page } from "@playwright/test";
 async function home(page: Page) {
   await page.getByRole("button", { name: "返回桌面", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "打开设置", exact: true }),
+    page.getByRole("button", { name: "開啟設定", exact: true }),
   ).toBeVisible();
 }
 async function open(page: Page, name: string) {
-  await page.getByRole("button", { name: "打开" + name, exact: true }).click();
+  await page.getByRole("button", { name: "開啟" + name, exact: true }).click();
   await expect(page.locator(".app-screen:not([inert])")).toBeVisible();
   await expect(page.locator(".app-screen:not([inert])")).toHaveCSS(
     "transform",
@@ -32,50 +32,50 @@ test("direct player, settings stack and toggle, system screenshots", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "轻触解锁" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "輕觸解鎖" })).toBeVisible();
   await expect(page.getByRole("button", { name: "新建作品" })).toHaveCount(0);
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.6/lock.png" });
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("button", { name: "打开设置", exact: true }),
+    page.getByRole("button", { name: "開啟設定", exact: true }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.6/home.png" });
-  await open(page, "设置");
+  await open(page, "設定");
   await expect(
-    page.getByRole("switch", { name: "飞行模式" }),
+    page.getByRole("switch", { name: "飛行模式" }),
   ).not.toBeChecked();
-  await page.getByRole("switch", { name: "飞行模式" }).check();
-  await expect(page.getByRole("switch", { name: "飞行模式" })).toBeChecked();
+  await page.getByRole("switch", { name: "飛行模式" }).check();
+  await expect(page.getByRole("switch", { name: "飛行模式" })).toBeChecked();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.6/settings.png" });
   await page.getByRole("button", { name: "通用", exact: true }).click();
-  await page.getByRole("button", { name: "关于本机", exact: true }).click();
+  await page.getByRole("button", { name: "關於本機", exact: true }).click();
   await expect(page.getByText("iPhone 15 Pro", { exact: true })).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.6/settings-about.png" });
   await page.getByRole("button", { name: "通用", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "关于本机", exact: true }),
+    page.getByRole("button", { name: "關於本機", exact: true }),
   ).toBeVisible();
   await home(page);
   for (const app of [
-    "信息",
-    "相册",
-    "电话",
-    "备忘录",
-    "通讯录",
-    "日历",
-    "时钟",
-    "计算器",
-    "文件",
-    "浏览器",
-    "相机",
+    "資訊",
+    "相簿",
+    "電話",
+    "備忘錄",
+    "通訊錄",
+    "日歷",
+    "時鍾",
+    "計算器",
+    "檔案",
+    "瀏覽器",
+    "相機",
   ]) {
     await open(page, app);
     await page
@@ -86,14 +86,14 @@ test("direct player, settings stack and toggle, system screenshots", async ({
   expect(errors).toEqual([]);
 });
 for (const [choice, ending] of [
-  ["赴约", "赴约：你按时把手机交还了主人。"],
-  ["留在失物招领", "等待：你留下联系方式，等主人取回手机。"],
+  ["赴約", "赴約：你按時把手機交還了主人。"],
+  ["留在失物招領", "等待：你留下聯系方式，等主人取回手機。"],
 ])
   test(
     "example puzzle, call, ending and persisted save: " + choice,
     async ({ page }) => {
       await page.goto("/");
-      await page.getByRole("button", { name: "轻触解锁" }).click();
+      await page.getByRole("button", { name: "輕觸解鎖" }).click();
       await open(page, "微信");
       await page
         .locator(".wx-chat-row")
@@ -102,40 +102,40 @@ for (const [choice, ending] of [
         .click();
       await page
         .getByRole("button", {
-          name: "密码还是我们第一次开会的日期：1023。",
+          name: "密碼還是我們第一次開會的日期：1023。",
           exact: true,
         })
         .click();
       await home(page);
-      await open(page, "相册");
+      await open(page, "相簿");
       await expect(
-        page.getByRole("button", { name: "查看藏起来的照片" }),
+        page.getByRole("button", { name: "檢視藏起來的照片" }),
       ).toBeVisible();
-      await page.getByRole("button", { name: "查看藏起来的照片" }).click();
+      await page.getByRole("button", { name: "檢視藏起來的照片" }).click();
       await expect(page.locator(".native-detail-photos")).toBeVisible();
       await page
         .locator(".phone-screen")
         .screenshot({ path: "outputs/v0.6/photos-detail.png" });
       await home(page);
-      await open(page, "备忘录");
+      await open(page, "備忘錄");
       await page
         .locator(".notes-list button")
         .filter({ hasText: "明天的安排" })
         .click();
-      await page.getByPlaceholder("内容密码").fill("bad");
-      await page.getByRole("button", { name: "解锁内容", exact: true }).click();
-      await expect(page.getByText("密码不正确")).toBeVisible();
-      await page.getByPlaceholder("内容密码").fill("1023");
-      await page.getByRole("button", { name: "解锁内容", exact: true }).click();
+      await page.getByPlaceholder("內容密碼").fill("bad");
+      await page.getByRole("button", { name: "解鎖內容", exact: true }).click();
+      await expect(page.getByText("密碼不正確")).toBeVisible();
+      await page.getByPlaceholder("內容密碼").fill("1023");
+      await page.getByRole("button", { name: "解鎖內容", exact: true }).click();
       await expect(page.locator(".native-note-paper")).toBeVisible();
       await page
         .locator(".native-note-paper")
         .screenshot({ path: "outputs/v0.6/notes-detail.png" });
-      await page.getByRole("button", { name: "接听", exact: true }).click();
+      await page.getByRole("button", { name: "接聽", exact: true }).click();
       await expect(
-        page.getByRole("button", { name: "赴约", exact: true }),
+        page.getByRole("button", { name: "赴約", exact: true }),
       ).toBeVisible();
-      await page.getByRole("button", { name: "挂断", exact: true }).click();
+      await page.getByRole("button", { name: "掛斷", exact: true }).click();
       await page.getByRole("button", { name: choice, exact: true }).click();
       await expect(page.getByText(ending, { exact: true })).toBeVisible();
       await page
@@ -143,16 +143,16 @@ for (const [choice, ending] of [
         .screenshot({ path: `outputs/v0.6/ending-${choice}.png` });
       await page.reload();
       await expect(page.locator(".lock-clock-block")).toContainText("10月24日");
-      await page.getByRole("button", { name: "轻触解锁" }).click();
+      await page.getByRole("button", { name: "輕觸解鎖" }).click();
       await expect(page.getByText(ending, { exact: true })).toBeVisible();
     },
   );
 test("mobile viewport, no overflow", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(
-    page.getByRole("button", { name: "打开设置", exact: true }),
+    page.getByRole("button", { name: "開啟設定", exact: true }),
   ).toBeVisible();
   const rect = await page.locator(".phone-shell").boundingBox();
   expect(rect!.width).toBeLessThanOrEqual(390);
@@ -166,13 +166,13 @@ test("production PWA cached story works after offline reload", async ({
   try {
     const page = await context.newPage();
     await page.goto("/");
-    await page.getByRole("button", { name: "轻触解锁" }).waitFor();
+    await page.getByRole("button", { name: "輕觸解鎖" }).waitFor();
     await page.waitForFunction(() => !!navigator.serviceWorker.controller);
     await context.setOffline(true);
     await page.reload();
-    await page.getByRole("button", { name: "轻触解锁" }).click();
-    await open(page, "设置");
-    await expect(page.getByRole("switch", { name: "飞行模式" })).toBeVisible();
+    await page.getByRole("button", { name: "輕觸解鎖" }).click();
+    await open(page, "設定");
+    await expect(page.getByRole("switch", { name: "飛行模式" })).toBeVisible();
     await page
       .locator(".phone-screen")
       .screenshot({ path: "outputs/v0.6/offline-settings.png" });
@@ -193,16 +193,16 @@ test("blank phone contains no story or author content", async ({
   expect(w.description).toBe("");
   expect(w.mode).toBe("explore");
   await page.goto("/?template=blank");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await expect(page.getByText("林知夏", { exact: true })).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: "打开设置", exact: true }),
+    page.getByRole("button", { name: "開啟設定", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".lock-screen")).toHaveCount(0);
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/blank-home.png" });
-  await open(page, "设置");
+  await open(page, "設定");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/settings-blank.png" });
@@ -211,8 +211,8 @@ test("reference-calibrated settings, WeChat pages and control center", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
-  await open(page, "设置");
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
+  await open(page, "設定");
   const screen = await page.locator(".phone-screen").boundingBox();
   const search = await page.locator(".settings-search").boundingBox();
   expect(search!.y).toBeGreaterThan(screen!.y + screen!.height * 0.75);
@@ -229,22 +229,22 @@ test("reference-calibrated settings, WeChat pages and control center", async ({
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/control-center.png" });
-  await page.getByRole("button", { name: "关闭控制中心" }).click();
+  await page.getByRole("button", { name: "關閉控制中心" }).click();
   await expect(page.locator(".device-control")).toHaveCount(0);
   await open(page, "微信");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/wechat-list-fixture.png" });
-  await page.locator(".wx-bottom button").filter({ hasText: "发现" }).click();
+  await page.locator(".wx-bottom button").filter({ hasText: "發現" }).click();
   await expect(
-    page.getByRole("button", { name: "视频号", exact: false }),
+    page.getByRole("button", { name: "視訊號", exact: false }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/wechat-discover.png" });
   await page.locator(".wx-bottom button").filter({ hasText: "我" }).click();
   await expect(
-    page.getByRole("button", { name: "小店与卡包", exact: false }),
+    page.getByRole("button", { name: "小店與卡包", exact: false }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
