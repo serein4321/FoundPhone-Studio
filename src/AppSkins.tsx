@@ -47,6 +47,7 @@ export type SkinProps = {
   onBack: () => void;
   thread: string;
   onThread: (s: string) => void;
+  incomingCall?: { status: "ringing" | "answered" } | null;
 };
 function Avatar({
   name,
