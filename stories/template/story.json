@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 11,
+  "revision": 12,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -271,7 +271,7 @@
     {
       "id": "perfect-family-kkt",
       "app": "kakao",
-      "title": "這是全天下最完美的陣容（5）",
+      "title": "這是全天下最完美的陣容（6）",
       "participants": [
         "owner",
         "mom",

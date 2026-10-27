@@ -61,7 +61,12 @@ function Back({ onClick }: { onClick: () => void }) {
     </button>
   );
 }
-export function kktTimeline(items: Item[], sent: string[], thread: string, owner: string, creator = false) {
+function stageVisible(items: Item[], thread: string, stage: number, count: number, id: string) {
+  if (!Number.isFinite(count)) return true;
+  const stageItems = items.filter((m) => m.title === thread && Number(m.meta.afterReplies || 0) === stage);
+  return stageItems.slice(0, count).some((m) => m.id === id);
+}
+export function kktTimeline(items: Item[], sent: string[], thread: string, owner: string, creator = false, visibleStageCount = Number.POSITIVE_INFINITY) {
   const replies: Item[] = [];
   for (const raw of sent) {
     try {
@@ -71,7 +76,7 @@ export function kktTimeline(items: Item[], sent: string[], thread: string, owner
         time: entry[2], sender: owner, outgoing: true, meta: { local: "true" } }));
     } catch { /* Ignore invalid saved entries. */ }
   }
-  const authored = items.filter((m) => m.title === thread && (creator || Number(m.meta.afterReplies || 0) <= replies.length));
+  const authored = items.filter((m) => m.title === thread && (creator || Number(m.meta.afterReplies || 0) < replies.length || (Number(m.meta.afterReplies || 0) === replies.length && stageVisible(items, thread, replies.length, visibleStageCount, m.id))));
   return [...authored.map((m) => ({ item: m, order: Number(m.meta.afterReplies || 0) * 2 })),
     ...replies.map((m, i) => ({ item: m, order: i * 2 + 1 }))]
     .sort((a, b) => a.order - b.order).map((v) => v.item);
@@ -81,14 +86,24 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
     [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
-    [menu, setMenu] = useState(false);
+    [menu, setMenu] = useState(false),
+    [stagedVisible, setStagedVisible] = useState<number | null>(null);
   const replyCount = (title: string) => sent.filter((raw) => {
     try { const v = JSON.parse(raw); return Array.isArray(v) && v.length === 3 && v.every((x) => typeof x === "string") && v[0] === title; }
     catch { return false; }
   }).length;
   const list = grouped(p.items.filter((m) => p.creator || Number(m.meta.afterReplies || 0) <= replyCount(m.title))),
-    messages = kktTimeline(p.items, sent, p.thread, p.owner || "機主", p.creator),
+    messages = kktTimeline(p.items, sent, p.thread, p.owner || "機主", p.creator, stagedVisible ?? Number.POSITIVE_INFINITY),
     scroll = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (stagedVisible === null || !p.thread) return;
+    const stage = replyCount(p.thread);
+    const total = p.items.filter((m) => m.title === p.thread && Number(m.meta.afterReplies || 0) === stage).length;
+    if (!total) { setStagedVisible(null); return; }
+    if (stagedVisible >= total) { setStagedVisible(null); return; }
+    const timer = window.setTimeout(() => setStagedVisible((v) => (v === null ? 1 : v + 1)), 950);
+    return () => window.clearTimeout(timer);
+  }, [stagedVisible, p.thread, sent.length, p.items]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
@@ -178,6 +193,7 @@ export function MymyKakao(p: SkinProps) {
             onSubmit={(e) => {
               e.preventDefault();
               if (draft.trim()) {
+                setStagedVisible(0);
                 setSent([
                   ...sent,
                   JSON.stringify([
