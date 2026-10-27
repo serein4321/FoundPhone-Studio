@@ -4219,3 +4219,23 @@
 .simulated-order {
   border: 1px solid #f0b47d;
 }
+
+.taobao-category-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 9px 2px;
+  background: #fff;
+}
+.taobao-category-tabs > button {
+  flex: 0 0 auto;
+  border-radius: 13px;
+  padding: 5px 10px;
+  color: #a8795b;
+  background: #fff8f1;
+  font-size: 9px;
+}
+.taobao-category-tabs > button.selected {
+  color: #fff;
+  background: #ed9146;
+}
