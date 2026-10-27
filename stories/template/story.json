@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 20,
+  "revision": 21,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -265,6 +265,106 @@
           "senderId": "dad",
           "body": "平常不都秒回的嗎怎麼今天一下子不見了？",
           "time": "2026-10-26 09:37"
+        },
+        {
+          "id": "family-kkt-snack-1",
+          "senderId": "mom",
+          "body": "幫我帶一份鹹酥雞和冰可樂",
+          "time": "2026-10-26 09:42",
+          "meta": {
+            "afterReplies": "1",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-snack-2",
+          "senderId": "dad",
+          "body": "家裡可樂喝完了嗎？",
+          "time": "2026-10-26 09:43",
+          "meta": {
+            "afterReplies": "1",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-snack-3",
+          "senderId": "mom",
+          "body": "阿翊，我記得我們走之前冰箱裡還有三罐的",
+          "time": "2026-10-26 09:44",
+          "meta": {
+            "afterReplies": "1",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-snack-4",
+          "senderId": "owner",
+          "body": "那是你記錯了媽媽……",
+          "time": "2026-10-26 09:46",
+          "meta": {
+            "afterReplies": "1",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-snack-5",
+          "senderId": "dad",
+          "body": "你一個人在家全喝完了是不是？都說了不要喝那麼多呀😡",
+          "time": "2026-10-26 09:47",
+          "meta": {
+            "afterReplies": "1",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-lyrics-1",
+          "senderId": "mom",
+          "body": "瑪莎跟我說你有在寫歌詞餒，怎麼偷偷去問他不問我，我才是金曲獎最佳作詞人😣",
+          "time": "2026-10-26 09:50",
+          "meta": {
+            "afterReplies": "2",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-lyrics-2",
+          "senderId": "dad",
+          "body": "女兒有小秘密囉。",
+          "time": "2026-10-26 09:51",
+          "meta": {
+            "afterReplies": "2",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-emoji-1",
+          "senderId": "mom",
+          "body": "🥹",
+          "time": "2026-10-26 09:54",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-emoji-2",
+          "senderId": "dad",
+          "body": "🥹",
+          "time": "2026-10-26 09:55",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
+        },
+        {
+          "id": "family-kkt-emoji-3",
+          "senderId": "owner",
+          "body": "你們兩個不要又來這一套……",
+          "time": "2026-10-26 09:56",
+          "meta": {
+            "afterReplies": "3",
+            "afterCall": "true"
+          }
         }
       ]
     },
