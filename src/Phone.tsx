@@ -1001,6 +1001,7 @@ function AppContent({
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
+              incomingCall={state.incomingCall}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
