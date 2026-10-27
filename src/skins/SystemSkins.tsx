@@ -185,6 +185,7 @@ export function ContactsSkin(p: Props) {
 export function PhotosSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "圖庫");
   const [album, setAlbum] = useState("");
+  const albumNames = ["不能讓他們兩個看到的", "我最喜歡的五個人", "想念的菜頭粿"];
   const list =
     tab === "收藏"
       ? items.filter((i) => i.favorite)
@@ -198,17 +199,16 @@ export function PhotosSkin(p: Props) {
         <h1>{album || tab}</h1>
         {tab === "相簿" && !album ? (
           <div className="album-grid">
-            {groupItems(items, "未分類").map((g) => (
-              <button key={g} onClick={() => setAlbum(g)}>
-                <Media
-                  item={items.find((i) => (i.folder || "未分類") === g)!}
-                />
-                <strong>{g}</strong>
-                <small>
-                  {items.filter((i) => (i.folder || "未分類") === g).length} 項
-                </small>
-              </button>
-            ))}
+            {[...new Set([...albumNames, ...groupItems(items, "未分類")])].map((g) => {
+              const albumItems = items.filter((i) => (i.folder || "未分類") === g);
+              return (
+                <button key={g} onClick={() => setAlbum(g)} aria-label={`開啟相簿${g}`}>
+                  {albumItems[0] ? <Media item={albumItems[0]} /> : <div className="skin-photo album-empty"><span>{g.slice(0, 1)}</span></div>}
+                  <strong>{g}</strong>
+                  <small>{albumItems.length} 項</small>
+                </button>
+              );
+            })}
           </div>
         ) : (
           <>

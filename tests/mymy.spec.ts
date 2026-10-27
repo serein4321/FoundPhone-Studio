@@ -174,3 +174,17 @@ for (const answer of [true, false]) {
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
   });
 }
+
+test("照片相簿顯示三個家庭分類", async ({ page }) => {
+  await page.route("**/work.json", (r) => r.fulfill({ json: compileStory(familyStory).work }));
+  await page.goto("/");
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
+  for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
+  await page.getByRole("button", { name: "開啟App Store", exact: true }).click();
+  await page.getByPlaceholder("搜尋全部App").fill("照片");
+  await page.locator(".runtime-library-row").getByRole("button", { name: "開啟", exact: true }).click();
+  await page.getByRole("button", { name: "相簿", exact: true }).click();
+  await expect(page.getByRole("button", { name: "開啟相簿不能讓他們兩個看到的", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "開啟相簿我最喜歡的五個人", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "開啟相簿想念的菜頭粿", exact: true })).toBeVisible();
+});
