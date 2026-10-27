@@ -159,7 +159,7 @@ export function TaobaoSkin(p: Props) {
         {tab === "商品" ? (
           <>
             <div className="taobao-category-tabs">
-              {["全部", "STAYREAL", "相機", "手機", "耳機"].map((name) => (
+              {["全部", "STAYREAL", "相機", "手機", "耳機", "其他"].map((name) => (
                 <button
                   className={category === name ? "selected" : ""}
                   key={name}
