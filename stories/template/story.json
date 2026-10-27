@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 16,
+  "revision": 17,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -309,25 +309,37 @@
           "id": "perfect-kkt-5",
           "senderId": "guanyou",
           "body": "小玫瑰這幾天也回來了，明天你倆要不要出去玩一下？",
-          "time": "2026-10-26 09:50"
+          "time": "2026-10-26 09:50",
+          "meta": {
+            "afterReplies": "1"
+          }
         },
         {
           "id": "perfect-kkt-6",
           "senderId": "stone",
           "body": "怪獸說你上次想買把新的吉他，我這幾天正好幫你挑選了一下",
-          "time": "2026-10-26 09:51"
+          "time": "2026-10-26 09:51",
+          "meta": {
+            "afterReplies": "1"
+          }
         },
         {
           "id": "perfect-kkt-7",
           "senderId": "dad",
           "body": "喂石錦航，這是我女兒你搶我的活幹什麼",
-          "time": "2026-10-26 09:52"
+          "time": "2026-10-26 09:52",
+          "meta": {
+            "afterReplies": "1"
+          }
         },
         {
           "id": "perfect-kkt-8",
           "senderId": "mom",
           "body": "不管他們了啦，我帶你去吃附近新開的一家超好吃的火鍋",
-          "time": "2026-10-26 09:54"
+          "time": "2026-10-26 09:54",
+          "meta": {
+            "afterReplies": "2"
+          }
         }
       ]
     },
