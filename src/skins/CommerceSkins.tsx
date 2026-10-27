@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import type { Item } from "../schema";
 import {
   Empty,
   Header,
