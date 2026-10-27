@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 15,
+  "revision": 16,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -309,36 +309,24 @@
           "id": "perfect-kkt-5",
           "senderId": "guanyou",
           "body": "小玫瑰這幾天也回來了，明天你倆要不要出去玩一下？",
-          "meta": {
-            "afterReplies": "1"
-          },
           "time": "2026-10-26 09:50"
         },
         {
           "id": "perfect-kkt-6",
           "senderId": "stone",
           "body": "怪獸說你上次想買把新的吉他，我這幾天正好幫你挑選了一下",
-          "meta": {
-            "afterReplies": "1"
-          },
           "time": "2026-10-26 09:51"
         },
         {
           "id": "perfect-kkt-7",
           "senderId": "dad",
           "body": "喂石錦航，這是我女兒你搶我的活幹什麼",
-          "meta": {
-            "afterReplies": "1"
-          },
           "time": "2026-10-26 09:52"
         },
         {
           "id": "perfect-kkt-8",
           "senderId": "mom",
           "body": "不管他們了啦，我帶你去吃附近新開的一家超好吃的火鍋",
-          "meta": {
-            "afterReplies": "2"
-          },
           "time": "2026-10-26 09:54"
         }
       ]
@@ -370,7 +358,6 @@
           "body": "好，我只是想聽妳回我。晚點我跟爸爸一起回家。",
           "time": "2026-10-26 10:06",
           "meta": {
-            "afterReplies": "1",
             "persona": "溫柔、黏人、以照顧女兒為主"
           }
         },
@@ -380,7 +367,6 @@
           "body": "如果忙就先忙，看到訊息再回，別餓著。",
           "time": "2026-10-26 10:08",
           "meta": {
-            "afterReplies": "2",
             "persona": "溫柔、黏人、以照顧女兒為主"
           }
         }
@@ -413,7 +399,6 @@
           "body": "那就好。妳想換吉他弦的話跟爸爸說。",
           "time": "2026-10-26 10:16",
           "meta": {
-            "afterReplies": "1",
             "persona": "穩重、寵女兒、用音樂和行動照顧她"
           }
         },
@@ -423,7 +408,6 @@
           "body": "晚點回家路上記得傳個訊息，媽媽會放心。",
           "time": "2026-10-26 10:18",
           "meta": {
-            "afterReplies": "2",
             "persona": "穩重、寵女兒、用音樂和行動照顧她"
           }
         }
@@ -456,7 +440,6 @@
           "body": "沒有，情緒很準。把最後一句再收一點，會更有力。",
           "time": "2026-10-26 10:26",
           "meta": {
-            "afterReplies": "1",
             "persona": "直白、毒舌但可靠，專注音樂建議"
           }
         },
@@ -466,7 +449,6 @@
           "body": "妳先照自己的想法改，改完再丟給我聽。",
           "time": "2026-10-26 10:28",
           "meta": {
-            "afterReplies": "2",
             "persona": "直白、毒舌但可靠，專注音樂建議"
           }
         }
@@ -484,34 +466,14 @@
         {
           "id": "guanyou-kkt-direct-1",
           "senderId": "guanyou",
-          "body": "小玫瑰，明天有空嗎？",
+          "body": "我前幾天看你穿的裙子好像有點太短了，下次還是要長一點點",
           "time": "2026-10-26 10:31"
         },
         {
           "id": "guanyou-kkt-direct-2",
           "senderId": "owner",
-          "body": "怎麼突然問這個？",
+          "body": "那是學校統一發的校服了啦，冠佑你比我爸媽還要囉嗦一點點👀。",
           "time": "2026-10-26 10:34"
-        },
-        {
-          "id": "guanyou-kkt-direct-3",
-          "senderId": "guanyou",
-          "body": "想帶妳出去逛逛，順便吃點東西。",
-          "time": "2026-10-26 10:36",
-          "meta": {
-            "afterReplies": "1",
-            "persona": "溫和、慢條斯理，像長輩一樣照顧她"
-          }
-        },
-        {
-          "id": "guanyou-kkt-direct-4",
-          "senderId": "guanyou",
-          "body": "不用排太滿，妳想去哪裡就去哪裡。",
-          "time": "2026-10-26 10:38",
-          "meta": {
-            "afterReplies": "2",
-            "persona": "溫和、慢條斯理，像長輩一樣照顧她"
-          }
         }
       ]
     },
@@ -542,7 +504,6 @@
           "body": "放心，我只是幫妳多看幾把，最後還是妳自己選。",
           "time": "2026-10-26 10:46",
           "meta": {
-            "afterReplies": "1",
             "persona": "溫和、務實，尊重女兒自己的選擇"
           }
         },
@@ -552,7 +513,6 @@
           "body": "有空過來試琴，手感合不合最重要。",
           "time": "2026-10-26 10:48",
           "meta": {
-            "afterReplies": "2",
             "persona": "溫和、務實，尊重女兒自己的選擇"
           }
         }
