@@ -92,5 +92,5 @@ test("published family story keeps authored password, wallpapers and live Taiwan
   expect(work.phone.wallpaper.startsWith("data:image/")).toBe(true);
   expect(work.phone.homeWallpaper.startsWith("data:image/")).toBe(true);
   expect(work.phone.homeWallpaper).not.toBe(work.phone.wallpaper);
-  expect(work.data.kakao.some((m: { title: string }) => m.title === "這是全天下最完美的陣容（5）")).toBe(true);
+  expect(work.data.kakao.some((m: { title: string }) => m.title === "這是全天下最完美的陣容（6）")).toBe(true);
 });
