@@ -1,4 +1,6 @@
 import {
+  Check,
+  CreditCard,
   Home,
   MapPin,
   Receipt,
@@ -8,8 +10,10 @@ import {
   Truck,
   Utensils,
   Wallet,
+  X,
 } from "lucide-react";
 import { useState } from "react";
+import type { Item } from "../schema";
 import {
   Empty,
   Header,
@@ -93,6 +97,15 @@ export function AlipaySkin(p: Props) {
 export function TaobaoSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商品");
   const [status, setStatus] = useState("全部");
+  const [selected, setSelected] = useState<Item | null>(null);
+  const [cart, setCart] = useState<Item[]>([]);
+  const [checkout, setCheckout] = useState(false);
+  const [paymentCard, setPaymentCard] = useState<"mom" | "dad">("mom");
+  const [order, setOrder] = useState<{
+    item: Item;
+    card: string;
+    number: string;
+  } | null>(null);
   const list = items
     .filter((i) =>
       tab === "商品"
@@ -100,17 +113,46 @@ export function TaobaoSkin(p: Props) {
         : i.folder === tab,
     )
     .filter((i) => status === "全部" || meta(i, "status") === status);
+  const closePanel = () => {
+    setSelected(null);
+    setCheckout(false);
+  };
+  const addToCart = () => {
+    if (!selected) return;
+    setCart((current) =>
+      current.some((item) => item.id === selected.id)
+        ? current
+        : [...current, selected],
+    );
+  };
+  const confirmOrder = () => {
+    if (!selected) return;
+    setOrder({
+      item: selected,
+      card:
+        paymentCard === "mom"
+          ? "陳信宏的家庭卡（虛構）"
+          : "溫尚翊的家庭卡（虛構）",
+      number: "TB-" + selected.id.slice(-6).toUpperCase(),
+    });
+    setCart((current) => current.filter((item) => item.id !== selected.id));
+    closePanel();
+    setTab("訂單");
+  };
   return (
     <div className="catalog-skin taobao-ui">
       <Header p={p} />
       <div className="taobao-search">
         <SearchBox value={q} set={setQ} placeholder="搜尋商品或訂單" />
+        {tab === "商品" && (
+          <span className="taobao-cart-count">購物車 {cart.length}</span>
+        )}
       </div>
       <div className="catalog-scroll">
         {tab === "商品" ? (
           <div className="taobao-products">
             {list.map((i) => (
-              <button key={i.id} onClick={() => p.onItem(i)}>
+              <button key={i.id} onClick={() => setSelected(i)}>
                 <Media item={i} />
                 <strong>{i.title}</strong>
                 <p>
@@ -133,6 +175,24 @@ export function TaobaoSkin(p: Props) {
                 </button>
               ))}
             </div>
+            {order && tab === "訂單" && (
+              <div className="taobao-order simulated-order">
+                <div>
+                  <ShoppingBag size={16} />
+                  <strong>{order.item.sender}</strong>
+                  <small>待發貨</small>
+                </div>
+                <section>
+                  <Media item={order.item} />
+                  <span>
+                    <strong>{order.item.title}</strong>
+                    <p>作品內模擬訂單 · 付款方式：{order.card}</p>
+                    <b>¥ {meta(order.item, "price", "—")}</b>
+                  </span>
+                </section>
+                <footer>{order.number} · 不會產生真實扣款</footer>
+              </div>
+            )}
             {list.map((i) => (
               <button
                 className="taobao-order"
@@ -170,6 +230,56 @@ export function TaobaoSkin(p: Props) {
         }}
         icons={[<Home />, <ShoppingBag />, <Truck />]}
       />
+      {selected && (
+        <div className="taobao-panel">
+          <div className="taobao-panel-header">
+            <strong>{checkout ? "確認訂單" : "商品詳情"}</strong>
+            <button aria-label="關閉商品詳情" onClick={closePanel}>
+              <X size={19} />
+            </button>
+          </div>
+          <Media item={selected} />
+          <h2>{selected.title}</h2>
+          <p>{selected.body}</p>
+          <strong className="taobao-panel-price">
+            ¥ {meta(selected, "price", "—")}
+          </strong>
+          {!checkout ? (
+            <div className="taobao-panel-actions">
+              <button onClick={addToCart}>
+                {cart.some((item) => item.id === selected.id)
+                  ? "已加入購物車"
+                  : "加入購物車"}
+              </button>
+              <button className="primary" onClick={() => setCheckout(true)}>
+                立即購買
+              </button>
+            </div>
+          ) : (
+            <div className="taobao-payment">
+              <small>作品內模擬付款，不會連接真實銀行或產生扣款。</small>
+              <button
+                className={paymentCard === "mom" ? "selected" : ""}
+                onClick={() => setPaymentCard("mom")}
+              >
+                <CreditCard size={16} />
+                陳信宏的家庭卡（虛構）
+              </button>
+              <button
+                className={paymentCard === "dad" ? "selected" : ""}
+                onClick={() => setPaymentCard("dad")}
+              >
+                <CreditCard size={16} />
+                溫尚翊的家庭卡（虛構）
+              </button>
+              <button className="primary" onClick={confirmOrder}>
+                <Check size={16} />
+                確認下單
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
