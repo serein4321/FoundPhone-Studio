@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 12,
+  "revision": 13,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -348,9 +348,10 @@
     "photos": [
       {
         "id": "family-wallpaper-photo",
-        "title": "五個大人",
+        "title": "五個人｜家庭合照",
         "body": "一直都在的人。｜家庭合照（壁紙素材待替換）",
-        "time": "2026-10-25 20:00"
+        "time": "2026-10-25 20:00",
+        "folder": "我最喜歡的五個人"
       }
     ],
     "notes": [
