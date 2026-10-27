@@ -290,6 +290,9 @@ function PhoneRuntime({
   useEffect(() => {
     if (app && !work.apps.some((a) => a.id === app && a.installed)) setApp("");
   }, [app, work.apps]);
+  const wallpaper = locked
+    ? work.phone.wallpaper
+    : work.phone.homeWallpaper || work.phone.wallpaper;
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
   const plugin = getApp(app);
   useEffect(() => {
@@ -318,8 +321,8 @@ function PhoneRuntime({
     >
       <KeyboardContext.Provider value={setKeyboard}>
         <div
-          style={safeMedia(work.phone.wallpaper) ? { backgroundImage: `url("${safeMedia(work.phone.wallpaper)}")`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
-          className={`phone-screen wallpaper-${safeMedia(work.phone.wallpaper) ? "custom" : work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
+          style={safeMedia(wallpaper) ? { backgroundImage: `url("${safeMedia(wallpaper)}")`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+          className={`phone-screen wallpaper-${safeMedia(wallpaper) ? "custom" : wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           data-app={app}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
@@ -385,8 +388,8 @@ function PhoneRuntime({
             }
           }}
         >
-          {!safeMedia(work.phone.wallpaper) && <div className="wallpaper-orb orb-one" />}
-          {!safeMedia(work.phone.wallpaper) && <div className="wallpaper-orb orb-two" />}
+          {!safeMedia(wallpaper) && <div className="wallpaper-orb orb-one" />}
+          {!safeMedia(wallpaper) && <div className="wallpaper-orb orb-two" />}
           <div className="status-bar">
             <button
               onClick={() =>
