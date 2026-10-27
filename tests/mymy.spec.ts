@@ -244,6 +244,7 @@ test("Taiwan real clock and two-stage family group survive reload", async ({ pag
   for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
   await open(page, "KakaoTalk");
   await page.locator(".kzkcr").filter({ hasText: group }).click();
-  await expect(page.locator(".kzbub")).toHaveCount(10);
+  await expect(page.locator(".kzbub")).toHaveCount(9);
+  await expect(page.locator(".kzbub")).toHaveCount(10, { timeout: 5000 });
   await expect(page.locator(".kzbub").last()).toContainText("超好吃的火鍋");
 });
