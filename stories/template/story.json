@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 21,
+  "revision": 22,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -268,8 +268,8 @@
         },
         {
           "id": "family-kkt-snack-1",
-          "senderId": "mom",
-          "body": "幫我帶一份鹹酥雞和冰可樂",
+          "senderId": "owner",
+          "body": "幫我帶一份鹹酥雞和可樂，要百事的吧冰的冰的",
           "time": "2026-10-26 09:42",
           "meta": {
             "afterReplies": "1",
