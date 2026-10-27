@@ -62,6 +62,10 @@
         },
         "notifications": {
           "type": "boolean"
+        },
+        "homeWallpaper": {
+          "type": "string",
+          "description": "Optional unlocked home screen wallpaper; falls back to wallpaper."
         }
       },
       "required": [

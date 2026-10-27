@@ -137,8 +137,13 @@ for (const answer of [true, false]) {
     );
     await page.goto("/");
     await expect(page.locator(".lock-screen")).toBeVisible();
+    expect(await page.locator(".phone-screen").evaluate((el, src) =>
+      (el as HTMLElement).style.backgroundImage.includes(src), familyStory.phone.wallpaper)).toBe(true);
     await page.getByRole("button", { name: "轻触解锁" }).click();
     for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    expect(await page.locator(".phone-screen").evaluate((el, src) =>
+      (el as HTMLElement).style.backgroundImage.includes(src), familyStory.phone.homeWallpaper)).toBe(true);
+    await page.locator(".phone-screen").screenshot({ path: "outputs/mymy/family-home-wallpaper-" + answer + ".png" });
     await open(page, "KakaoTalk");
     await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
     await expect(page.locator(".chat-time")).toContainText("10月26日");
