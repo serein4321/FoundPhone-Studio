@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 22,
+  "revision": 23,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -28,7 +28,8 @@
     "clock",
     "settings",
     "appstore",
-    "kakao"
+    "kakao",
+    "taobao"
   ],
   "contacts": [
     {
@@ -737,6 +738,36 @@
           "callType": "video"
         },
         "time": "2026-10-26 09:38"
+      }
+    ],
+    "taobao": [
+      {
+        "id": "taobao-pepsi-ice-pack",
+        "title": "百事可樂｜冰鎮家庭包",
+        "body": "24罐裝，送到家前保持冰涼。作品內商品，可加入購物車並模擬下單。",
+        "time": "2026-10-27 14:20",
+        "sender": "百事官方旗艦店",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "89",
+          "merchant": "百事官方旗艦店",
+          "rating": "4.9"
+        }
+      },
+      {
+        "id": "taobao-grill-gift-box",
+        "title": "台式鹹酥雞調理包",
+        "body": "氣炸鍋加熱即可享用，適合晚回家的家庭晚餐。",
+        "time": "2026-10-27 14:22",
+        "sender": "台味食堂",
+        "kind": "image",
+        "folder": "商品",
+        "meta": {
+          "price": "168",
+          "merchant": "台味食堂",
+          "rating": "4.8"
+        }
       }
     ]
   },
