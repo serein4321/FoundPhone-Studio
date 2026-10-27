@@ -44,7 +44,7 @@ export function SocialDetail(p: {
       false,
     ),
     [extra, setExtra] = useSkinState<string[]>(p, "replies-" + item.id, []);
-  const [tab, setTab] = useState("评论"),
+  const [tab, setTab] = useState("評論"),
     [draft, setDraft] = useState(""),
     [target, setTarget] = useState(""),
     [menu, setMenu] = useState(false),
@@ -62,23 +62,23 @@ export function SocialDetail(p: {
   };
   const submit = () => {
     if (!draft.trim()) return;
-    setExtra([...extra, (p.owner || "机主") + "：" + draft.trim()]);
+    setExtra([...extra, (p.owner || "機主") + "：" + draft.trim()]);
     setDraft("");
     setTarget("");
-    setTab("评论");
+    setTab("評論");
   };
   const actions = (
     <div className="post-detail-actions">
-      <button aria-label="查看评论" onClick={() => setTab("评论")}>
+      <button aria-label="檢視評論" onClick={() => setTab("評論")}>
         <MessageCircle />
         {count(comments.length)}
       </button>
-      <button aria-label="查看转发" onClick={() => setTab("转发")}>
+      <button aria-label="檢視轉發" onClick={() => setTab("轉發")}>
         <Repeat2 />
         {meta(item, "reposts", "0")}
       </button>
       <button
-        aria-label="喜欢帖子"
+        aria-label="喜歡帖子"
         aria-pressed={liked}
         onClick={() => setLiked(!liked)}
       >
@@ -118,7 +118,7 @@ export function SocialDetail(p: {
         <strong>{weibo ? "微博正文" : "帖子"}</strong>
         <div>
           {weibo && <Headphones size={23} />}
-          <button aria-label="帖子更多选项" onClick={() => setMenu(!menu)}>
+          <button aria-label="帖子更多選項" onClick={() => setMenu(!menu)}>
             <MoreHorizontal size={26} />
           </button>
         </div>
@@ -127,7 +127,7 @@ export function SocialDetail(p: {
         <div className="post-detail-author">
           <Avatar name={item.sender} src={item.avatar} />
           <div>
-            <strong>{item.sender || "用户"}</strong>
+            <strong>{item.sender || "用戶"}</strong>
             <small>
               {weibo
                 ? item.time + " " + meta(item, "location")
@@ -136,7 +136,7 @@ export function SocialDetail(p: {
           </div>
           {weibo ? (
             <button
-              aria-label="关注作者"
+              aria-label="關注作者"
               onClick={() => setFollowed(!followed)}
             >
               <Star fill={followed ? "#ff9500" : "none"} />
@@ -146,7 +146,7 @@ export function SocialDetail(p: {
               className="post-follow"
               onClick={() => setFollowed(!followed)}
             >
-              {followed ? "已关注" : "关注"}
+              {followed ? "已關注" : "關注"}
             </button>
           )}
         </div>
@@ -159,7 +159,7 @@ export function SocialDetail(p: {
             {[Crown, MessageCircle, Camera, Share, Copy].map((Icon, n) => (
               <button
                 key={n}
-                aria-label={["会员", "微信分享", "相机", "分享", "复制"][n]}
+                aria-label={["會員", "微信分享", "相機", "分享", "復制"][n]}
                 onClick={() => (n === 4 ? void copy() : setMenu(true))}
               >
                 <Icon size={25} />
@@ -169,23 +169,23 @@ export function SocialDetail(p: {
         ) : (
           <>
             <div className="x-post-metadata">
-              {item.time} · <b>{meta(item, "views", "0")}</b> 次查看
+              {item.time} · <b>{meta(item, "views", "0")}</b> 次檢視
             </div>
             {actions}
           </>
         )}
         {weibo ? (
           <div className="weibo-detail-tabs">
-            {["转发", "评论", "赞"].map((name) => (
+            {["轉發", "評論", "贊"].map((name) => (
               <button
                 key={name}
                 aria-pressed={tab === name}
                 onClick={() => setTab(name)}
               >
                 {name}{" "}
-                {name === "评论"
+                {name === "評論"
                   ? count(comments.length)
-                  : name === "赞"
+                  : name === "贊"
                     ? count(item.likes + (liked ? 1 : 0))
                     : meta(item, "reposts", "0")}
               </button>
@@ -194,24 +194,24 @@ export function SocialDetail(p: {
         ) : (
           <div className="x-related-row">
             <button onClick={() => setSort(!sort)}>
-              {sort ? "最新" : "相关"}⌄
+              {sort ? "最新" : "相關"}⌄
             </button>
-            <button onClick={() => setTab(tab === "转发" ? "评论" : "转发")}>
-              查看引用 ›
+            <button onClick={() => setTab(tab === "轉發" ? "評論" : "轉發")}>
+              檢視引用 ›
             </button>
           </div>
         )}
         {weibo && (
           <button className="weibo-sort" onClick={() => setSort(!sort)}>
-            {sort ? "按时间" : "按热度"}⌄
+            {sort ? "按時間" : "按熱度"}⌄
           </button>
         )}
-        {tab === "评论" ? (
+        {tab === "評論" ? (
           <div className="post-detail-comments">
             {replies.map((c, index) => {
               const split = c.search(/[：:]/),
                 hasName = split > 0 && split < 24,
-                name = hasName ? c.slice(0, split) : "用户",
+                name = hasName ? c.slice(0, split) : "用戶",
                 body = hasName ? c.slice(split + 1) : c;
               return (
                 <article key={index} className="post-detail-comment">
@@ -221,13 +221,13 @@ export function SocialDetail(p: {
                     <p>{body}</p>
                     <div className="post-comment-actions">
                       <button
-                        aria-label={"回复" + name}
+                        aria-label={"回復" + name}
                         onClick={() => setTarget(name)}
                       >
                         <MessageCircle size={16} />
                       </button>
                       <button
-                        aria-label={"喜欢回复" + index}
+                        aria-label={"喜歡回復" + index}
                         onClick={(e) => {
                           e.currentTarget.classList.toggle("liked");
                         }}
@@ -240,11 +240,11 @@ export function SocialDetail(p: {
                 </article>
               );
             })}
-            {!replies.length && <p className="post-comments-empty">暂无评论</p>}
+            {!replies.length && <p className="post-comments-empty">暫無評論</p>}
           </div>
         ) : (
           <p className="post-comments-empty">
-            {tab === "转发" ? "暂无可展开的转发记录" : "暂无更多记录"}
+            {tab === "轉發" ? "暫無可展開的轉發記錄" : "暫無更多記錄"}
           </p>
         )}
       </div>
@@ -255,16 +255,16 @@ export function SocialDetail(p: {
           submit();
         }}
       >
-        <Avatar name={p.owner || "机主"} />
+        <Avatar name={p.owner || "機主"} />
         <input
-          aria-label="回复帖子"
+          aria-label="回復帖子"
           placeholder={
-            target ? "回复 @" + target : weibo ? "发表你的评论" : "发布你的回复"
+            target ? "回復 @" + target : weibo ? "發表你的評論" : "發布你的回復"
           }
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
         />
-        <button aria-label="发送回复" disabled={!draft.trim()}>
+        <button aria-label="傳送回復" disabled={!draft.trim()}>
           <Send size={20} />
         </button>
       </form>
@@ -274,7 +274,7 @@ export function SocialDetail(p: {
             <button
               key={n}
               aria-label={
-                ["返回X时间线", "X搜索", "X助手", "X通知", "X私信"][n]
+                ["返回X時間線", "X搜尋", "X助手", "X通知", "X私信"][n]
               }
               onClick={p.back}
             >
@@ -287,7 +287,7 @@ export function SocialDetail(p: {
         <div className="post-options-menu">
           <button onClick={copy}>
             <Copy size={18} />
-            {copied ? "已复制" : "复制文字"}
+            {copied ? "已復制" : "復制文字"}
           </button>
           <button
             onClick={() => {

@@ -66,6 +66,14 @@
         "homeWallpaper": {
           "type": "string",
           "description": "Optional unlocked home screen wallpaper; falls back to wallpaper."
+        },
+        "clockMode": {
+          "type": "string",
+          "enum": [
+            "story",
+            "real"
+          ],
+          "description": "real 使用即時台灣時間；未設定則沿用劇情時鐘。"
         }
       },
       "required": [

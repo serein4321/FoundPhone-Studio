@@ -30,11 +30,11 @@ function Player() {
           <p className="player-footnote">
             {work.description}
             <br />
-            进度保存在此浏览器 · FoundPhone Studio
+            進度儲存在此瀏覽器 · FoundPhone Studio
           </p>
         </>
       ) : (
-        <p>{error || "正在打开故事…"}</p>
+        <p>{error || "正在開啟故事…"}</p>
       )}
     </main>
   );

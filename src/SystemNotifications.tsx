@@ -5,7 +5,7 @@ import { AppArtwork } from "./AppArtwork";
 import type { Work } from "./schema";
 export function notificationContent(text: string, apps: Work["apps"]) {
   const separator = text.search(/[:：]/);
-  const sender = separator > 0 ? text.slice(0, separator) : "信息";
+  const sender = separator > 0 ? text.slice(0, separator) : "資訊";
   const app = apps.find((a) => a.name === sender);
   return {
     title: sender,
@@ -61,7 +61,7 @@ export function SystemNotifications({
                   <strong>{n.title}</strong>
                   <span>{n.body}</span>
                 </span>
-                <time>现在</time>
+                <time>現在</time>
               </button>
               {!compact && (
                 <button
@@ -81,7 +81,7 @@ export function SystemNotifications({
           className="notice-expand"
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ? "收起" : notices.length + " 条通知"}
+          {expanded ? "收起" : notices.length + " 條通知"}
         </button>
       )}
     </div>

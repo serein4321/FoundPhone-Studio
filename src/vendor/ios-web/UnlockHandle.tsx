@@ -10,7 +10,7 @@ export function UnlockHandle({ onUnlock }: { onUnlock: () => void }) {
   return (
     <motion.button
       className="unlock-btn swipe-unlock"
-      aria-label="轻触解锁"
+      aria-label="輕觸解鎖"
       drag="y"
       dragConstraints={{ top: 0, bottom: 0 }}
       dragElastic={0.1}
@@ -24,7 +24,7 @@ export function UnlockHandle({ onUnlock }: { onUnlock: () => void }) {
       onClick={onUnlock}
       style={{ opacity: 1 - swipeProgress * 0.5 }}
     >
-      向上轻扫以打开
+      向上輕掃以開啟
     </motion.button>
   );
 }

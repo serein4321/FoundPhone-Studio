@@ -5,7 +5,7 @@ import { advance, dispatch } from "./engine";
 function node(p: Partial<StoryNode>): StoryNode {
   return {
     id: "node",
-    label: "节点",
+    label: "節點",
     type: "action",
     event: "",
     target: "",
@@ -31,7 +31,7 @@ describe("deterministic scheduled story execution", () => {
         actions: [{ type: "clue", key: "late", value: true }],
         next: ["end"],
       }),
-      node({ id: "end", type: "ending", label: "迟来的消息" }),
+      node({ id: "end", type: "ending", label: "遲來的訊息" }),
     ];
     const s = dispatch(w, initialRuntime(w), "start");
     expect(s.clues).toEqual([]);
@@ -40,7 +40,7 @@ describe("deterministic scheduled story execution", () => {
     expect(early.endings).toEqual([]);
     const done = advance(w, early, 1);
     expect(done.clues).toEqual(["late"]);
-    expect(done.endings).toEqual(["迟来的消息"]);
+    expect(done.endings).toEqual(["遲來的訊息"]);
     expect(advance(w, done, 3000).clues).toHaveLength(1);
   });
   it("restores pending events through save JSON and handles chained due times", () => {

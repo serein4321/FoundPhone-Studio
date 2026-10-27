@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { createWork } from "../src/demo";
 async function setup(page: import("@playwright/test").Page) {
-  const w = createWork("系统体验验收");
+  const w = createWork("系統體驗驗收");
   w.phone.passcode = "1121";
   for (const id of [
     "wechat",
@@ -18,15 +18,15 @@ async function setup(page: import("@playwright/test").Page) {
   w.nodes = [
     {
       id: "device-notices",
-      label: "通知回归",
+      label: "通知回歸",
       type: "event",
       event: "start",
       target: "",
       conditions: [],
       logic: "and",
       actions: [
-        { type: "notification", key: "", value: "微信：林知夏发来了一条消息" },
-        { type: "notification", key: "", value: "信息：记得带上那张车票" },
+        { type: "notification", key: "", value: "微信：林知夏發來了一條訊息" },
+        { type: "notification", key: "", value: "資訊：記得帶上那張車票" },
       ],
       next: [],
       once: true,
@@ -40,9 +40,9 @@ async function setup(page: import("@playwright/test").Page) {
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(w)),
   });
-  await expect(page.getByRole("status")).toContainText("作品已导入");
-  await page.getByRole("button", { name: "关闭提示" }).click();
-  await page.getByRole("button", { name: "预览", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("作品已導入");
+  await page.getByRole("button", { name: "關閉提示" }).click();
+  await page.getByRole("button", { name: "預覽", exact: true }).click();
   return page.locator(".preview-overlay .phone-shell");
 }
 test("device lock, automatic passcode, native settings, controls and keyboard work together", async ({
@@ -52,20 +52,20 @@ test("device lock, automatic passcode, native settings, controls and keyboard wo
   await expect(phone.locator(".lock-clock-block")).toBeVisible();
   await expect(phone.locator(".pin-keypad")).toHaveCount(0);
   await phone.screenshot({ path: "outputs/v0.5/lock.png" });
-  await phone.getByRole("button", { name: "轻触解锁" }).click();
+  await phone.getByRole("button", { name: "輕觸解鎖" }).click();
   await phone.screenshot({ path: "outputs/v0.5/passcode.png" });
   for (const n of "0000")
     await phone
-      .getByRole("button", { name: "密码键" + n, exact: true })
+      .getByRole("button", { name: "密碼鍵" + n, exact: true })
       .click();
-  await expect(phone.getByText("密码不正确")).toBeVisible();
+  await expect(phone.getByText("密碼不正確")).toBeVisible();
   for (const n of "1121")
     await phone
-      .getByRole("button", { name: "密码键" + n, exact: true })
+      .getByRole("button", { name: "密碼鍵" + n, exact: true })
       .click();
   await expect(phone.locator(".home-screen")).toBeVisible();
   await phone.screenshot({ path: "outputs/v0.5/home.png" });
-  await phone.getByRole("button", { name: "打开设置", exact: true }).click();
+  await phone.getByRole("button", { name: "開啟設定", exact: true }).click();
   await expect(phone.locator(".settings-account")).toBeVisible();
   await phone.screenshot({ path: "outputs/v0.5/settings.png" });
   await phone.getByRole("button", { name: "Wi-Fi", exact: false }).click();
@@ -74,7 +74,7 @@ test("device lock, automatic passcode, native settings, controls and keyboard wo
   );
   await phone
     .locator(".settings-native-nav")
-    .getByRole("button", { name: "设置", exact: true })
+    .getByRole("button", { name: "設定", exact: true })
     .click();
   await phone.getByRole("button", { name: "返回桌面" }).click();
   await phone.getByRole("button", { name: "控制中心", exact: true }).click();
@@ -84,21 +84,21 @@ test("device lock, automatic passcode, native settings, controls and keyboard wo
   await expect(wifi).toHaveAttribute("aria-pressed", "true");
   await wifi.click();
   await expect(wifi).toHaveAttribute("aria-pressed", "false");
-  await phone.getByRole("button", { name: "关闭控制中心" }).click();
-  await phone.getByRole("button", { name: "打开微信", exact: true }).click();
+  await phone.getByRole("button", { name: "關閉控制中心" }).click();
+  await phone.getByRole("button", { name: "開啟微信", exact: true }).click();
   await phone.screenshot({ path: "outputs/v0.5/wechat-list.png" });
   await phone.locator(".wx-chat-row").first().click();
-  await phone.getByRole("button", { name: "输入消息", exact: true }).click();
-  await expect(phone.getByRole("dialog", { name: "屏幕键盘" })).toBeVisible();
+  await phone.getByRole("button", { name: "輸入訊息", exact: true }).click();
+  await expect(phone.getByRole("dialog", { name: "螢幕鍵盤" })).toBeVisible();
   await phone
     .getByRole("dialog")
     .getByRole("button", { name: "q", exact: true })
     .click();
-  await expect(phone.getByRole("textbox", { name: "消息草稿" })).toHaveValue(
+  await expect(phone.getByRole("textbox", { name: "訊息草稿" })).toHaveValue(
     "q",
   );
   await phone.screenshot({ path: "outputs/v0.5/keyboard.png" });
-  await phone.getByRole("button", { name: "收起键盘" }).click();
+  await phone.getByRole("button", { name: "收起鍵盤" }).click();
   await expect(phone.locator(".device-keyboard")).toHaveCount(0);
   await phone.screenshot({ path: "outputs/v0.5/wechat-chat.png" });
 });
@@ -141,7 +141,7 @@ test("mobile device gestures and long press work at 390px without document overf
   await expect(phone.locator(".device-passcode")).toBeVisible();
   for (const n of "1121")
     await phone
-      .getByRole("button", { name: "密码键" + n, exact: true })
+      .getByRole("button", { name: "密碼鍵" + n, exact: true })
       .click();
   await expect(phone.locator(".home-screen")).toBeVisible();
   await swipe(
@@ -151,8 +151,8 @@ test("mobile device gestures and long press work at 390px without document overf
     box.y + 180 * scale,
   );
   await expect(phone.locator(".device-control")).toBeVisible();
-  await phone.getByRole("button", { name: "关闭控制中心" }).click();
-  const icon = phone.getByRole("button", { name: "打开相册", exact: true });
+  await phone.getByRole("button", { name: "關閉控制中心" }).click();
+  const icon = phone.getByRole("button", { name: "開啟相簿", exact: true });
   await icon.hover();
   await page.mouse.down();
   await page.waitForTimeout(650);
@@ -202,16 +202,16 @@ test("notification stack, authenticated camera return and recent apps preserve t
     "1",
   );
   await phone.screenshot({ path: "outputs/v0.5/lock-notifications.png" });
-  await phone.getByRole("button", { name: "2 条通知", exact: true }).click();
+  await phone.getByRole("button", { name: "2 條通知", exact: true }).click();
   await expect(phone.locator(".device-notice")).toHaveCount(2);
-  await phone.getByRole("button", { name: "相机", exact: true }).click();
+  await phone.getByRole("button", { name: "相機", exact: true }).click();
   await expect(phone.locator(".native-camera")).toBeVisible();
   await phone.getByRole("button", { name: "返回桌面" }).click();
   await expect(phone.locator(".device-passcode")).toBeVisible();
   await expect(phone.locator(".home-screen")).toHaveCount(0);
   for (const n of "1121")
     await phone
-      .getByRole("button", { name: "密码键" + n, exact: true })
+      .getByRole("button", { name: "密碼鍵" + n, exact: true })
       .click();
   await phone.getByRole("button", { name: "通知中心", exact: true }).click();
   await expect(phone.locator(".device-notice")).toHaveCount(2);
@@ -219,7 +219,7 @@ test("notification stack, authenticated camera return and recent apps preserve t
   await expect(phone.locator(".device-notice")).toHaveCount(1);
   await phone.screenshot({ path: "outputs/v0.5/notifications.png" });
   await phone.getByRole("button", { name: "返回桌面" }).click();
-  await phone.getByRole("button", { name: "打开备忘录", exact: true }).click();
+  await phone.getByRole("button", { name: "開啟備忘錄", exact: true }).click();
   await expect(phone.locator(".native-notes")).toBeVisible();
   await expect(phone.locator(".app-screen")).toHaveCSS("opacity", "1");
   const box = (await phone.locator(".phone-screen").boundingBox())!;
@@ -235,7 +235,7 @@ test("notification stack, authenticated camera return and recent apps preserve t
   await phone.screenshot({ path: "outputs/v0.5/switcher.png" });
   await phone
     .locator(".device-switcher")
-    .getByRole("button", { name: /备忘录/ })
+    .getByRole("button", { name: /備忘錄/ })
     .click();
   await expect(phone.locator(".native-notes")).toBeVisible();
   await expect(phone.locator(".device-switcher")).toHaveCount(0);

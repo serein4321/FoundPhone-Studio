@@ -33,7 +33,7 @@ export function Modal({
             <span className="eyebrow">FOUNDPHONE STUDIO</span>
             <h2>{title}</h2>
           </div>
-          <button className="icon-button" aria-label="关闭" onClick={onClose}>
+          <button className="icon-button" aria-label="關閉" onClick={onClose}>
             <X size={20} />
           </button>
         </header>
@@ -62,14 +62,14 @@ export function ItemEditor({
   const plugin = getApp(app);
   return (
     <Modal
-      title={`编辑${plugin.engine === "messaging" ? "消息" : "内容"} · ${plugin.name}`}
+      title={`編輯${plugin.engine === "messaging" ? "訊息" : "內容"} · ${plugin.name}`}
       onClose={onClose}
     >
       <div className="editor-fields">
         <label>
-          内容 ID
+          內容 ID
           <input
-            aria-label="内容 ID"
+            aria-label="內容 ID"
             readOnly
             value={draft.id}
             onFocus={(e) => e.target.select()}
@@ -77,14 +77,14 @@ export function ItemEditor({
         </label>
         <div className="two-cols">
           <label>
-            {plugin.engine === "messaging" ? "会话名称" : "标题"}
+            {plugin.engine === "messaging" ? "會話名稱" : "標題"}
             <input
               value={draft.title}
               onChange={(e) => setField("title", e.target.value)}
             />
           </label>
           <label>
-            发送者 / 作者
+            傳送者 / 作者
             <input
               value={draft.sender}
               onChange={(e) => setField("sender", e.target.value)}
@@ -93,14 +93,14 @@ export function ItemEditor({
         </div>
         <div className="two-cols">
           <label>
-            时间
+            時間
             <input
               value={draft.time}
               onChange={(e) => setField("time", e.target.value)}
             />
           </label>
           <label>
-            内容类型
+            內容類型
             <select
               value={draft.kind}
               onChange={(e) => setField("kind", e.target.value as Item["kind"])}
@@ -126,10 +126,10 @@ export function ItemEditor({
         {["messaging", "social"].includes(plugin.engine) && (
           <label className="upload-zone">
             <ImagePlus size={20} />
-            <span>发送者头像</span>
+            <span>傳送者頭像</span>
             <input
               type="file"
-              aria-label="上传发送者头像"
+              aria-label="上傳傳送者頭像"
               accept="image/png,image/jpeg,image/webp"
               onChange={async (e) => {
                 const f = e.target.files?.[0];
@@ -147,10 +147,10 @@ export function ItemEditor({
                 <img
                   className="avatar-preview"
                   src={safeMedia(draft.avatar)}
-                  alt="头像预览"
+                  alt="頭像預覽"
                 />
                 <button type="button" onClick={() => setField("avatar", "")}>
-                  移除头像
+                  移除頭像
                 </button>
               </>
             )}
@@ -176,10 +176,10 @@ export function ItemEditor({
           </div>
         )}
         <label>
-          故事内容
+          故事內容
           {plugin.engine === "document" ? (
             <>
-              <Suspense fallback={<p>正在打开编辑器…</p>}>
+              <Suspense fallback={<p>正在開啟編輯器…</p>}>
                 <RichEditor
                   item={item}
                   onChange={(patch) => set((s) => ({ ...s, ...patch }))}
@@ -196,12 +196,12 @@ export function ItemEditor({
         </label>
         <div className="two-cols">
           <label>
-            文件夹 / App 分栏
+            資料夾 / App 分欄
             <input
               list="item-folders"
               value={draft.folder}
               onChange={(e) => setField("folder", e.target.value)}
-              placeholder="可输入新的分组或频道名称"
+              placeholder="可輸入新的分組或頻道名稱"
             />
             <datalist id="item-folders">
               {[...new Set([...plugin.tabs, draft.folder])]
@@ -212,7 +212,7 @@ export function ItemEditor({
             </datalist>
           </label>
           <label>
-            内容密码
+            內容密碼
             <input
               value={draft.password}
               onChange={(e) => setField("password", e.target.value)}
@@ -223,8 +223,8 @@ export function ItemEditor({
         <label className="upload-zone">
           <ImagePlus size={20} />
           <span>
-            {draft.media ? "替换已上传素材" : "添加图片、音频或视频"}
-            <small>仅本地保存 · 图片自动压缩 · 单文件 20 MB</small>
+            {draft.media ? "替換已上傳素材" : "新增圖片、音頻或視訊"}
+            <small>僅本地儲存 · 圖片自動壓縮 · 單檔案 20 MB</small>
           </span>
           <input
             type="file"
@@ -262,7 +262,7 @@ export function ItemEditor({
               checked={draft.outgoing}
               onChange={(e) => setField("outgoing", e.target.checked)}
             />
-            本人发送
+            本人傳送
           </label>
           <label>
             <input
@@ -270,7 +270,7 @@ export function ItemEditor({
               checked={draft.hidden}
               onChange={(e) => setField("hidden", e.target.checked)}
             />
-            初始隐藏
+            初始隱藏
           </label>
           <label>
             <input
@@ -286,13 +286,13 @@ export function ItemEditor({
               checked={draft.read}
               onChange={(e) => setField("read", e.target.checked)}
             />
-            已读
+            已讀
           </label>
         </div>
         <label>
-          解锁变量
+          解鎖變量
           <input
-            placeholder="例如 found（变量为 true 时显示）"
+            placeholder="例如 found（變量為 true 時顯示）"
             value={draft.unlock}
             onChange={(e) => setField("unlock", e.target.value)}
           />
@@ -300,7 +300,7 @@ export function ItemEditor({
         {plugin.engine === "social" && (
           <>
             <label>
-              虚构点赞数
+              虛構點贊數
               <input
                 type="number"
                 min="0"
@@ -309,7 +309,7 @@ export function ItemEditor({
               />
             </label>
             <label>
-              评论（每行一条）
+              評論（每行一條）
               <textarea
                 value={draft.comments.join("\n")}
                 onChange={(e) =>
@@ -327,7 +327,7 @@ export function ItemEditor({
       <footer>
         <button className="danger ghost" onClick={onDelete}>
           <Trash2 size={15} />
-          删除
+          刪除
         </button>
         <button
           className="primary"
@@ -338,7 +338,7 @@ export function ItemEditor({
           }}
         >
           <Check size={16} />
-          保存内容
+          儲存內容
         </button>
       </footer>
     </Modal>
@@ -355,18 +355,18 @@ export function PhoneSettings({
 }) {
   const [draft, set] = useState(work.phone);
   return (
-    <Modal title="手机设置" onClose={onClose}>
+    <Modal title="手機設定" onClose={onClose}>
       <div className="editor-fields">
         <div className="two-cols">
           <label>
-            机主名称
+            機主名稱
             <input
               value={draft.owner}
               onChange={(e) => set({ ...draft, owner: e.target.value })}
             />
           </label>
           <label>
-            锁屏密码
+            鎖屏密碼
             <input
               maxLength={12}
               value={draft.passcode}
@@ -375,12 +375,12 @@ export function PhoneSettings({
           </label>
         </div>
         <label>
-          壁纸
+          壁紙
           <div className="wallpaper-options">
             {["sage", "sand", "night", "rose"].map((w) => (
               <button
                 key={w}
-                aria-label={`选择${w}壁纸`}
+                aria-label={`選擇${w}壁紙`}
                 className={`wallpaper-${w} ${draft.wallpaper === w ? "chosen" : ""}`}
                 onClick={() => set({ ...draft, wallpaper: w })}
               >
@@ -391,19 +391,19 @@ export function PhoneSettings({
         </label>
         <div className="two-cols">
           <label>
-            主题
+            主題
             <select
               value={draft.theme}
               onChange={(e) =>
                 set({ ...draft, theme: e.target.value as "light" | "dark" })
               }
             >
-              <option value="light">浅色</option>
+              <option value="light">淺色</option>
               <option value="dark">深色</option>
             </select>
           </label>
           <label>
-            虚拟时间
+            虛擬時間
             <input
               type="time"
               value={draft.time}
@@ -411,7 +411,7 @@ export function PhoneSettings({
             />
           </label>
           <label>
-            电量
+            電量
             <input
               type="number"
               min={0}
@@ -426,7 +426,7 @@ export function PhoneSettings({
             />
           </label>
           <label>
-            网络
+            網路
             <input
               value={draft.network}
               onChange={(e) => set({ ...draft, network: e.target.value })}
@@ -439,11 +439,11 @@ export function PhoneSettings({
             checked={draft.notifications}
             onChange={(e) => set({ ...draft, notifications: e.target.checked })}
           />
-          显示剧情通知
+          顯示劇情通知
         </label>
       </div>
       <footer>
-        <span>设置会用于创作器和独立玩家。</span>
+        <span>設定會用於創作器和獨立玩家。</span>
         <button
           className="primary"
           onClick={() => {
@@ -453,7 +453,7 @@ export function PhoneSettings({
             onClose();
           }}
         >
-          保存设置
+          儲存設定
         </button>
       </footer>
     </Modal>
@@ -467,7 +467,7 @@ export function BatchImport({
   onClose: () => void;
 }) {
   const [text, set] = useState(
-    "[2026-09-01 08:30] 小林：你到学校了吗？\n[2026-09-01 08:31] 我：还没，快到了。",
+    "[2026-09-01 08:30] 小林：你到學校了嗎？\n[2026-09-01 08:31] 我：還沒，快到了。",
   );
   const [format, setFormat] = useState("script");
   const [me, setMe] = useState("我");
@@ -484,19 +484,19 @@ export function BatchImport({
     parsed = { items: [], errors: [String(e)] };
   }
   return (
-    <Modal title="批量导入聊天" onClose={onClose}>
+    <Modal title="批量導入聊天" onClose={onClose}>
       <div className="editor-fields">
         <div className="two-cols">
           <label>
             格式
             <select value={format} onChange={(e) => setFormat(e.target.value)}>
-              <option value="script">聊天脚本</option>
+              <option value="script">聊天腳本</option>
               <option value="csv">CSV · time,sender,body</option>
               <option value="json">JSON · Item[]</option>
             </select>
           </label>
           <label>
-            会话名称
+            會話名稱
             <input
               value={conversation}
               onChange={(e) => setConversation(e.target.value)}
@@ -504,12 +504,12 @@ export function BatchImport({
           </label>
         </div>
         <label>
-          代表机主的发送者
+          代表機主的傳送者
           <input value={me} onChange={(e) => setMe(e.target.value)} />
         </label>
         <textarea rows={8} value={text} onChange={(e) => set(e.target.value)} />
         <div className="import-preview">
-          <strong>解析预览 · {parsed.items.length} 条</strong>
+          <strong>解析預覽 · {parsed.items.length} 條</strong>
           {parsed.items.slice(0, 20).map((i) => (
             <p key={i.id}>
               <small>{i.time}</small> <b>{i.sender}</b>：{i.body}
@@ -523,7 +523,7 @@ export function BatchImport({
         ))}
       </div>
       <footer>
-        <span>确认后写入当前 App，可撤销。</span>
+        <span>確認後寫入目前 App，可撤銷。</span>
         <button
           className="primary"
           disabled={!!parsed.errors.length || !parsed.items.length}
@@ -537,7 +537,7 @@ export function BatchImport({
             )
           }
         >
-          确认导入
+          確認導入
         </button>
       </footer>
     </Modal>

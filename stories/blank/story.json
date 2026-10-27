@@ -1,11 +1,11 @@
 {
   "scriptVersion": 1,
   "id": "blank-phone",
-  "title": "捡手机",
+  "title": "撿手機",
   "description": "",
   "revision": 1,
   "phone": {
-    "owner": "机主",
+    "owner": "機主",
     "date": "2026-10-25",
     "time": "09:41",
     "battery": 94,

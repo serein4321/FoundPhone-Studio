@@ -25,7 +25,7 @@ let saving: Promise<void> = Promise.resolve();
 export const useStudio = create<Store>((set, get) => ({
   works: [],
   work: null,
-  status: "正在加载",
+  status: "正在載入",
   past: [],
   future: [],
   error: "",
@@ -39,9 +39,9 @@ export const useStudio = create<Store>((set, get) => ({
         await db.works.put(w);
         works = [w];
       }
-      set({ works, work: works[0], status: "已保存到本机" });
+      set({ works, work: works[0], status: "已儲存到本機" });
     } catch (e) {
-      set({ error: String(e), status: "存储不可用" });
+      set({ error: String(e), status: "儲存不可用" });
     }
   },
   select: (id) => {
@@ -61,7 +61,7 @@ export const useStudio = create<Store>((set, get) => ({
       works: get().works.map((x) => (x.id === w.id ? w : x)),
       past: [...get().past.slice(-29), old],
       future: [],
-      status: "保存中…",
+      status: "儲存中…",
     });
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -78,10 +78,10 @@ export const useStudio = create<Store>((set, get) => ({
       .then(async () => {
         try {
           await db.works.put(w);
-          if (!pending) set({ status: "已保存到本机", error: "" });
+          if (!pending) set({ status: "已儲存到本機", error: "" });
         } catch (e) {
           pending = w;
-          set({ status: "保存失败 · 点击重试", error: String(e) });
+          set({ status: "儲存失敗 · 點擊重試", error: String(e) });
         }
       });
     return saving;
@@ -114,7 +114,7 @@ export const useStudio = create<Store>((set, get) => ({
       works: get().works.map((x) => (x.id === w.id ? w : x)),
       past: past.slice(0, -1),
       future: [work, ...future],
-      status: "保存中…",
+      status: "儲存中…",
     });
     void get().flush();
   },
@@ -128,7 +128,7 @@ export const useStudio = create<Store>((set, get) => ({
       works: get().works.map((x) => (x.id === w.id ? w : x)),
       future: future.slice(1),
       past: [...past, work],
-      status: "保存中…",
+      status: "儲存中…",
     });
     void get().flush();
   },

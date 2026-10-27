@@ -102,6 +102,7 @@ export const workSchema = z.object({
     passcode: z.string().max(12),
     wallpaper: z.string(),
     homeWallpaper: z.string().optional(),
+    clockMode: z.enum(["story", "real"]).optional(),
     theme: z.enum(["light", "dark"]),
     time: z.string(),
     battery: z.number().min(0).max(100),
@@ -186,8 +187,8 @@ export function initialRuntime(w: Work): Runtime {
 export function makeItem(partial: Partial<Item> = {}): Item {
   return itemSchema.parse({
     id: uid(),
-    title: "新内容",
-    body: "在这里写下故事…",
+    title: "新內容",
+    body: "在這裡寫下故事…",
     time: "2026-09-01 08:30",
     sender: "小林",
     ...partial,

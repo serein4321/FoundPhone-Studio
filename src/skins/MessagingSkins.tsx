@@ -108,7 +108,7 @@ function ChatRows({
   );
 }
 export function MessagesSkin(p: Props) {
-  const { q, setQ, items } = useContent(p, "信息");
+  const { q, setQ, items } = useContent(p, "資訊");
   const [unread, setUnread] = useState(false);
   return (
     <div className="catalog-skin native-messages">
@@ -116,10 +116,10 @@ export function MessagesSkin(p: Props) {
         p={{ ...p, onBack: () => (p.thread ? p.onThread("") : p.onBack()) }}
       />
       <div className="message-heading">
-        <h1>{p.thread || "信息"}</h1>
+        <h1>{p.thread || "資訊"}</h1>
         {!p.thread && (
           <button onClick={() => setUnread(!unread)}>
-            {unread ? "全部" : "未读"}
+            {unread ? "全部" : "未讀"}
           </button>
         )}
       </div>
@@ -145,8 +145,8 @@ export function MessagesSkin(p: Props) {
   );
 }
 export function QQSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "消息");
-  const list = items.filter((i) => i.folder !== "空间" && i.kind !== "post");
+  const { tab, setTab, q, setQ, items } = useContent(p, "訊息");
+  const list = items.filter((i) => i.folder !== "空間" && i.kind !== "post");
   return (
     <div className="catalog-skin qq-ui">
       {!p.thread && <Header p={p} />}
@@ -165,9 +165,9 @@ export function QQSkin(p: Props) {
         <>
           <div className="catalog-scroll">
             <SearchBox value={q} set={setQ} />
-            {tab === "消息" ? (
+            {tab === "訊息" ? (
               <ChatRows p={p} items={list} />
-            ) : tab === "联系人" ? (
+            ) : tab === "聯絡人" ? (
               <>
                 {[...new Set(list.map((i) => i.sender))].map((s) => (
                   <button
@@ -185,9 +185,9 @@ export function QQSkin(p: Props) {
               </>
             ) : (
               <div className="qq-space">
-                <h2>好友动态</h2>
+                <h2>好友動態</h2>
                 {items
-                  .filter((i) => i.folder === "空间" || i.kind === "post")
+                  .filter((i) => i.folder === "空間" || i.kind === "post")
                   .map((i) => (
                     <button key={i.id} onClick={() => p.onItem(i)}>
                       <Avatar name={i.sender} src={i.avatar} />
@@ -197,12 +197,12 @@ export function QQSkin(p: Props) {
                       <small>{i.time}</small>
                     </button>
                   ))}
-                <Add p={p} label="添加空间动态" />
+                <Add p={p} label="新增空間動態" />
               </div>
             )}
           </div>
           <Tabs
-            tabs={["消息", "联系人", "空间"]}
+            tabs={["訊息", "聯絡人", "空間"]}
             value={tab}
             set={setTab}
             icons={[<MessageCircle />, <Users />, <Compass />]}
@@ -215,7 +215,7 @@ export function QQSkin(p: Props) {
 export function TelegramSkin(p: Props) {
   const { q, setQ, items } = useContent(p, "全部");
   const [folder, setFolder] = useState("全部");
-  const folders = ["全部", ...groupItems(items).filter((f) => f !== "未分类")];
+  const folders = ["全部", ...groupItems(items).filter((f) => f !== "未分類")];
   const list =
     folder === "全部" ? items : items.filter((i) => i.folder === folder);
   return (
@@ -229,7 +229,7 @@ export function TelegramSkin(p: Props) {
             <Avatar name={p.thread} />
             <strong>{p.thread}</strong>
             <span>
-              {list.filter((i) => i.title === p.thread).length} 条消息
+              {list.filter((i) => i.title === p.thread).length} 條訊息
             </span>
           </div>
           <Bubbles
@@ -260,7 +260,7 @@ export function TelegramSkin(p: Props) {
           </div>
           <div className="telegram-footer">
             <Send size={17} />
-            聊天 · {list.length} 条记录
+            聊天 · {list.length} 條記錄
           </div>
         </>
       )}
@@ -268,14 +268,14 @@ export function TelegramSkin(p: Props) {
   );
 }
 export function DiscordSkin(p: Props) {
-  const { tab, setTab, items } = useContent(p, "频道");
+  const { tab, setTab, items } = useContent(p, "頻道");
   const servers = [
-    ...new Set(items.map((i) => meta(i, "server", "故事服务器"))),
+    ...new Set(items.map((i) => meta(i, "server", "故事服務器"))),
   ];
   const [server, setServer] = useState(""),
     [channel, setChannel] = useState("");
-  const current = server || servers[0] || "服务器";
-  const list = items.filter((i) => meta(i, "server", "故事服务器") === current);
+  const current = server || servers[0] || "服務器";
+  const list = items.filter((i) => meta(i, "server", "故事服務器") === current);
   const channels = groupItems(list, "general");
   const active = channel || channels[0] || "general";
   const messages = list.filter((i) => (i.folder || "general") === active);
@@ -286,7 +286,7 @@ export function DiscordSkin(p: Props) {
         <aside className="discord-servers">
           {servers.map((s) => (
             <button
-              aria-label={`服务器${s}`}
+              aria-label={`服務器${s}`}
               className={s === current ? "selected" : ""}
               key={s}
               onClick={() => {
@@ -319,7 +319,7 @@ export function DiscordSkin(p: Props) {
             ))}
           </div>
           <div className="discord-current">
-            {tab === "频道" ? (
+            {tab === "頻道" ? (
               <>
                 <Hash size={16} />
                 {active}
@@ -327,12 +327,12 @@ export function DiscordSkin(p: Props) {
             ) : (
               <>
                 <Users size={16} />
-                成员
+                成員
               </>
             )}
           </div>
           <div className="catalog-scroll">
-            {tab === "成员"
+            {tab === "成員"
               ? [...new Set(list.map((i) => i.sender))].map((s) => (
                   <div key={s} className="discord-member">
                     <Avatar name={s} />
@@ -342,7 +342,7 @@ export function DiscordSkin(p: Props) {
                         {meta(
                           list.find((i) => i.sender === s)!,
                           "status",
-                          "虚构成员",
+                          "虛構成員",
                         )}
                       </small>
                     </span>
@@ -365,11 +365,11 @@ export function DiscordSkin(p: Props) {
                 ))}
             <Empty items={list} />
           </div>
-          <Add p={p} label={`添加 #${active} 的消息`} />
+          <Add p={p} label={`新增 #${active} 的訊息`} />
         </section>
       </div>
       <Tabs
-        tabs={["频道", "成员"]}
+        tabs={["頻道", "成員"]}
         value={tab}
         set={setTab}
         icons={[<Hash />, <Users />]}
@@ -491,7 +491,7 @@ export function MessengerSkin(p: Props) {
             )}
           </div>
           <Tabs
-            tabs={["聊天", "联系人"]}
+            tabs={["聊天", "聯絡人"]}
             value={tab}
             set={setTab}
             icons={[<MessageCircle />, <Users />]}

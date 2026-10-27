@@ -1,3 +1,4 @@
+import { useDeviceClock } from "./useDeviceClock";
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
 import { NativeCalculator } from "./ios/Calculator";
@@ -86,7 +87,7 @@ export function AppIcon({
       <span className="app-icon" style={{ background: a.color }}>
         {custom ? (
           safeMedia(custom) ? (
-            <img src={safeMedia(custom)} alt="自定义图标" />
+            <img src={safeMedia(custom)} alt="自定義圖標" />
           ) : (
             <span>{custom.slice(0, 2)}</span>
           )
@@ -207,13 +208,13 @@ function PhoneRuntime({
           setOwn(saved.state);
         else {
           setOwn(dispatch(work, initialRuntime(work), "start"));
-          if (saved) setLoadError("作品已更新，已开始新的进度。");
+          if (saved) setLoadError("作品已更新，已開始新的進度。");
         }
         setReady(true);
       })
       .catch(() => {
         setOwn(dispatch(work, initialRuntime(work), "start"));
-        setLoadError("无法读取本地存档。本次仍可游玩。");
+        setLoadError("無法讀取本地存檔。本次仍可遊玩。");
         setReady(true);
       });
     return () => {
@@ -224,7 +225,7 @@ function PhoneRuntime({
     if (!creator && !external && ready)
       void db.saves
         .put({ id: work.id, state: own })
-        .catch(() => setLoadError("存档失败，请检查浏览器存储权限。"));
+        .catch(() => setLoadError("存檔失敗，請檢查瀏覽器儲存權限。"));
   }, [own, creator, work.id, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
@@ -283,7 +284,7 @@ function PhoneRuntime({
       setPinOpen(false);
       event("password", pin);
     } else {
-      setPinError("密码不正确");
+      setPinError("密碼不正確");
       setPinOpen(true);
     }
   };
@@ -293,7 +294,11 @@ function PhoneRuntime({
   const wallpaper = locked
     ? work.phone.wallpaper
     : work.phone.homeWallpaper || work.phone.wallpaper;
-  const displayTime = creator ? work.phone.time : s.time || work.phone.time;
+  const realClock = useDeviceClock(!creator && work.phone.clockMode === "real");
+  const displayTime = !creator && work.phone.clockMode === "real"
+    ? realClock.time : creator ? work.phone.time : s.time || work.phone.time;
+  const displayDate = !creator && work.phone.clockMode === "real"
+    ? realClock.date : s.date || work.phone.date;
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
@@ -312,7 +317,7 @@ function PhoneRuntime({
         (_, i) => i !== index,
       ),
     });
-  if (!ready) return <div className="phone-loading">正在恢复进度…</div>;
+  if (!ready) return <div className="phone-loading">正在恢復進度…</div>;
   return (
     <div
       ref={shell}
@@ -421,8 +426,8 @@ function PhoneRuntime({
             {locked && !(quickCamera && app === "camera") ? (
               <DeviceLock
                 work={
-                  s.date
-                    ? { ...work, phone: { ...work.phone, date: s.date } }
+                  displayDate
+                    ? { ...work, phone: { ...work.phone, date: displayDate } }
                     : work
                 }
                 time={displayTime}
@@ -455,7 +460,7 @@ function PhoneRuntime({
                     ...(s.messages[app] ?? []),
                   ]}
                   creator={creator}
-                  state={s}
+                  state={{ ...s, time: displayTime, date: displayDate }}
                   onRead={(id) => event("read", id)}
                   onEdit={(item) => onEdit?.(app, item)}
                   onAdd={() => onAdd?.(app)}
@@ -504,8 +509,8 @@ function PhoneRuntime({
                     name={small ? undefined : a.name}
                     small={small}
                     custom={a.icon}
-                    date={s.date || work.phone.date}
-                    time={s.time}
+                    date={displayDate}
+                    time={displayTime}
                   />
                 )}
                 clearApp={(id) =>
@@ -534,7 +539,7 @@ function PhoneRuntime({
                   ))}
               </div>
               <button className="glass-btn" onClick={() => setFolder("")}>
-                关闭文件夹
+                關閉資料夾
               </button>
             </div>
           )}
@@ -550,7 +555,7 @@ function PhoneRuntime({
               className={`system-panel ${panel === "light" ? "flash-on" : ""}`}
             >
               <button className="panel-close" onClick={() => setPanel("")}>
-                关闭 <ChevronLeft size={14} />
+                關閉 <ChevronLeft size={14} />
               </button>
               {panel === "notification" ? (
                 <>
@@ -568,23 +573,23 @@ function PhoneRuntime({
                       onDismiss={dismissNotice}
                     />
                   ) : (
-                    <p>没有新通知</p>
+                    <p>沒有新通知</p>
                   )}
                 </>
               ) : panel === "search" ? (
                 <>
-                  <h2>搜索 App</h2>
+                  <h2>搜尋 App</h2>
                   <AppSearch apps={installedApps} open={open} />
                 </>
               ) : (
-                <h2>手电筒已打开</h2>
+                <h2>手電筒已開啟</h2>
               )}
             </div>
           )}
           {!creator && s.choices.length > 0 && !locked && (
             <div className="story-overlay">
-              <span className="eyebrow">故事来到一个岔路口</span>
-              <h3>你会如何选择？</h3>
+              <span className="eyebrow">故事來到一個岔路口</span>
+              <h3>你會如何選擇？</h3>
               {s.choices.map((c) => (
                 <button
                   key={c.target}
@@ -599,7 +604,7 @@ function PhoneRuntime({
           {!creator && s.endings.length > 0 && !locked && (
             <div className="story-overlay ending">
               <span className="eyebrow">ENDING · {s.endings.length}</span>
-              <h2>故事在这里停泊。</h2>
+              <h2>故事在這裡停泊。</h2>
               <p>{s.endings[s.endings.length - 1]}</p>
               <button
                 onClick={() => {
@@ -608,19 +613,19 @@ function PhoneRuntime({
                   setLocked(true);
                 }}
               >
-                重新开始
+                重新開始
               </button>
             </div>
           )}
           {!creator && s.incomingCall && (
             <div className="incoming-call-screen">
               <small>
-                {work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.meta.callType === "video" ? "KKT 视频通话 · " : ""}
-                {s.incomingCall.status === "ringing" ? "来电" : "通话中"} ·
-                作品内模拟
+                {work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.meta.callType === "video" ? "KKT 視訊通話 · " : ""}
+                {s.incomingCall.status === "ringing" ? "來電" : "通話中"} ·
+                作品內模擬
               </small>
               <div className="incoming-avatar">
-                {safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "") ? <img alt="来电头像" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }} src={safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "")} /> : s.incomingCall.caller.slice(0, 1)}
+                {safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "") ? <img alt="來電頭像" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }} src={safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "")} /> : s.incomingCall.caller.slice(0, 1)}
               </div>
               <h2>{s.incomingCall.caller}</h2>
               {s.incomingCall.status === "answered" &&
@@ -629,11 +634,11 @@ function PhoneRuntime({
                     (i) => i.id === s.incomingCall?.target,
                   );
                   return record?.meta.callType === "video" ? (
-                    <p>视频通话已接通</p>
+                    <p>視訊通話已接通</p>
                   ) : record?.kind === "audio" && safeMedia(record.media) ? (
                     <audio controls src={safeMedia(record.media)} />
                   ) : (
-                    <p>这是一通虚构来电。</p>
+                    <p>這是一通虛構來電。</p>
                   );
                 })()}
               <div className="incoming-actions">
@@ -656,7 +661,7 @@ function PhoneRuntime({
                 >
                   <PhoneIcon size={25} />
                   <span>
-                    {s.incomingCall.status === "ringing" ? "拒接" : "挂断"}
+                    {s.incomingCall.status === "ringing" ? "拒接" : "掛斷"}
                   </span>
                 </button>
                 {s.incomingCall.status === "ringing" && (
@@ -679,7 +684,7 @@ function PhoneRuntime({
                     }}
                   >
                     <PhoneIcon size={25} />
-                    <span>接听</span>
+                    <span>接聽</span>
                   </button>
                 )}
               </div>
@@ -760,7 +765,7 @@ function PhoneRuntime({
                     setContextApp("");
                   }}
                 >
-                  打开 App
+                  開啟 App
                 </button>
                 <button
                   onClick={() => {
@@ -768,7 +773,7 @@ function PhoneRuntime({
                     setPanel("search");
                   }}
                 >
-                  在 App 库中查看
+                  在 App 庫中檢視
                 </button>
                 <button onClick={() => setContextApp("")}>取消</button>
               </div>
@@ -817,7 +822,7 @@ function AppSearch({
       <input
         autoFocus
         value={q}
-        placeholder="App 名称"
+        placeholder="App 名稱"
         onChange={(e) => set(e.target.value)}
       />
       {apps
@@ -852,10 +857,10 @@ function Media({ item }: { item: Item }) {
       <span>
         {item.id.includes("ticket") ? "城南 / SOUTHBOUND" : "after the rain"}
       </span>
-      <strong>{item.id.includes("ticket") ? "09 · 01" : "雨 后"}</strong>
+      <strong>{item.id.includes("ticket") ? "09 · 01" : "雨 後"}</strong>
       <small>
         {item.id.includes("ticket")
-          ? "16:30 · 一张未完成的约定"
+          ? "16:30 · 一張未完成的約定"
           : "a little moment of quiet"}
       </small>
     </div>
@@ -932,10 +937,10 @@ function AppContent({
       {detail.password && !creator && !unlocks.includes(detail.id) ? (
         <div className="locked-note">
           <LockKeyhole size={36} />
-          <h3>这条内容已锁定</h3>
+          <h3>這條內容已鎖定</h3>
           <input
             type="password"
-            placeholder="内容密码"
+            placeholder="內容密碼"
             value={pw}
             onChange={(e) => setPw(e.target.value)}
           />
@@ -945,10 +950,10 @@ function AppContent({
                 setUnlocks([...unlocks, detail.id]);
                 onRead(detail.id);
                 setPwError("");
-              } else setPwError("密码不正确");
+              } else setPwError("密碼不正確");
             }}
           >
-            解锁内容
+            解鎖內容
           </button>
           <small>{pwError}</small>
         </div>
@@ -991,7 +996,7 @@ function AppContent({
     return (
       <>
         <div className="catalog-slot" hidden={!!detail}>
-          <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
+          <Suspense fallback={<div className="catalog-loading">正在開啟…</div>}>
             <Skin
               appId={app.id}
               owner={work.phone.owner}
@@ -1057,7 +1062,7 @@ function AppContent({
                     )
                     ?.focus()
           }
-          aria-label={creator ? "新增内容" : "搜索内容"}
+          aria-label={creator ? "新增內容" : "搜尋內容"}
         >
           {creator ? <Plus size={22} /> : <Search size={20} />}
         </button>
@@ -1099,7 +1104,7 @@ function AppContent({
                   ) : i.kind === "transfer" ? (
                     <span className="transfer">
                       ¥ {i.body}
-                      <small>虚构转账记录</small>
+                      <small>虛構轉帳記錄</small>
                     </span>
                   ) : (
                     i.body
@@ -1115,11 +1120,11 @@ function AppContent({
             ))}
           {creator ? (
             <button className="chat-compose" onClick={onAdd}>
-              ＋ 添加一条消息
+              ＋ 新增一條訊息
             </button>
           ) : (
             <div className="chat-compose muted">
-              根据剧情推进，互动回复将在这里出现。
+              根據劇情推進，互動回復將在這裡出現。
             </div>
           )}
         </div>
@@ -1131,7 +1136,7 @@ function AppContent({
             <div className="phone-search">
               <Search size={15} />
               <input
-                placeholder={`搜索${name}`}
+                placeholder={`搜尋${name}`}
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
               />
@@ -1165,14 +1170,14 @@ function AppContent({
             <>
               <div className="media-heading">
                 <h1>{tab}</h1>
-                <p>{filtered.length} 个故事片段</p>
+                <p>{filtered.length} 個故事片段</p>
               </div>
               <div className="media-grid">
                 {filtered.map((i) => (
                   <button key={i.id} onClick={() => read(i)}>
                     <Media item={i} />
                     <span>
-                      {i.title} {creator && i.hidden ? "· 隐藏" : ""}
+                      {i.title} {creator && i.hidden ? "· 隱藏" : ""}
                     </span>
                   </button>
                 ))}
@@ -1189,7 +1194,7 @@ function AppContent({
                     <strong>{i.sender}</strong>
                     <small>{i.time}</small>
                   </div>
-                  <button aria-label="查看帖子详情" onClick={() => read(i)}>
+                  <button aria-label="檢視帖子詳情" onClick={() => read(i)}>
                     <MoreHorizontal size={20} />
                   </button>
                 </div>
@@ -1198,7 +1203,7 @@ function AppContent({
                 </button>
                 <div className="post-actions">
                   <button
-                    aria-label="虚构点赞"
+                    aria-label="虛構點贊"
                     onClick={() =>
                       setLikes(
                         likes.includes(i.id)
@@ -1212,11 +1217,11 @@ function AppContent({
                       fill={likes.includes(i.id) ? "#d67670" : "none"}
                     />
                   </button>
-                  <button aria-label="查看评论" onClick={() => read(i)}>
+                  <button aria-label="檢視評論" onClick={() => read(i)}>
                     <MessageCircle size={22} />
                   </button>
                   <small>
-                    {i.likes + (likes.includes(i.id) ? 1 : 0)} 次虚构喜欢
+                    {i.likes + (likes.includes(i.id) ? 1 : 0)} 次虛構喜歡
                   </small>
                 </div>
                 <button className="post-text" onClick={() => read(i)}>
@@ -1257,25 +1262,25 @@ function AppContent({
           {!filtered.length && app.engine !== "messaging" && (
             <div className="empty-app">
               <app.icon size={36} />
-              <h3>这一页还很安静</h3>
+              <h3>這一頁還很安靜</h3>
               <p>
                 {creator
-                  ? "添加属于这个 App 的故事内容。"
-                  : "暂时没有可浏览的内容。"}
+                  ? "新增屬於這個 App 的故事內容。"
+                  : "暫時沒有可瀏覽的內容。"}
               </p>
             </div>
           )}
           {creator && (
             <button className="phone-add" onClick={onAdd}>
               <Plus size={15} />
-              添加
+              新增
               {app.engine === "messaging"
                 ? "聊天"
                 : app.engine === "social"
                   ? "帖子"
                   : app.engine === "media"
                     ? "素材"
-                    : "内容"}
+                    : "內容"}
             </button>
           )}
         </div>

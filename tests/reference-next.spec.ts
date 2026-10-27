@@ -11,49 +11,49 @@ async function enter(page: Page) {
   story.content.threads = [
     {
       id: "thread-feed",
-      title: "测试串文",
-      body: "这是一条用于布局校准的测试串文。",
-      sender: "测试用户",
+      title: "測試串文",
+      body: "這是一條用於布局校準的測試串文。",
+      sender: "測試用戶",
       likes: 2,
     },
     {
       id: "thread-dm",
-      title: "测试会话",
-      body: "这是一条测试消息。",
-      sender: "测试联系人",
+      title: "測試會話",
+      body: "這是一條測試訊息。",
+      sender: "測試聯絡人",
       folder: "私信",
     },
     {
       id: "thread-activity",
-      title: "测试动态",
-      body: "这是一条测试回复动态。",
-      sender: "测试用户",
+      title: "測試動態",
+      body: "這是一條測試回復動態。",
+      sender: "測試用戶",
       meta: { activityType: "reply" },
     },
   ];
   story.content.twitter = [
     {
       id: "x-reference",
-      title: "测试帖子",
-      body: "这是一条用于深色界面校准的测试帖子。",
-      sender: "测试用户",
-      comments: ["这是一条测试回复。"],
+      title: "測試帖子",
+      body: "這是一條用於深色介面校準的測試帖子。",
+      sender: "測試用戶",
+      comments: ["這是一條測試回復。"],
     },
   ];
   await page.route("**/work.json", (r) =>
     r.fulfill({ json: compileStory(story).work }),
   );
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
 }
 async function open(page: Page, name: string) {
   await page
-    .getByRole("button", { name: "打开App Store", exact: true })
+    .getByRole("button", { name: "開啟App Store", exact: true })
     .click();
-  await page.getByPlaceholder("搜索全部App").fill(name);
+  await page.getByPlaceholder("搜尋全部App").fill(name);
   await page
     .locator(".runtime-library-row")
-    .getByRole("button", { name: "打开", exact: true })
+    .getByRole("button", { name: "開啟", exact: true })
     .click();
   await expect(page.locator(".app-screen:not([inert])")).toHaveCSS(
     "transform",
@@ -65,10 +65,10 @@ test("home has no permanent toolbar, long press edits, App Store installs apps",
 }) => {
   await enter(page);
   await expect(
-    page.getByRole("button", { name: "编辑桌面", exact: true }),
+    page.getByRole("button", { name: "編輯桌面", exact: true }),
   ).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: "打开App库", exact: true }),
+    page.getByRole("button", { name: "開啟App庫", exact: true }),
   ).toHaveCount(0);
   const home = page.locator(".interactive-home");
   const box = await home.boundingBox();
@@ -77,22 +77,22 @@ test("home has no permanent toolbar, long press edits, App Store installs apps",
   await page.waitForTimeout(700);
   await page.mouse.up();
   await expect(
-    page.getByRole("button", { name: "添加小组件", exact: true }),
+    page.getByRole("button", { name: "新增小組件", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "完成", exact: true }).click();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/home.png" });
   await page
-    .getByRole("button", { name: "打开App Store", exact: true })
+    .getByRole("button", { name: "開啟App Store", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: "搜索", exact: true }),
+    page.getByRole("heading", { name: "搜尋", exact: true }),
   ).toBeVisible();
-  await page.getByPlaceholder("搜索全部App").fill("抖音");
-  await page.getByRole("button", { name: "获取", exact: true }).click();
+  await page.getByPlaceholder("搜尋全部App").fill("抖音");
+  await page.getByRole("button", { name: "獲取", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "打开", exact: true }),
+    page.getByRole("button", { name: "開啟", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".interactive-home")).toHaveCSS("opacity", "1");
   await page
@@ -107,34 +107,34 @@ test("Threads reference messages activity menu and composer persist local posts"
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/threads-feed.png" });
-  await page.getByRole("button", { name: "Threads消息", exact: true }).click();
-  await expect(page.locator(".tr-message")).toContainText("测试消息");
+  await page.getByRole("button", { name: "Threads訊息", exact: true }).click();
+  await expect(page.locator(".tr-message")).toContainText("測試訊息");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/threads-messages.png" });
-  await page.getByRole("button", { name: "Threads动态", exact: true }).click();
+  await page.getByRole("button", { name: "Threads動態", exact: true }).click();
   await expect(page.locator(".tr-activity")).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/threads-activity.png" });
-  await page.getByRole("button", { name: "Threads首页", exact: true }).click();
-  await page.getByRole("button", { name: "打开Threads菜单" }).click();
+  await page.getByRole("button", { name: "Threads首頁", exact: true }).click();
+  await page.getByRole("button", { name: "開啟Threads選單" }).click();
   await expect(page.locator(".tr-side")).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/threads-menu.png" });
-  await page.getByRole("button", { name: "关闭Threads菜单" }).click();
+  await page.getByRole("button", { name: "關閉Threads選單" }).click();
   await page.getByRole("button", { name: "新建串文", exact: true }).click();
-  await page.getByRole("textbox", { name: "串文内容" }).fill("本地串文测试");
+  await page.getByRole("textbox", { name: "串文內容" }).fill("本地串文測試");
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/threads-compose.png" });
-  await page.getByRole("button", { name: "发布", exact: true }).click();
-  await expect(page.locator(".tr-scroll")).toContainText("本地串文测试");
+  await page.getByRole("button", { name: "發布", exact: true }).click();
+  await expect(page.locator(".tr-scroll")).toContainText("本地串文測試");
   await page.reload();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await open(page, "Threads");
-  await expect(page.locator(".tr-scroll")).toContainText("本地串文测试");
+  await expect(page.locator(".tr-scroll")).toContainText("本地串文測試");
 });
 test("X reference dark feed and detail with optional light appearance", async ({
   page,
@@ -145,9 +145,9 @@ test("X reference dark feed and detail with optional light appearance", async ({
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/reference-next/x-dark-feed.png" });
-  await page.getByRole("button", { name: "切换X外观" }).click();
+  await page.getByRole("button", { name: "切換X外觀" }).click();
   await expect(page.locator(".mymy-x")).not.toHaveClass(/x-reference-dark/);
-  await page.getByRole("button", { name: "切换X外观" }).click();
+  await page.getByRole("button", { name: "切換X外觀" }).click();
   await page.locator(".kzxx").click();
   await expect(page.locator(".x-post-detail")).toHaveCSS(
     "background-color",

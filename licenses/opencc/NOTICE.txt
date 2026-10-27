@@ -1,0 +1,1 @@
+Traditional Chinese character substitutions generated using OpenCC STCharacters and TWVariants dictionaries. Source: https://github.com/BYVoid/OpenCC . Copyright OpenCC contributors; Apache License 2.0. Taiwan UI terminology adjusted for this project. No dependency or license notices from the original project have been removed.

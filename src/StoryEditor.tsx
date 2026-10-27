@@ -67,7 +67,7 @@ export function StoryEditor({
   const nodes: Node[] = work.nodes.map((x) => ({
     id: x.id,
     data: {
-      label: `${{ start: "起点", event: "事件", condition: "条件", action: "动作", choice: "选择", delay: "延时", ending: "结局", comment: "注释" }[x.type]} · ${x.label}`,
+      label: `${{ start: "起點", event: "事件", condition: "條件", action: "動作", choice: "選擇", delay: "延時", ending: "結局", comment: "注釋" }[x.type]} · ${x.label}`,
     },
     position: dragged[x.id] ?? { x: x.x, y: x.y },
     type:
@@ -88,16 +88,16 @@ export function StoryEditor({
       <div className="graph-main">
         <div className="graph-toolbar">
           <div>
-            <h2>剧情编排</h2>
+            <h2>劇情編排</h2>
           </div>
           <input
-            placeholder="搜索节点"
+            placeholder="搜尋節點"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           <button className="secondary" onClick={add}>
             <Plus size={16} />
-            添加节点
+            新增節點
           </button>
         </div>
         <div className="flow-canvas">
@@ -151,7 +151,7 @@ export function StoryEditor({
           ) : (
             <>
               <CheckCircle size={16} />
-              图结构检查通过 · {work.nodes.length} 个节点
+              圖結構檢查通過 · {work.nodes.length} 個節點
             </>
           )}
         </div>
@@ -161,18 +161,18 @@ export function StoryEditor({
           <>
             <h3>{n.label}</h3>
             <label>
-              节点 ID
+              節點 ID
               <input value={n.id} readOnly />
             </label>
             <label>
-              名称
+              名稱
               <input
                 value={n.label}
                 onChange={(e) => update({ label: e.target.value })}
               />
             </label>
             <label>
-              节点类型
+              節點類型
               <select
                 value={n.type}
                 onChange={(e) =>
@@ -195,7 +195,7 @@ export function StoryEditor({
             </label>
             {n.type === "delay" && (
               <label>
-                延迟毫秒
+                延遲毫秒
                 <input
                   type="number"
                   min="0"
@@ -210,11 +210,11 @@ export function StoryEditor({
                     })
                   }
                 />
-                <small>按作品运行时间计时，关闭后暂停。</small>
+                <small>按作品運行時間計時，關閉後暫停。</small>
               </label>
             )}
             <label>
-              触发事件
+              觸發事件
               <select
                 value={n.event}
                 onChange={(e) => update({ event: e.target.value })}
@@ -233,16 +233,16 @@ export function StoryEditor({
                   "callEnded",
                 ].map((t) => (
                   <option key={t} value={t}>
-                    {t || "仅由连线触发"}
+                    {t || "僅由連線觸發"}
                   </option>
                 ))}
               </select>
             </label>
             <label>
-              事件目标
+              事件目標
               <input
                 list="story-targets"
-                placeholder="选择 App、内容或变量"
+                placeholder="選擇 App、內容或變量"
                 value={n.target}
                 onChange={(e) => update({ target: e.target.value })}
               />
@@ -272,11 +272,11 @@ export function StoryEditor({
                 checked={n.once}
                 onChange={(e) => update({ once: e.target.checked })}
               />
-              仅执行一次
+              僅執行一次
             </label>
             <div className="inspector-divider" />
             <div className="section-label">
-              <strong>执行条件</strong>
+              <strong>執行條件</strong>
               <button
                 onClick={() =>
                   update({
@@ -296,14 +296,14 @@ export function StoryEditor({
                 update({ logic: e.target.value as StoryNode["logic"] })
               }
             >
-              <option value="and">满足全部 · AND</option>
-              <option value="or">满足任意 · OR</option>
-              <option value="not">不满足全部 · NOT</option>
+              <option value="and">滿足全部 · AND</option>
+              <option value="or">滿足任意 · OR</option>
+              <option value="not">不滿足全部 · NOT</option>
             </select>
             {n.conditions.map((c, i) => (
               <div className="condition-editor" key={i}>
                 <input
-                  aria-label="条件变量"
+                  aria-label="條件變量"
                   value={c.key}
                   onChange={(e) =>
                     update({
@@ -340,7 +340,7 @@ export function StoryEditor({
                   }
                 />
                 <button
-                  aria-label="删除条件"
+                  aria-label="刪除條件"
                   onClick={() =>
                     update({
                       conditions: n.conditions.filter((_, j) => j !== i),
@@ -352,7 +352,7 @@ export function StoryEditor({
               </div>
             ))}
             <div className="section-label">
-              <strong>执行动作</strong>
+              <strong>執行動作</strong>
               <button
                 onClick={() =>
                   update({
@@ -361,7 +361,7 @@ export function StoryEditor({
                       {
                         type: "notification",
                         key: "",
-                        value: "新的线索出现了",
+                        value: "新的線索出現了",
                       },
                     ],
                   })
@@ -400,7 +400,7 @@ export function StoryEditor({
                   ))}
                 </select>
                 <input
-                  placeholder="目标 / 变量 / App ID"
+                  placeholder="目標 / 變量 / App ID"
                   value={a.key}
                   onChange={(e) =>
                     update({
@@ -426,7 +426,7 @@ export function StoryEditor({
                     update({ actions: n.actions.filter((_, j) => j !== i) })
                   }
                 >
-                  移除动作
+                  移除動作
                 </button>
               </div>
             ))}
@@ -444,15 +444,15 @@ export function StoryEditor({
                 setSelected("");
               }}
             >
-              删除节点
+              刪除節點
             </button>
           </>
         ) : (
           <div className="inspector-empty">
-            <p>点击节点编辑事件、条件与动作。</p>
+            <p>點擊節點編輯事件、條件與動作。</p>
             <small>
-              拖动节点连接点建立分支；选中连线后按 Delete
-              删除。选择节点的后继节点将作为玩家选项。
+              拖動節點連接點建立分支；選中連線後按 Delete
+              刪除。選擇節點的後繼節點將作為玩家選項。
             </small>
           </div>
         )}
@@ -470,7 +470,7 @@ function TypedValue({
   return (
     <div className="typed-value">
       <select
-        aria-label="值类型"
+        aria-label="值類型"
         value={typeof value}
         onChange={(e) =>
           set(
@@ -483,8 +483,8 @@ function TypedValue({
         }
       >
         <option value="string">文字</option>
-        <option value="number">数值</option>
-        <option value="boolean">布尔</option>
+        <option value="number">數值</option>
+        <option value="boolean">布爾</option>
       </select>
       {typeof value === "boolean" ? (
         <select

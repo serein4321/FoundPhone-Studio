@@ -21,7 +21,7 @@ import {
   type Props,
 } from "./shared";
 export function AlipaySkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "账单");
+  const { tab, setTab, q, setQ, items } = useContent(p, "賬單");
   const list =
     tab === "卡包"
       ? items.filter((i) => i.folder === "卡包" || i.folder === "票券")
@@ -32,16 +32,16 @@ export function AlipaySkin(p: Props) {
       <div className="alipay-blue">
         <h2>{tab}</h2>
         <div>
-          <button onClick={() => setTab("账单")}>
+          <button onClick={() => setTab("賬單")}>
             <Receipt size={28} />
-            账单
+            賬單
           </button>
           <button onClick={() => setTab("卡包")}>
             <Ticket size={28} />
             卡包
           </button>
         </div>
-        <small>作品内的虚构支付记录</small>
+        <small>作品內的虛構支付記錄</small>
       </div>
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
@@ -74,7 +74,7 @@ export function AlipaySkin(p: Props) {
               </div>
               <span>
                 <strong>{meta(i, "amount", "—")}</strong>
-                <small>{meta(i, "status", "账单记录")}</small>
+                <small>{meta(i, "status", "賬單記錄")}</small>
               </span>
             </button>
           ),
@@ -82,7 +82,7 @@ export function AlipaySkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["账单", "卡包"]}
+        tabs={["賬單", "卡包"]}
         value={tab}
         set={setTab}
         icons={[<Receipt />, <Ticket />]}
@@ -96,7 +96,7 @@ export function TaobaoSkin(p: Props) {
   const list = items
     .filter((i) =>
       tab === "商品"
-        ? i.folder !== "订单" && i.folder !== "物流"
+        ? i.folder !== "訂單" && i.folder !== "物流"
         : i.folder === tab,
     )
     .filter((i) => status === "全部" || meta(i, "status") === status);
@@ -104,7 +104,7 @@ export function TaobaoSkin(p: Props) {
     <div className="catalog-skin taobao-ui">
       <Header p={p} />
       <div className="taobao-search">
-        <SearchBox value={q} set={setQ} placeholder="搜索商品或订单" />
+        <SearchBox value={q} set={setQ} placeholder="搜尋商品或訂單" />
       </div>
       <div className="catalog-scroll">
         {tab === "商品" ? (
@@ -123,7 +123,7 @@ export function TaobaoSkin(p: Props) {
         ) : (
           <>
             <div className="taobao-status">
-              {["全部", "待付款", "待发货", "待收货", "已完成"].map((s) => (
+              {["全部", "待付款", "待發貨", "待收貨", "已完成"].map((s) => (
                 <button
                   className={s === status ? "selected" : ""}
                   key={s}
@@ -142,7 +142,7 @@ export function TaobaoSkin(p: Props) {
                 <div>
                   <ShoppingBag size={16} />
                   <strong>{i.sender}</strong>
-                  <small>{meta(i, "status", "订单记录")}</small>
+                  <small>{meta(i, "status", "訂單記錄")}</small>
                 </div>
                 <section>
                   <Media item={i} />
@@ -162,7 +162,7 @@ export function TaobaoSkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["商品", "订单", "物流"]}
+        tabs={["商品", "訂單", "物流"]}
         value={tab}
         set={(t) => {
           setTab(t);
@@ -176,7 +176,7 @@ export function TaobaoSkin(p: Props) {
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
   const list = items.filter((i) =>
-    tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
+    tab === "訂單" ? i.folder === "訂單" : i.folder !== "訂單",
   );
   return (
     <div className="catalog-skin delivery-ui">
@@ -185,7 +185,7 @@ export function DeliverySkin(p: Props) {
         <MapPin size={18} />
         <strong>{meta(items[0], "address", "作品配送地址")}</strong>
       </div>
-      <SearchBox value={q} set={setQ} placeholder="搜索商家或订单" />
+      <SearchBox value={q} set={setQ} placeholder="搜尋商家或訂單" />
       <div className="catalog-scroll">
         {tab === "商家"
           ? list.map((i) => (
@@ -216,7 +216,7 @@ export function DeliverySkin(p: Props) {
                 <header>
                   <Utensils size={18} />
                   <strong>{i.sender}</strong>
-                  <span>{meta(i, "status", "配送记录")}</span>
+                  <span>{meta(i, "status", "配送記錄")}</span>
                 </header>
                 <section>
                   <Media item={i} />
@@ -236,7 +236,7 @@ export function DeliverySkin(p: Props) {
         <Empty items={list} />
       </div>
       <Tabs
-        tabs={["商家", "订单"]}
+        tabs={["商家", "訂單"]}
         value={tab}
         set={setTab}
         icons={[<Utensils />, <Receipt />]}

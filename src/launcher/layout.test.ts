@@ -79,7 +79,7 @@ it("preserves free grid gaps and rejects colliding fixed placements", () => {
     y: 4,
   });
   l.positions.notes = { page: 0, x: 2, y: 4 };
-  expect(() => validateLayout(l, w)).toThrow("位置冲突");
+  expect(() => validateLayout(l, w)).toThrow("位置衝突");
 });
 
 it("adds store to legacy work without changing author data or other app states", () => {
@@ -102,8 +102,8 @@ it("migrates preview folders once while preserving custom folders and widgets", 
   const old = defaultLayout(w);
   old.previewLayoutRevision = 0;
   old.apps.find((a) => a.id === "wechat")!.folder = "聊天";
-  old.apps.find((a) => a.id === "douyin")!.folder = "国内";
-  old.apps.find((a) => a.id === "instagram")!.folder = "国际";
+  old.apps.find((a) => a.id === "douyin")!.folder = "國內";
+  old.apps.find((a) => a.id === "instagram")!.folder = "國際";
   old.apps.find((a) => a.id === "clock")!.folder = "我的工具";
   old.widgets.push({ id: "widget-keep", type: "battery", size: "small" });
   const migrated = validateLayout(old, w);
@@ -112,8 +112,8 @@ it("migrates preview folders once while preserving custom folders and widgets", 
   expect(migrated.apps.find((a) => a.id === "clock")!.folder).toBe("我的工具");
   expect(migrated.widgets).toEqual(old.widgets);
   expect(JSON.stringify(w)).toBe(before);
-  migrated.apps.find((a) => a.id === "wechat")!.folder = "作者新建文件夹";
+  migrated.apps.find((a) => a.id === "wechat")!.folder = "作者新建資料夾";
   expect(
     validateLayout(migrated, w).apps.find((a) => a.id === "wechat")!.folder,
-  ).toBe("作者新建文件夹");
+  ).toBe("作者新建資料夾");
 });

@@ -155,7 +155,7 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
       <>
         <text x="32" y="18" fill="#ee404b" textAnchor="middle" fontSize="12">
           {date
-            ? new Intl.DateTimeFormat("zh-CN", {
+            ? new Intl.DateTimeFormat("zh-TW", {
                 weekday: "long",
                 timeZone: "UTC",
               }).format(new Date(date + "T12:00:00Z"))
@@ -734,7 +734,7 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
         fontWeight="800"
         fill="white"
       >
-        小红书
+        小紅書
       </text>
     );
   } else if (id === "netease") {
@@ -810,7 +810,7 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
         fontWeight="800"
         fill="#181818"
       >
-        外卖
+        外賣
       </text>
     );
   } else if (id === "forum") {
@@ -871,7 +871,7 @@ export function AppArtwork({
       {id === "calendar" && (
         <span className="original-calendar">
           <small>
-            {new Intl.DateTimeFormat("zh-CN", {
+            {new Intl.DateTimeFormat("zh-TW", {
               weekday: "short",
               timeZone: "UTC",
             }).format(d)}

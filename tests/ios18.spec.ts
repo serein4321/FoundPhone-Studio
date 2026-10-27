@@ -3,7 +3,7 @@ import { createWork } from "../src/demo";
 test("iOS18 canonical screen, native artwork and paged desktop stay aligned", async ({
   page,
 }) => {
-  const w = createWork("iOS 18 验收");
+  const w = createWork("iOS 18 驗收");
   w.apps.forEach((a) => {
     a.installed = true;
     a.visible = true;
@@ -19,8 +19,8 @@ test("iOS18 canonical screen, native artwork and paged desktop stay aligned", as
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(w)),
   });
-  await expect(page.getByRole("status")).toContainText("作品已导入");
-  await page.getByRole("button", { name: "关闭提示" }).click();
+  await expect(page.getByRole("status")).toContainText("作品已導入");
+  await page.getByRole("button", { name: "關閉提示" }).click();
   const phone = page.locator(".creator-layout .phone-shell");
   expect(
     await phone
@@ -39,7 +39,7 @@ test("iOS18 canonical screen, native artwork and paged desktop stay aligned", as
     phone
       .locator(".home-app-grid")
       .first()
-      .getByRole("button", { name: "打开相册" })
+      .getByRole("button", { name: "開啟相簿" })
       .locator(".app-artwork"),
   ).toHaveCount(1);
   await expect(phone.locator(".home-pages")).toHaveJSProperty("scrollTop", 0);
@@ -78,15 +78,15 @@ test("iOS18 canonical screen, native artwork and paged desktop stay aligned", as
     JSON.stringify(metrics, null, 2),
   );
   await phone.screenshot({ path: "outputs/v0.5/ios18-home.png" });
-  await phone.getByRole("button", { name: "前往桌面第2页" }).click();
+  await phone.getByRole("button", { name: "前往桌面第2頁" }).click();
   await expect(
-    phone.getByRole("button", { name: "前往桌面第2页" }),
+    phone.getByRole("button", { name: "前往桌面第2頁" }),
   ).toHaveAttribute("aria-current", "page");
   const last = phone.locator(".home-app-grid").last();
   await expect(last.getByRole("button").last()).toBeInViewport();
   await last.getByRole("button").last().click();
   await expect(phone.locator(".app-screen")).toBeVisible();
-  await page.getByRole("button", { name: "预览", exact: true }).click();
+  await page.getByRole("button", { name: "預覽", exact: true }).click();
   const player = page.locator(".preview-overlay .phone-shell");
   await expect(player.locator(".lock-screen")).toBeVisible();
   await player.screenshot({ path: "outputs/v0.5/ios18-lock.png" });
@@ -95,7 +95,7 @@ test("iOS18 canonical screen, native artwork and paged desktop stay aligned", as
 test("WeChat avatars survive export and player menu returns to its conversation", async ({
   page,
 }) => {
-  const w = createWork("头像回归");
+  const w = createWork("頭像回歸");
   w.phone.passcode = "";
   const app = w.apps.find((a) => a.id === "wechat")!;
   app.installed = true;
@@ -113,32 +113,32 @@ test("WeChat avatars survive export and player menu returns to its conversation"
       mimeType: "application/json",
       buffer: Buffer.from(JSON.stringify(w)),
     });
-  await expect(page.getByRole("status")).toContainText("作品已导入");
-  await page.getByRole("button", { name: "关闭提示" }).click();
-  await page.getByRole("button", { name: "导出作品", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("作品已導入");
+  await page.getByRole("button", { name: "關閉提示" }).click();
+  await page.getByRole("button", { name: "導出作品", exact: true }).click();
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: /作品 JSON/ }).click();
   const file = await download;
   const { readFile } = await import("node:fs/promises");
   const restored = JSON.parse(await readFile((await file.path())!, "utf8"));
   expect(restored.data.wechat[0].avatar).toBe(avatar);
-  await page.getByRole("button", { name: "关闭", exact: true }).click();
-  await page.getByRole("button", { name: "预览", exact: true }).click();
+  await page.getByRole("button", { name: "關閉", exact: true }).click();
+  await page.getByRole("button", { name: "預覽", exact: true }).click();
   const player = page.locator(".preview-overlay");
-  await player.getByRole("button", { name: "轻触解锁" }).click();
-  await player.getByRole("button", { name: "打开微信", exact: true }).click();
+  await player.getByRole("button", { name: "輕觸解鎖" }).click();
+  await player.getByRole("button", { name: "開啟微信", exact: true }).click();
   await expect(player.locator(".wx-chat-avatar img").first()).toHaveAttribute(
     "src",
     avatar,
   );
-  await player.getByRole("button", { name: "微信菜单" }).click();
-  await player.getByRole("menuitem", { name: "添加朋友" }).click();
-  await expect(player.locator(".wx-nav strong")).toHaveText("添加朋友");
+  await player.getByRole("button", { name: "微信選單" }).click();
+  await player.getByRole("menuitem", { name: "新增朋友" }).click();
+  await expect(player.locator(".wx-nav strong")).toHaveText("新增朋友");
   await player.getByRole("button", { name: "返回", exact: true }).click();
   await player.locator(".wx-chat-row").first().click();
   const title = await player.locator(".wx-nav strong").textContent();
-  await player.getByRole("button", { name: "聊天详情" }).click();
-  await expect(player.locator(".wx-nav strong")).toHaveText("聊天信息");
+  await player.getByRole("button", { name: "聊天詳情" }).click();
+  await expect(player.locator(".wx-nav strong")).toHaveText("聊天資訊");
   await player.getByRole("button", { name: "返回", exact: true }).click();
   await expect(player.locator(".wx-nav strong")).toHaveText(title!);
   await expect(player.locator(".skin-messages")).toBeVisible();

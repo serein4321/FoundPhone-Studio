@@ -21,3 +21,6 @@
 媒体仅支持safeMedia允许的内嵌data URL格式。禁止HTML/JS脚本；富文本为安全结构化JSON。作品脚本是公开静态数据，谜题密码不属于安全保密机制。
 
 默认空白模板：stories/blank/story.json。引擎回归样例位于tests/fixtures/story-example，不作为内置作品。自然语言原稿：tests/fixtures/story-example/STORY.md。只改故事数据就能改变手机内容。
+
+
+phone.clockMode 可設為 real，鎖屏、狀態列與新傳送訊息使用即時台灣時間；不設定時保留劇情時鐘。KKT 訊息的 meta.afterReplies 可設為非負整數字串，於玩家在該群組傳送指定次數後顯示，並按照回覆階段排列。玩家自由回覆與進度儲存在瀏覽器存檔中。

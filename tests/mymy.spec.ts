@@ -13,14 +13,14 @@ async function start(page: Page) {
     r.fulfill({ json: compileStory(fixture).work }),
   );
   await page.goto("/");
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
 }
 async function open(page: Page, name: string) {
-  await page.getByRole("button", { name: "打开App Store", exact: true }).click();
-  await page.getByPlaceholder("搜索全部App").fill(name);
+  await page.getByRole("button", { name: "開啟App Store", exact: true }).click();
+  await page.getByPlaceholder("搜尋全部App").fill(name);
   await page
     .locator(".runtime-library-row")
-    .getByRole("button", { name: "打开", exact: true })
+    .getByRole("button", { name: "開啟", exact: true })
     .click();
   await expect(page.locator(".app-screen:not([inert])")).toHaveCSS(
     "transform",
@@ -43,15 +43,15 @@ test("Mymy KKT read triggers call and cross-app authored Instagram unlock", asyn
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/kkt-chat.png" });
   await page
-    .getByRole("button", { name: "点击这条测试消息触发来电。", exact: true })
+    .getByRole("button", { name: "點擊這條測試訊息觸發來電。", exact: true })
     .click();
   await expect(page.locator(".incoming-call-screen")).toBeVisible();
-  await page.getByRole("button", { name: "接听", exact: false }).click();
-  await page.getByRole("button", { name: "挂断", exact: false }).click();
+  await page.getByRole("button", { name: "接聽", exact: false }).click();
+  await page.getByRole("button", { name: "掛斷", exact: false }).click();
   await home(page);
   await open(page, "Instagram");
   await expect(
-    page.getByText("挂断后出现的测试动态。", { exact: false }),
+    page.getByText("掛斷後出現的測試動態。", { exact: false }),
   ).toBeVisible();
 });
 test("Mymy Instagram comments, likes, profile, stories and X interaction persistence", async ({
@@ -61,48 +61,48 @@ test("Mymy Instagram comments, likes, profile, stories and X interaction persist
   page.on("pageerror", (e) => errors.push(e.message));
   await start(page);
   await open(page, "Instagram");
-  await page.getByRole("button", { name: "点赞测试帖子", exact: true }).click();
+  await page.getByRole("button", { name: "點贊測試帖子", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "点赞测试帖子", exact: true }),
+    page.getByRole("button", { name: "點贊測試帖子", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "评论测试帖子", exact: true }).click();
-  await page.getByRole("textbox", { name: "添加评论" }).fill("本地测试回复");
-  await page.getByRole("button", { name: "发布", exact: true }).click();
+  await page.getByRole("button", { name: "評論測試帖子", exact: true }).click();
+  await page.getByRole("textbox", { name: "新增評論" }).fill("本地測試回復");
+  await page.getByRole("button", { name: "發布", exact: true }).click();
   await expect(
-    page.locator(".mymy-comments p").filter({ hasText: "本地测试回复" }),
+    page.locator(".mymy-comments p").filter({ hasText: "本地測試回復" }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/instagram-comments.png" });
-  await page.getByRole("button", { name: "关闭评论面板" }).click();
+  await page.getByRole("button", { name: "關閉評論面板" }).click();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/instagram-feed.png" });
   await page.locator(".st").first().click();
   await expect(page.locator(".mymy-story")).toBeVisible();
-  await page.getByRole("button", { name: "关闭快拍" }).click();
-  await page.getByRole("button", { name: "个人主页", exact: true }).click();
+  await page.getByRole("button", { name: "關閉快拍" }).click();
+  await page.getByRole("button", { name: "個人首頁", exact: true }).click();
   await expect(page.locator(".pg2")).toBeVisible();
   await home(page);
   await open(page, "X");
-  await page.getByRole("button", { name: "点赞测试帖子", exact: true }).click();
-  await page.getByRole("button", { name: "转发测试帖子", exact: true }).click();
+  await page.getByRole("button", { name: "點贊測試帖子", exact: true }).click();
+  await page.getByRole("button", { name: "轉發測試帖子", exact: true }).click();
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/x-feed.png" });
   await page.locator(".kzxx").click();
   await expect(page.locator(".x-post-detail")).toBeVisible();
-  await expect(page.getByRole("button", { name: "喜欢帖子" })).toHaveAttribute(
+  await expect(page.getByRole("button", { name: "喜歡帖子" })).toHaveAttribute(
     "aria-pressed",
     "true",
   );
   await home(page);
   await page.reload();
-  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
   await open(page, "Instagram");
-  await page.getByRole("button", { name: "主页", exact: true }).click();
+  await page.getByRole("button", { name: "首頁", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "点赞测试帖子", exact: true }),
+    page.getByRole("button", { name: "點贊測試帖子", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   expect(errors).toEqual([]);
 });
@@ -115,11 +115,11 @@ test("mobile Mymy KKT layout and touch controls", async ({ page }) => {
   const bounds = await page.locator(".kzinp").boundingBox();
   expect(bounds!.width).toBeLessThanOrEqual(393);
   await page
-    .getByRole("textbox", { name: "KKT消息", exact: true })
-    .fill("本地发送测试");
-  await page.getByRole("button", { name: "发送KKT消息" }).click();
+    .getByRole("textbox", { name: "KKT訊息", exact: true })
+    .fill("本地傳送測試");
+  await page.getByRole("button", { name: "傳送KKT訊息" }).click();
   await expect(
-    page.getByRole("button", { name: "本地发送测试", exact: true }),
+    page.getByRole("button", { name: "本地傳送測試", exact: true }),
   ).toBeVisible();
   await page
     .locator(".phone-screen")
@@ -139,34 +139,34 @@ for (const answer of [true, false]) {
     await expect(page.locator(".lock-screen")).toBeVisible();
     expect(await page.locator(".phone-screen").evaluate((el, src) =>
       (el as HTMLElement).style.backgroundImage.includes(src), familyStory.phone.wallpaper)).toBe(true);
-    await page.getByRole("button", { name: "轻触解锁" }).click();
-    for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    await page.getByRole("button", { name: "輕觸解鎖" }).click();
+    for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
     expect(await page.locator(".phone-screen").evaluate((el, src) =>
       (el as HTMLElement).style.backgroundImage.includes(src), familyStory.phone.homeWallpaper)).toBe(true);
     await page.locator(".phone-screen").screenshot({ path: "outputs/mymy/family-home-wallpaper-" + answer + ".png" });
     await open(page, "KakaoTalk");
-    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await page.locator(".kzkcr").filter({ hasText: "一對恩愛夫夫和我（3）" }).click();
     await expect(page.locator(".chat-time")).toContainText("10月26日");
     await expect(page.locator(".kzt").first()).toHaveText("09:30");
     await expect(page.locator(".kzt").nth(1)).toHaveText("09:37");
     await expect(page.locator(".kzbub")).toHaveCount(2);
     await expect(page.locator(".incoming-call-screen")).toHaveCount(0);
-    const send = page.getByRole("button", { name: "发送KKT消息" });
+    const send = page.getByRole("button", { name: "傳送KKT訊息" });
     await expect(send).toBeDisabled();
-    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill("   ");
+    await page.getByRole("textbox", { name: "KKT訊息", exact: true }).fill("   ");
     await expect(send).toBeDisabled();
     const reply = answer ? "想吃牛肉麵，我在這裡！" : "<script>不是程式，只是回覆</script>";
-    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill(reply);
+    await page.getByRole("textbox", { name: "KKT訊息", exact: true }).fill(reply);
     await send.click();
     const call = page.locator(".incoming-call-screen");
     await expect(call).toBeVisible();
-    await expect(call.locator("h2")).toHaveText("妈妈🐈");
-    await expect(call).toContainText("KKT 视频通话");
+    await expect(call.locator("h2")).toHaveText("媽媽🐈");
+    await expect(call).toContainText("KKT 視訊通話");
     await page.locator(".phone-screen").screenshot({ path: "outputs/mymy/family-kkt-" + answer + ".png" });
     if (answer) {
-      await call.getByRole("button", { name: "接听", exact: false }).click();
-      await expect(call).toContainText("视频通话已接通");
-      await call.getByRole("button", { name: "挂断", exact: false }).click();
+      await call.getByRole("button", { name: "接聽", exact: false }).click();
+      await expect(call).toContainText("視訊通話已接通");
+      await call.getByRole("button", { name: "掛斷", exact: false }).click();
     } else {
       await call.getByRole("button", { name: "拒接", exact: false }).click();
     }
@@ -174,7 +174,7 @@ for (const answer of [true, false]) {
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
     await home(page);
     await open(page, "KakaoTalk");
-    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await page.locator(".kzkcr").filter({ hasText: "一對恩愛夫夫和我（3）" }).click();
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
     await page.waitForFunction(() => new Promise<boolean>((resolve, reject) => {
       const request = indexedDB.open("foundphone-studio");
@@ -191,15 +191,57 @@ for (const answer of [true, false]) {
       };
     }));
     await page.reload();
-    await page.getByRole("button", { name: "轻触解锁" }).click();
-    for (const n of "0329") await page.getByRole("button", { name: "密码键" + n, exact: true }).click();
+    await page.getByRole("button", { name: "輕觸解鎖" }).click();
+    for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
     await open(page, "KakaoTalk");
-    await page.locator(".kzkcr").filter({ hasText: "一对恩爱夫夫和我（3）" }).click();
+    await page.locator(".kzkcr").filter({ hasText: "一對恩愛夫夫和我（3）" }).click();
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
     await expect(call).toHaveCount(0);
-    await page.getByRole("textbox", { name: "KKT消息", exact: true }).fill("再回覆一次");
+    await page.getByRole("textbox", { name: "KKT訊息", exact: true }).fill("再回覆一次");
     await send.click();
     await expect(page.locator(".kzbub").last()).toHaveText("再回覆一次");
     await expect(call).toHaveCount(0);
   });
 }
+
+test("Taiwan real clock and two-stage family group survive reload", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-10-26T15:59:58Z") });
+  await page.route("**/work.json", (r) => r.fulfill({ json: compileStory(familyStory).work }));
+  await page.goto("/");
+  await expect(page.locator(".status-time")).toHaveText("23:59");
+  await page.clock.fastForward(4000);
+  await expect(page.locator(".status-time")).toHaveText("00:00");
+  await expect(page.locator(".lock-clock-block p")).toContainText("10月27日");
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
+  for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
+  await open(page, "KakaoTalk");
+  const group = "這是全天下最完美的陣容（5）";
+  await page.locator(".kzkcr").filter({ hasText: group }).click();
+  await expect(page.locator(".kzbub")).toHaveCount(4);
+  await expect(page.locator(".msgs")).not.toContainText("小玫瑰");
+  await page.getByRole("textbox", { name: "KKT訊息", exact: true }).fill("好啦，知道你們感情很好！");
+  await page.getByRole("button", { name: "傳送KKT訊息" }).click();
+  await expect(page.locator(".kzbub")).toHaveCount(8);
+  await expect(page.locator(".msgs")).toContainText("小玫瑰這幾天也回來了");
+  await expect(page.locator(".msgs")).not.toContainText("火鍋");
+  await page.getByRole("textbox", { name: "KKT訊息", exact: true }).fill("那我也想去！");
+  await page.getByRole("button", { name: "傳送KKT訊息" }).click();
+  await expect(page.locator(".kzbub")).toHaveCount(10);
+  await expect(page.locator(".kzbub").last()).toContainText("超好吃的火鍋");
+  await expect(page.locator(".incoming-call-screen")).toHaveCount(0);
+  await page.locator(".phone-screen").screenshot({ path: "outputs/mymy/taiwan-family-group.png" });
+  await page.waitForFunction(() => new Promise<boolean>((resolve) => {
+    const r = indexedDB.open("foundphone-studio");
+    r.onsuccess = () => {
+      const db = r.result, q = db.transaction("saves").objectStore("saves").get("shiyi-family-phone");
+      q.onsuccess = () => { resolve((q.result?.state?.ui?.kakao?.mymyKktSent?.length ?? 0) >= 2); db.close(); };
+    };
+  }));
+  await page.reload();
+  await page.getByRole("button", { name: "輕觸解鎖" }).click();
+  for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
+  await open(page, "KakaoTalk");
+  await page.locator(".kzkcr").filter({ hasText: group }).click();
+  await expect(page.locator(".kzbub")).toHaveCount(10);
+  await expect(page.locator(".kzbub").last()).toContainText("超好吃的火鍋");
+});
