@@ -182,7 +182,7 @@ test("照片相簿顯示三個家庭分類", async ({ page }) => {
   for (const n of "0329") await page.getByRole("button", { name: "密碼鍵" + n, exact: true }).click();
   await page.getByRole("button", { name: "開啟App Store", exact: true }).click();
   await page.getByPlaceholder("搜尋全部App").fill("照片");
-  await page.locator(".runtime-library-row").filter({ hasText: "照片" }).getByRole("button", { name: "開啟", exact: true }).click();
+  await page.locator(".runtime-library-row").first().getByRole("button", { name: "開啟", exact: true }).click();
   await page.getByRole("button", { name: "相簿", exact: true }).click();
   await expect(page.getByRole("button", { name: "開啟相簿不能讓他們兩個看到的", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "開啟相簿我最喜歡的五個人", exact: true })).toBeVisible();
