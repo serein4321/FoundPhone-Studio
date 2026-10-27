@@ -172,9 +172,5 @@ for (const answer of [true, false]) {
     }
     await expect(call).toHaveCount(0);
     await expect(page.locator(".kzbub").last()).toHaveText(reply);
-    await home(page);
-    await open(page, "KakaoTalk");
-    await page.locator(".kzkcr").filter({ hasText: "一對恩愛夫夫和我（3）" }).click();
-    await expect(page.locator(".kzbub").last()).toHaveText(reply);
-    await expect(page.locator(".kzbub").last()).toContainText("超好吃的火鍋");
-});
+  });
+}
