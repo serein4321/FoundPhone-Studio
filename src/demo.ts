@@ -27,6 +27,7 @@ export function createWork(title = "雨停之前"): Work {
         "appstore",
         "phone",
         "messages",
+        "wechat",
         "photos",
         "notes",
         "safari",
