@@ -230,6 +230,34 @@ export function WeChatSkin(p: SkinProps) {
   const [draft, setDraft] = useState("");
   const momVideoReplySent = hasMomWechatReply(sent);
   const revealAfterCall = p.creator || (momVideoReplySent && !p.incomingCall);
+  const wechatContactNames = [
+    "媽媽🐈",
+    "爸爸🐈‍⬛",
+    "瑪莎叔叔🧹",
+    "石頭叔叔🪨",
+    "冠佑叔叔🥁",
+  ];
+  const wechatContactAvatars = new Map(
+    wechatContactNames.map((name) => [
+      name,
+      p.items.find((item) => item.sender === name && item.avatar)?.avatar ||
+        "",
+    ]),
+  );
+  const wechatAvatar = (name: string, fallback = "") =>
+    wechatContactAvatars.get(name) || fallback;
+  const fixedWechatTimeline = (thread: string) =>
+    wechatTimeline(
+      p.items,
+      sent,
+      thread,
+      p.owner || "機主",
+      p.creator,
+      revealAfterCall,
+    ).map((item) => {
+      const avatar = wechatAvatar(item.sender, item.avatar);
+      return avatar && avatar !== item.avatar ? { ...item, avatar } : item;
+    });
   const [profileName, setProfileName] = useSkinState<string>(
     p,
     "wechatProfileName",
@@ -400,7 +428,10 @@ export function WeChatSkin(p: SkinProps) {
                 <div key={name}>
                   <Avatar
                     name={name}
-                    src={p.items.find((i) => i.sender === name)?.avatar}
+                    src={wechatAvatar(
+                      name,
+                      p.items.find((i) => i.sender === name)?.avatar,
+                    )}
                   />
                   <small>{name}</small>
                 </div>
@@ -425,14 +456,7 @@ export function WeChatSkin(p: SkinProps) {
       ) : p.thread ? (
         <>
           <MessageList
-            items={wechatTimeline(
-              p.items,
-              sent,
-              p.thread,
-              p.owner || "機主",
-              p.creator,
-              revealAfterCall,
-            )}
+            items={fixedWechatTimeline(p.thread)}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
@@ -497,7 +521,7 @@ export function WeChatSkin(p: SkinProps) {
               className="wx-moment-post"
               onClick={() => p.onItem(i)}
             >
-              <Avatar name={i.sender} />
+              <Avatar name={i.sender} src={wechatAvatar(i.sender, i.avatar)} />
               <div>
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
@@ -542,14 +566,7 @@ export function WeChatSkin(p: SkinProps) {
                     ),
                 )
                 .map((t) => {
-                  const list = wechatTimeline(
-                      p.items,
-                      sent,
-                      t,
-                      p.owner || "機主",
-                      p.creator,
-                      revealAfterCall,
-                    ),
+                  const list = fixedWechatTimeline(t),
                     last = list.at(-1);
                   if (!last) return null;
                   return (
@@ -565,10 +582,7 @@ export function WeChatSkin(p: SkinProps) {
                       <span className="wx-chat-avatar">
                         <Avatar
                           name={t}
-                          src={
-                            p.items.find((i) => i.sender === t && i.avatar)
-                              ?.avatar || last.avatar
-                          }
+                          src={wechatAvatar(t, last.avatar)}
                         />
                         {!readThreads.includes(t) &&
                           list.some((i) => !i.read) && (
@@ -604,7 +618,10 @@ export function WeChatSkin(p: SkinProps) {
                 >
                   <Avatar
                     name={c}
-                    src={p.items.find((i) => i.sender === c)?.avatar}
+                    src={wechatAvatar(
+                    c,
+                    p.items.find((i) => i.sender === c)?.avatar,
+                  )}
                   />
                   {c}
                 </button>
