@@ -32,7 +32,7 @@ import {
   Layers,
   ShoppingBag,
 } from "lucide-react";
-import { safeMedia, type Item, type UiValue } from "./schema";
+import { makeItem, safeMedia, type Item, type UiValue } from "./schema";
 export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
@@ -134,6 +134,72 @@ function MessageList({
     </div>
   );
 }
+function parseWechatReply(raw: string) {
+  try {
+    const value: unknown = JSON.parse(raw);
+    if (
+      Array.isArray(value) &&
+      value.length === 3 &&
+      value.every((v) => typeof v === "string")
+    ) {
+      return {
+        thread: value[0] as string,
+        body: value[1] as string,
+        time: value[2] as string,
+      };
+    }
+  } catch {
+    // Ignore invalid saved entries.
+  }
+  return null;
+}
+function hasMomWechatReply(sent: string[]) {
+  return sent.some((raw) => {
+    const entry = parseWechatReply(raw);
+    return entry?.thread === "媽媽🐈" && entry.body === "我想你了";
+  });
+}
+function wechatTimeline(
+  items: Item[],
+  sent: string[],
+  thread: string,
+  owner: string,
+  creator = false,
+  revealAfterCall = false,
+) {
+  const replies = sent
+    .map(parseWechatReply)
+    .filter(
+      (entry): entry is { thread: string; body: string; time: string } =>
+        Boolean(entry && entry.thread === thread),
+    )
+    .map((entry, index) =>
+      makeItem({
+        id: "local-wechat-" + index,
+        title: thread,
+        body: entry.body,
+        time: entry.time,
+        sender: owner,
+        outgoing: true,
+        meta: { local: "true" },
+      }),
+    );
+  const authored = items.filter(
+    (item) =>
+      item.title === thread &&
+      (creator || item.meta.afterCall !== "true" || revealAfterCall),
+  );
+  return [
+    ...authored.map((item) => ({
+      item,
+      order: Number(item.meta.afterReplies || 0) * 2,
+    })),
+    ...replies.map((item, index) => ({ item, order: index * 2 + 1 })),
+  ]
+    .sort((a, b) => a.order - b.order)
+    .map((entry) => entry.item);
+}
+
 function Compose({
   creator,
   onAdd,
@@ -160,6 +226,10 @@ export function WeChatSkin(p: SkinProps) {
     [menu, setMenu] = useState(false),
     [searchOpen, setSearchOpen] = useState(false),
     [utility, setUtility] = useState("");
+  const [sent, setSent] = useSkinState<string[]>(p, "wechatSent", []);
+  const [draft, setDraft] = useState("");
+  const momVideoReplySent = hasMomWechatReply(sent);
+  const revealAfterCall = p.creator || (momVideoReplySent && !p.incomingCall);
   const [profileName, setProfileName] = useSkinState<string>(
     p,
     "wechatProfileName",
@@ -230,12 +300,22 @@ export function WeChatSkin(p: SkinProps) {
       </button>
     </div>
   );
+  const visibleItems = p.items.filter(
+    (i) => p.creator || i.meta.afterCall !== "true" || revealAfterCall,
+  );
+  const sentThreads = sent
+    .map(parseWechatReply)
+    .filter((entry): entry is { thread: string; body: string; time: string } =>
+      Boolean(entry),
+    )
+    .map((entry) => entry.thread);
   const conversations = [
-    ...new Set(
-      p.items
+    ...new Set([
+      ...visibleItems
         .filter((i) => !["朋友圈", "我", "通訊錄"].includes(i.folder))
         .map((i) => i.title),
-    ),
+      ...sentThreads,
+    ]),
   ];
   const contacts = [
     ...new Set(p.items.map((i) => i.sender).filter((s) => s !== "我")),
@@ -345,12 +425,65 @@ export function WeChatSkin(p: SkinProps) {
       ) : p.thread ? (
         <>
           <MessageList
-            items={p.items.filter((i) => i.title === p.thread)}
+            items={wechatTimeline(
+              p.items,
+              sent,
+              p.thread,
+              p.owner || "機主",
+              p.creator,
+              revealAfterCall,
+            )}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          <Compose creator={p.creator} onAdd={p.onAdd} />
+          <form
+            className="skin-compose wechat-compose"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const value = draft.trim();
+              if (!value) return;
+              if (p.creator) {
+                p.onAdd();
+                return;
+              }
+              setSent([
+                ...sent,
+                JSON.stringify([
+                  p.thread,
+                  value,
+                  p.virtualTime || "09:41",
+                ]),
+              ]);
+              setDraft("");
+            }}
+          >
+            <button
+              type="button"
+              aria-label="聊天選單"
+              onClick={() =>
+                p.creator ? p.onAdd() : setUtility("聊天資訊")
+              }
+            >
+              <Plus size={20} />
+            </button>
+            <input
+              aria-label="微信訊息"
+              placeholder="輸入訊息"
+              value={draft}
+              maxLength={2000}
+              onChange={(event) => setDraft(event.target.value)}
+            />
+            <Smile size={21} />
+            <button
+              type="submit"
+              className="wechat-send"
+              aria-label="傳送微信訊息"
+              disabled={!draft.trim()}
+            >
+              ↑
+            </button>
+          </form>
         </>
       ) : moments ? (
         <div className="wx-moments">
@@ -409,8 +542,16 @@ export function WeChatSkin(p: SkinProps) {
                     ),
                 )
                 .map((t) => {
-                  const list = p.items.filter((i) => i.title === t),
-                    last = list.at(-1)!;
+                  const list = wechatTimeline(
+                      p.items,
+                      sent,
+                      t,
+                      p.owner || "機主",
+                      p.creator,
+                      revealAfterCall,
+                    ),
+                    last = list.at(-1);
+                  if (!last) return null;
                   return (
                     <button
                       className="wx-chat-row"

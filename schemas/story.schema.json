@@ -262,6 +262,14 @@
                   "default": "",
                   "type": "string"
                 },
+                "videoImage": {
+                  "default": "",
+                  "type": "string"
+                },
+                "videoMedia": {
+                  "default": "",
+                  "type": "string"
+                },
                 "hidden": {
                   "default": false,
                   "type": "boolean"

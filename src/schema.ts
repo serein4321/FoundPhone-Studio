@@ -26,6 +26,7 @@ export const itemSchema = z.object({
     .default("text"),
   media: z.string().default(""),
   videoImage: z.string().default(""),
+  videoMedia: z.string().default(""),
   hidden: z.boolean().default(false),
   unlock: z.string().default(""),
   password: z.string().default(""),

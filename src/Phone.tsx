@@ -640,12 +640,46 @@ function PhoneRuntime({
                 ) : null;
               })()}
               <small>
-                {work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.meta.callType === "video" ? "KKT 視訊通話 · " : ""}
+                {(() => {
+                  const record = work.data.phone?.find(
+                    (i) => i.id === s.incomingCall?.target,
+                  );
+                  const service =
+                    record?.meta.callApp === "wechat"
+                      ? "微信"
+                      : record?.meta.callApp === "kakao"
+                        ? "KKT"
+                        : "";
+                  return record?.meta.callType === "video"
+                    ? `${service ? service + " " : ""}視訊通話 · `
+                    : "";
+                })()}
                 {s.incomingCall.status === "ringing" ? "來電" : "通話中"} ·
                 作品內模擬
               </small>
               <div className="incoming-avatar">
-                {safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "") ? <img alt="來電頭像" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "inherit" }} src={safeMedia(work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.avatar || "")} /> : s.incomingCall.caller.slice(0, 1)}
+                {(() => {
+                  const record = work.data.phone?.find(
+                    (i) => i.id === s.incomingCall?.target,
+                  );
+                  const avatar =
+                    safeMedia(record?.avatar || "") ||
+                    safeMedia(record?.videoImage || "");
+                  return avatar ? (
+                    <img
+                      alt="來電頭像"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "inherit",
+                      }}
+                      src={avatar}
+                    />
+                  ) : (
+                    s.incomingCall.caller.slice(0, 1)
+                  );
+                })()}
               </div>
               <h2>{s.incomingCall.caller}</h2>
               {s.incomingCall.status === "answered" &&
@@ -655,14 +689,28 @@ function PhoneRuntime({
                   );
                   return record?.meta.callType === "video" ? (
                     <>
-                      {safeMedia(record.videoImage) && (
+                      {safeMedia(record.videoMedia) ? (
+                        <video
+                          className="incoming-video-player"
+                          controls
+                          autoPlay
+                          loop
+                          playsInline
+                          preload="auto"
+                          poster={safeMedia(record.videoImage) || undefined}
+                          src={safeMedia(record.videoMedia)}
+                          onCanPlay={(event) => {
+                            void event.currentTarget.play().catch(() => undefined);
+                          }}
+                        />
+                      ) : safeMedia(record.videoImage) ? (
                         <div className="incoming-video-preview">
                           <img
                             src={safeMedia(record.videoImage)}
                             alt={record.title + "視訊畫面"}
                           />
                         </div>
-                      )}
+                      ) : null}
                       <p>視訊通話已接通</p>
                     </>
                   ) : record?.kind === "audio" && safeMedia(record.media) ? (

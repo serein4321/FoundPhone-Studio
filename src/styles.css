@@ -4902,9 +4902,22 @@ label {
   object-fit: cover;
 }
 
+.incoming-video-player {
+  display: block;
+  width: min(100%, 286px);
+  height: min(360px, 42vh);
+  margin-top: 20px;
+  border: 0;
+  border-radius: 24px;
+  background: #111;
+  box-shadow: 0 12px 36px #0006;
+  object-fit: contain;
+}
+
 .incoming-call-screen audio {
   width: 100%;
   margin-top: 30px;
+}
 .incoming-call-screen audio.incoming-ringtone {
   display: none;
 }
