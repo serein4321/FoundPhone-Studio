@@ -3,7 +3,7 @@
   "id": "shiyi-family-phone",
   "title": "拾遺｜女兒的手機",
   "description": "虛構平行世界故事：一支在演唱會場館附近被拾獲的手機，藏著五個大人和一個孩子的日常。",
-  "revision": 29,
+  "revision": 30,
   "phone": {
     "owner": "我",
     "date": "2026-10-26",
@@ -633,6 +633,69 @@
           "time": "2026-10-26 10:18",
           "meta": {
             "persona": "穩重、寵女兒、用音樂和行動照顧她"
+          }
+        },
+        {
+          "body": "你媽呢？還在書房？",
+          "id": "dad-kkt-evening-1",
+          "senderId": "dad",
+          "time": "2026-10-28 21:20",
+          "meta": {
+            "afterReplies": "0"
+          }
+        },
+        {
+          "body": "就早上出門搞晚了啦然後忘記做了件很重要的事，然後他一整天都沒理我……",
+          "id": "dad-kkt-evening-2",
+          "senderId": "dad",
+          "time": "2026-10-28 21:21",
+          "meta": {
+            "afterReplies": "1"
+          }
+        },
+        {
+          "body": "哎呀我每天早上出門前都會親一下你媽媽啦，然後晚上回來的時候他會再親我一下",
+          "id": "dad-kkt-evening-3",
+          "senderId": "dad",
+          "time": "2026-10-28 21:22",
+          "meta": {
+            "afterReplies": "2"
+          }
+        },
+        {
+          "body": "阿信說這樣一天才算是完整的",
+          "id": "dad-kkt-evening-4",
+          "senderId": "dad",
+          "time": "2026-10-28 21:23",
+          "meta": {
+            "afterReplies": "2"
+          }
+        },
+        {
+          "body": "我買了那家他最愛吃的綿綿冰，你幫我送進去🥲",
+          "id": "dad-kkt-evening-5",
+          "senderId": "dad",
+          "time": "2026-10-28 21:24",
+          "meta": {
+            "afterReplies": "3"
+          }
+        },
+        {
+          "body": "哦但是你要看著點不要讓他多吃，最近換季了",
+          "id": "dad-kkt-evening-6",
+          "senderId": "dad",
+          "time": "2026-10-28 21:25",
+          "meta": {
+            "afterReplies": "3"
+          }
+        },
+        {
+          "body": "幫我哄一下啦，媽媽對你最心軟了🥺🥹",
+          "id": "dad-kkt-evening-7",
+          "senderId": "dad",
+          "time": "2026-10-28 21:26",
+          "meta": {
+            "afterReplies": "4"
           }
         }
       ]
