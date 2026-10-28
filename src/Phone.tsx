@@ -619,6 +619,26 @@ function PhoneRuntime({
           )}
           {!creator && s.incomingCall && (
             <div className="incoming-call-screen">
+              {(() => {
+                const record = work.data.phone?.find(
+                  (i) => i.id === s.incomingCall?.target,
+                );
+                return s.incomingCall?.status === "ringing" &&
+                  record?.meta.callType === "video" &&
+                  safeMedia(record.media) ? (
+                  <audio
+                    className="incoming-ringtone"
+                    aria-label="視訊來電鈴聲"
+                    autoPlay
+                    loop
+                    preload="auto"
+                    src={safeMedia(record.media)}
+                    onCanPlay={(event) => {
+                      void event.currentTarget.play().catch(() => undefined);
+                    }}
+                  />
+                ) : null;
+              })()}
               <small>
                 {work.data.phone?.find((i) => i.id === s.incomingCall?.target)?.meta.callType === "video" ? "KKT 視訊通話 · " : ""}
                 {s.incomingCall.status === "ringing" ? "來電" : "通話中"} ·

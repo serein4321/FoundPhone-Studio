@@ -4889,6 +4889,9 @@ label {
   width: 100%;
   margin-top: 30px;
 }
+.incoming-call-screen audio.incoming-ringtone {
+  display: none;
+}
 .incoming-actions {
   display: flex;
   align-items: center;
