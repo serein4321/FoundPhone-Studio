@@ -565,7 +565,7 @@ export function WeChatSkin(p: SkinProps) {
                 </>
               )}
             </>
-
+          )}
         </div>
       )}
       {!p.thread && !moments && !utility && (
