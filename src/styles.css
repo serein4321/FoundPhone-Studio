@@ -4918,3 +4918,48 @@ label {
   background: #e34f58;
   transform: rotate(135deg);
 }
+
+
+.wx-profile-setup {
+  align-items: center;
+  gap: 16px;
+  padding: 28px 22px;
+  background: #f7f7f7;
+}
+.wx-profile-setup > .skin-avatar {
+  width: 84px;
+  height: 84px;
+  font-size: 28px;
+}
+.wx-profile-setup label {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  color: #555;
+  font-size: 13px;
+}
+.wx-profile-setup input[type="text"],
+.wx-profile-setup input:not([type]) {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d7d7d7;
+  border-radius: 9px;
+  background: #fff;
+  padding: 11px 12px;
+  font-size: 16px;
+}
+.wx-profile-setup input[type="file"] {
+  width: 100%;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.wx-profile-setup .phone-add {
+  width: 100%;
+  margin-top: 4px;
+}
+.wx-profile-setup .phone-add:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+/* 微信個人資料設定 */
