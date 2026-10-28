@@ -194,6 +194,11 @@ export function WeChatSkin(p: SkinProps) {
     setProfileAvatar(draftAvatar);
     setProfileReady(true);
   };
+  const [readThreads, setReadThreads] = useSkinState<string[]>(
+    p,
+    "readThreads",
+    [],
+  );
   const profileSetup = (
     <div className="wechat-ui independent-skin">
       <div className="app-nav wx-nav">
@@ -235,15 +240,6 @@ export function WeChatSkin(p: SkinProps) {
     </div>
   );
   if (!profileReady) return profileSetup;
-  const [readThreads, setReadThreads] = useSkinState<string[]>(
-    p,
-    "readThreads",
-    [],
-  );
-    p,
-    "readThreads",
-    [],
-  );
   const conversations = [
     ...new Set(
       p.items
