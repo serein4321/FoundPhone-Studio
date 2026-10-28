@@ -379,6 +379,11 @@ export function WeChatSkin(p: SkinProps) {
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
+                {i.comments.map((comment, index) => (
+                  <p className="wx-moment-comment" key={`${i.id}-comment-${index}`}>
+                    {comment}
+                  </p>
+                ))}
                 <small>{i.time}</small>
               </div>
             </button>
