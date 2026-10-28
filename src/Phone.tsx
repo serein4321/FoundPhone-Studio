@@ -654,7 +654,17 @@ function PhoneRuntime({
                     (i) => i.id === s.incomingCall?.target,
                   );
                   return record?.meta.callType === "video" ? (
-                    <p>視訊通話已接通</p>
+                    <>
+                      {safeMedia(record.videoImage) && (
+                        <div className="incoming-video-preview">
+                          <img
+                            src={safeMedia(record.videoImage)}
+                            alt={record.title + "視訊畫面"}
+                          />
+                        </div>
+                      )}
+                      <p>視訊通話已接通</p>
+                    </>
                   ) : record?.kind === "audio" && safeMedia(record.media) ? (
                     <audio controls src={safeMedia(record.media)} />
                   ) : (

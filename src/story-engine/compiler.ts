@@ -145,7 +145,7 @@ export function compileStory(raw: unknown): { story: Story; work: Work } {
       sender: s.phone.owner,
       ...raw,
     });
-    for (const k of ["media", "avatar"] as const)
+    for (const k of ["media", "avatar", "videoImage"] as const)
       if (item[k] && !safeMedia(item[k]))
         fail(p + "." + k, "僅允許受支持的內嵌媒體，不允許腳本或遠程資源");
     if (item.richText) {
