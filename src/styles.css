@@ -4965,3 +4965,11 @@ label {
 /* 微信個人資料設定 */
 
 /* Pages deployment refresh */
+
+
+.wx-moment-comment {
+  margin: 3px 0 0;
+  color: #576b95;
+  font-size: 12px;
+  line-height: 1.45;
+}

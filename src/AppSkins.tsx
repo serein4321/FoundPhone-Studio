@@ -200,46 +200,36 @@ export function WeChatSkin(p: SkinProps) {
     [],
   );
   const profileSetup = (
-    <div className="wechat-ui independent-skin">
-      <div className="app-nav wx-nav">
-        <button aria-label="返回" onClick={p.onBack}>
-          <ChevronLeft size={22} />
-        </button>
-        <strong>設定微信</strong>
-        <span />
-      </div>
-      <div className="skin-scroll wx-profile-setup">
-        <Avatar name={draftName || "我"} src={draftAvatar} />
-        <label>
-          微信名稱
-          <input
-            aria-label="微信名稱"
-            value={draftName}
-            maxLength={20}
-            placeholder="輸入微信名稱"
-            onChange={(event) => setDraftName(event.target.value)}
-          />
-        </label>
-        <label>
-          微信頭像
-          <input
-            aria-label="微信頭像"
-            type="file"
-            accept="image/png,image/jpeg,image/webp,image/gif"
-            onChange={chooseAvatar}
-          />
-        </label>
-        <button
-          className="phone-add"
-          disabled={!draftName.trim()}
-          onClick={saveProfile}
-        >
-          完成設定
-        </button>
-      </div>
+    <div className="wx-profile-setup">
+      <Avatar name={draftName || "我"} src={draftAvatar} />
+      <label>
+        微信名稱
+        <input
+          aria-label="微信名稱"
+          value={draftName}
+          maxLength={20}
+          placeholder="輸入微信名稱"
+          onChange={(event) => setDraftName(event.target.value)}
+        />
+      </label>
+      <label>
+        微信頭像
+        <input
+          aria-label="微信頭像"
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          onChange={chooseAvatar}
+        />
+      </label>
+      <button
+        className="phone-add"
+        disabled={!draftName.trim()}
+        onClick={saveProfile}
+      >
+        完成設定
+      </button>
     </div>
   );
-  if (!profileReady) return profileSetup;
   const conversations = [
     ...new Set(
       p.items
@@ -379,6 +369,11 @@ export function WeChatSkin(p: SkinProps) {
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
+                {i.comments.map((comment, index) => (
+                  <p className="wx-moment-comment" key={`${i.id}-comment-${index}`}>
+                    {comment}
+                  </p>
+                ))}
                 <small>{i.time}</small>
               </div>
             </button>
@@ -495,65 +490,66 @@ export function WeChatSkin(p: SkinProps) {
             </div>
           ) : (
             <>
-              <div className="wx-profile">
-                <Avatar name={displayName} src={profileAvatar} />
-                <div>
-                  <h2>{displayName}</h2>
-                  <small>微信號：未設定</small>
-                  <button
-                    className="wx-profile-status"
-                    onClick={() => setUtility("狀態")}
-                  >
-                    ＋ 狀態
-                  </button>
-                </div>
-              </div>
-              <div className="wx-profile-menu">
-                {[
-                  [MessageCircle, "服務", "#07c160"],
-                  [Layers, "收藏", "#e8a828"],
-                  [ImageIcon, "朋友圈", "#3a9bd9"],
-                  [Layers, "作品", "#329dd8"],
-                  [ShoppingBag, "小店與卡包", "#ed7c59"],
-                  [Smile, "表情", "#f7b900"],
-                  [Settings, "設定", "#1696d2"],
-                ].map(([Icon, label, color]) => {
-                  const Glyph = Icon as typeof Settings;
-                  return (
-                    <button
-                      key={String(label)}
-                      className="wx-discovery"
-                      onClick={() =>
-                        label === "朋友圈"
-                          ? setMoments(true)
-                          : setUtility(String(label))
-                      }
-                    >
-                      <Glyph size={22} style={{ color: String(color) }} />
-                      {String(label)}
-                      <span>›</span>
+              {!profileReady && profileSetup}
+                  <div className="wx-profile">
+                    <Avatar name={displayName} src={profileAvatar} />
+                    <div>
+                      <h2>{displayName}</h2>
+                      <small>微信號：未設定</small>
+                      <button
+                        className="wx-profile-status"
+                        onClick={() => setUtility("狀態")}
+                      >
+                        ＋ 狀態
+                      </button>
+                    </div>
+                  </div>
+                  <div className="wx-profile-menu">
+                    {[
+                      [MessageCircle, "服務", "#07c160"],
+                      [Layers, "收藏", "#e8a828"],
+                      [ImageIcon, "朋友圈", "#3a9bd9"],
+                      [Layers, "作品", "#329dd8"],
+                      [ShoppingBag, "小店與卡包", "#ed7c59"],
+                      [Smile, "表情", "#f7b900"],
+                      [Settings, "設定", "#1696d2"],
+                    ].map(([Icon, label, color]) => {
+                      const Glyph = Icon as typeof Settings;
+                      return (
+                        <button
+                          key={String(label)}
+                          className="wx-discovery"
+                          onClick={() =>
+                            label === "朋友圈"
+                              ? setMoments(true)
+                              : setUtility(String(label))
+                          }
+                        >
+                          <Glyph size={22} style={{ color: String(color) }} />
+                          {String(label)}
+                          <span>›</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {p.items
+                    .filter((i) => i.folder === "我")
+                    .map((i) => (
+                      <button
+                        className="wx-discovery"
+                        key={i.id}
+                        onClick={() => p.onItem(i)}
+                      >
+                        <User size={18} />
+                        {i.title}
+                        <span>›</span>
+                      </button>
+                    ))}
+                  {p.creator && (
+                    <button className="phone-add" onClick={p.onAdd}>
+                      編輯個人資料內容
                     </button>
-                  );
-                })}
-              </div>
-              {p.items
-                .filter((i) => i.folder === "我")
-                .map((i) => (
-                  <button
-                    className="wx-discovery"
-                    key={i.id}
-                    onClick={() => p.onItem(i)}
-                  >
-                    <User size={18} />
-                    {i.title}
-                    <span>›</span>
-                  </button>
-                ))}
-              {p.creator && (
-                <button className="phone-add" onClick={p.onAdd}>
-                  編輯個人資料內容
-                </button>
-              )}
+                  )}
             </>
           )}
         </div>
