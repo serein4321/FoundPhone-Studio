@@ -91,7 +91,7 @@ function WidgetFace({
         style={{
           backgroundImage:
             'linear-gradient(90deg, rgba(0, 0, 0, .80), rgba(0, 0, 0, .2) 74%), url("' +
-            import.meta.env.BASE_URL + 'family-birthday.webp")',
+            import.meta.env.BASE_URL + 'family-birthday-original.jpg")',
         }}
       >
         <span className="family-birthday-label">距離{who}生日還有</span>
