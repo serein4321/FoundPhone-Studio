@@ -82,6 +82,30 @@ try {
         .length - 1;
   }
   const raw = JSON.parse(json);
+  // Attach original, unmodified JPEG files only for the authored family story.
+  // This keeps the existing multi-megabyte story.json and all player data intact.
+  if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
+    const manifest = JSON.parse(await readFile("stories/template/album-photos.json", "utf8"));
+    const existing = raw.content?.photos || [];
+    const ids = new Set(existing.map((item) => item.id));
+    const added = [];
+    for (const photo of manifest.photos) {
+      if (!/^[a-zA-Z0-9_.-]+\.jpe?g$/i.test(photo.file))
+        throw Error("Invalid album photo filename");
+      if (ids.has(photo.id)) continue;
+      const originalJpeg = await readFile("stories/template/photos/" + photo.file);
+      added.push({
+        id: photo.id,
+        title: photo.title,
+        body: "",
+        kind: "image",
+        folder: photo.folder,
+        media: "data:image/jpeg;base64," + originalJpeg.toString("base64"),
+      });
+    }
+    raw.content = { ...raw.content, photos: [...added, ...existing] };
+    raw.revision = (raw.revision || 1) + 1;
+  }
   const { compileStory, storySchema } = await server.ssrLoadModule(
     "/src/story-engine/compiler.ts",
   );

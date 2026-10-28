@@ -1,0 +1,28 @@
+{
+  "photos": [
+    {
+      "id": "family-photos-rain-crossing-2026",
+      "title": "雨夜過馬路",
+      "folder": "我最喜歡的五個人",
+      "file": "01-rainy-street.jpg"
+    },
+    {
+      "id": "family-photos-guitar-hug-2026",
+      "title": "舞台上一起彈吉他",
+      "folder": "我最喜歡的五個人",
+      "file": "02-stage-guitar.jpg"
+    },
+    {
+      "id": "family-photos-toast-2026",
+      "title": "一起舉杯",
+      "folder": "我最喜歡的五個人",
+      "file": "03-toast.jpg"
+    },
+    {
+      "id": "family-photos-poster-2026",
+      "title": "戳海報鼻子的拼圖",
+      "folder": "我最喜歡的五個人",
+      "file": "04-poster-collage.jpg"
+    }
+  ]
+}

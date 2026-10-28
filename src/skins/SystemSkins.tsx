@@ -185,7 +185,7 @@ export function ContactsSkin(p: Props) {
 export function PhotosSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "圖庫");
   const [album, setAlbum] = useState("");
-  const albumNames = ["不能讓他們兩個看到的", "我最喜歡的五個人", "想念的菜頭粿"];
+  const albumNames = ["我最喜歡的五個人", "不能讓他們兩個看到的", "想念的菜頭粿"];
   const list =
     tab === "收藏"
       ? items.filter((i) => i.favorite)
