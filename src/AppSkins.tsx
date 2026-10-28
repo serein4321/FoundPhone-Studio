@@ -422,7 +422,13 @@ export function WeChatSkin(p: SkinProps) {
                       }}
                     >
                       <span className="wx-chat-avatar">
-                        <Avatar name={t} src={last.avatar} />
+                        <Avatar
+                          name={t}
+                          src={
+                            p.items.find((i) => i.sender === t && i.avatar)
+                              ?.avatar || last.avatar
+                          }
+                        />
                         {!readThreads.includes(t) &&
                           list.some((i) => !i.read) && (
                             <b className="wx-unread">
