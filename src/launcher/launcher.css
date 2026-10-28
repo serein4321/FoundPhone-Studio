@@ -528,3 +528,40 @@
   opacity: 0.4;
   cursor: default;
 }
+
+/* Birthday countdowns use the author's photograph without AI retouching. */
+.ios18 .family-birthday-widget {
+  background-color: #16201a;
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  justify-content: center;
+  gap: 2px;
+  padding: 12px 18px;
+}
+.ios18 .family-birthday-widget .family-birthday-label {
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 600;
+  text-shadow: 0 1px 2px #0009;
+}
+.ios18 .family-birthday-widget .family-birthday-count {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px #0008;
+}
+.ios18 .family-birthday-widget .family-birthday-count b {
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 700;
+}
+.ios18 .family-birthday-widget .family-birthday-date {
+  color: #fff;
+  font-size: 11px;
+  opacity: .96;
+  text-shadow: 0 1px 2px #0009;
+}

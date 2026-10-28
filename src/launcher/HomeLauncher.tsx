@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type ReactNode, type PointerEvent } from "react";
 import {
   Search,
   Plus,
@@ -45,6 +45,8 @@ const widgetLabels = {
   weather: "天氣",
   notes: "備忘錄",
   battery: "電池",
+  "birthday-dad": "爸爸生日倒數",
+  "birthday-mom": "媽媽生日倒數",
 };
 const widgetApp = {
   calendar: "calendar",
@@ -52,7 +54,16 @@ const widgetApp = {
   weather: "weather",
   notes: "notes",
   battery: "settings",
+  "birthday-dad": "calendar",
+  "birthday-mom": "calendar",
 };
+function daysUntilBirthday(today: Date, month: number, day: number): number {
+  const year = today.getFullYear();
+  const start = Date.UTC(year, today.getMonth(), today.getDate());
+  let birthday = Date.UTC(year, month - 1, day);
+  if (birthday < start) birthday = Date.UTC(year + 1, month - 1, day);
+  return Math.round((birthday - start) / 86_400_000);
+}
 function WidgetFace({
   widget,
   work,
@@ -62,6 +73,33 @@ function WidgetFace({
   work: Work;
   time: string;
 }) {
+  const [today, setToday] = useState(() => new Date());
+  const isBirthday = widget.type === "birthday-dad" || widget.type === "birthday-mom";
+  useEffect(() => {
+    if (!isBirthday) return;
+    const timer = window.setInterval(() => setToday(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, [isBirthday]);
+  if (isBirthday) {
+    const dad = widget.type === "birthday-dad";
+    const month = dad ? 11 : 12;
+    const day = dad ? 28 : 6;
+    const who = dad ? "爸爸" : "媽媽";
+    return (
+      <div
+        className={"widget-face widget-" + widget.type + " family-birthday-widget"}
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg, rgba(0, 0, 0, .80), rgba(0, 0, 0, .2) 74%), url("' +
+            import.meta.env.BASE_URL + 'family-birthday.webp")',
+        }}
+      >
+        <span className="family-birthday-label">距離{who}生日還有</span>
+        <strong className="family-birthday-count"><b>{daysUntilBirthday(today, month, day)}</b> 天</strong>
+        <small className="family-birthday-date">{who}生日｜{month}/{day}</small>
+      </div>
+    );
+  }
   const date = new Date((work.phone.date || "2026-10-25") + "T12:00:00Z");
   const weather = work.data.weather?.[0];
   return (

@@ -6,7 +6,7 @@ export const widgetSchema = z.object({
     .string()
     .regex(/^widget-[a-zA-Z0-9-]+$/)
     .max(80),
-  type: z.enum(["calendar", "clock", "weather", "notes", "battery"]),
+  type: z.enum(["calendar", "clock", "weather", "notes", "battery", "birthday-dad", "birthday-mom"]),
   size: z.enum(["small", "medium", "large"]),
 });
 export const layoutSchema = z
@@ -57,7 +57,7 @@ export function defaultLayout(input: Work): DeviceLayout {
   return {
     version: 1,
     workId: w.id,
-    previewLayoutRevision: w.id === "ui-test-phone-v2" ? 1 : 0,
+    previewLayoutRevision: w.id === "ui-test-phone-v2" || w.id === "shiyi-family-phone" ? 1 : 0,
     apps: structuredClone(w.apps)
       .sort((a, b) => (a.id === "appstore" ? -1 : b.id === "appstore" ? 1 : 0))
       .map((a) =>
@@ -65,8 +65,11 @@ export function defaultLayout(input: Work): DeviceLayout {
           ? { ...a, installed: true, visible: true, folder: "", dock: false }
           : a,
       ),
-    widgets: [],
-    order: [],
+    widgets: w.id === "shiyi-family-phone" ? [
+      { id: "widget-family-dad-birthday", type: "birthday-dad", size: "medium" },
+      { id: "widget-family-mom-birthday", type: "birthday-mom", size: "medium" },
+    ] : [],
+    order: w.id === "shiyi-family-phone" ? ["widget-family-dad-birthday", "widget-family-mom-birthday"] : [],
     cleared: [],
     positions: {},
   };
@@ -93,6 +96,20 @@ export function validateLayout(raw: unknown, input: Work) {
     store.installed = true;
     store.visible = true;
     store.folder = "";
+  }
+  if (w.id === "shiyi-family-phone" && layout.previewLayoutRevision < 1) {
+    const birthdayWidgets = defaultLayout(w).widgets;
+    for (const birthdayWidget of birthdayWidgets) {
+      if (!layout.widgets.some((widget) => widget.id === birthdayWidget.id)) {
+        layout.widgets.push(birthdayWidget);
+      }
+    }
+    const birthdayIds = birthdayWidgets.map((widget) => widget.id);
+    layout.order = [
+      ...birthdayIds,
+      ...layout.order.filter((id) => !birthdayIds.includes(id)),
+    ];
+    layout.previewLayoutRevision = 1;
   }
   if (w.id === "ui-test-phone-v2" && layout.previewLayoutRevision < 1) {
     const visibleApps = ["wechat", "douyin"];
