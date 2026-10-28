@@ -233,7 +233,7 @@ export function WeChatSkin(p: SkinProps) {
   const conversations = [
     ...new Set(
       p.items
-        .filter((i) => !["朋友圈", "我"].includes(i.folder))
+        .filter((i) => !["朋友圈", "我", "通訊錄"].includes(i.folder))
         .map((i) => i.title),
     ),
   ];
