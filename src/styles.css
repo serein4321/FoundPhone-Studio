@@ -5054,3 +5054,56 @@ label {
   opacity: 0;
   cursor: pointer;
 }
+
+
+/* 微信首次個人資料設定：名稱與頭像由玩家選擇並保存在既有存檔 */
+.wx-first-setup-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 22px 14px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+}
+.wx-profile-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
+  padding: 22px 18px;
+  margin: auto;
+  background: #f7f7f7;
+}
+.wx-profile-intro {
+  margin: 0 0 4px;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+.wx-profile-setup .wx-avatar-picker {
+  padding: 12px;
+  border: 1px dashed #c8c8c8;
+  border-radius: 10px;
+  background: #fff;
+}
+.wx-profile-setup .wx-avatar-picker input[type="file"] {
+  padding: 4px 0 0;
+}
+.wx-avatar-selected {
+  margin: -8px 0 0;
+  color: #168b4b;
+  font-size: 12px;
+}
+.wx-first-setup .wx-nav {
+  justify-content: center;
+}
+.wx-first-setup .wx-nav strong {
+  font-size: 15px;
+}

@@ -33,7 +33,6 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { makeItem, safeMedia, type Item, type UiValue } from "./schema";
-import { PLAYER_AVATAR } from "./playerAvatar";
 export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
@@ -252,29 +251,74 @@ export function WeChatSkin(p: SkinProps) {
     "wechatProfileName",
     "",
   );
+  const [profileAvatar, setProfileAvatar] = useSkinState<string>(
+    p,
+    "wechatProfileAvatar",
+    "",
+  );
   const [profileReady, setProfileReady] = useSkinState<boolean>(
     p,
     "wechatProfileReady",
     false,
   );
   const [draftName, setDraftName] = useState(profileName);
-  const displayName = profileName || p.owner || "機主";
+  const [draftAvatar, setDraftAvatar] = useState(profileAvatar);
+  const displayName = profileName || "我";
   const isPlayerSender = (name: string) =>
     name === displayName ||
     name === (p.owner || "機主") ||
     name === "我" ||
     name === "機主";
+  const chooseAvatar = (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    input.value = "";
+    if (
+      !file ||
+      file.size > 12_000_000 ||
+      !/^image\/(png|jpeg|webp)$/.test(file.type)
+    ) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") return;
+      const image = new Image();
+      image.onload = () => {
+        const sourceWidth = image.naturalWidth || image.width;
+        const sourceHeight = image.naturalHeight || image.height;
+        if (!sourceWidth || !sourceHeight) return;
+        const scale = Math.min(
+          1,
+          512 / Math.max(sourceWidth, sourceHeight),
+        );
+        const width = Math.max(1, Math.round(sourceWidth * scale));
+        const height = Math.max(1, Math.round(sourceHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d");
+        if (!context) return;
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, width, height);
+        context.drawImage(image, 0, 0, width, height);
+        setDraftAvatar(canvas.toDataURL("image/jpeg", 0.86));
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  };
   const fixedWechatTimeline = (thread: string) =>
     wechatTimeline(
       p.items,
       sent,
       thread,
-      p.owner || "機主",
+      displayName,
       p.creator,
       revealAfterCall,
     ).map((item) => {
       if (item.outgoing || isPlayerSender(item.sender)) {
-        return { ...item, avatar: PLAYER_AVATAR };
+        return { ...item, avatar: profileAvatar };
       }
       const avatar = wechatAvatar(item.sender, item.avatar);
       return avatar && avatar !== item.avatar ? { ...item, avatar } : item;
@@ -325,8 +369,9 @@ export function WeChatSkin(p: SkinProps) {
   };
   const saveProfile = () => {
     const name = draftName.trim();
-    if (!name) return;
+    if (!name || !draftAvatar) return;
     setProfileName(name);
+    setProfileAvatar(draftAvatar);
     setProfileReady(true);
   };
   const [readThreads, setReadThreads] = useSkinState<string[]>(
@@ -336,23 +381,36 @@ export function WeChatSkin(p: SkinProps) {
   );
   const profileSetup = (
     <div className="wx-profile-setup">
-      <Avatar name={draftName || "我"} src={PLAYER_AVATAR} />
+      <p className="wx-profile-intro">
+        第一次使用微信，請設定你的微信名稱和頭像。完成後會保留在手機存檔中，不會自動更改。
+      </p>
+      <Avatar name={draftName || "我"} src={draftAvatar} />
       <label>
         微信名稱
         <input
           aria-label="微信名稱"
           value={draftName}
           maxLength={20}
-          placeholder="輸入微信名稱"
+          placeholder="輸入你想使用的名稱"
           onChange={(event) => setDraftName(event.target.value)}
         />
       </label>
+      <label className="wx-avatar-picker">
+        我的頭像（請從裝置選擇照片）
+        <input
+          aria-label="選擇我的微信頭像"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          onChange={chooseAvatar}
+        />
+      </label>
+      {draftAvatar && <p className="wx-avatar-selected">已選擇頭像</p>}
       <button
         className="phone-add"
-        disabled={!draftName.trim()}
+        disabled={!draftName.trim() || !draftAvatar}
         onClick={saveProfile}
       >
-        完成設定
+        完成設定並進入微信
       </button>
     </div>
   );
@@ -379,6 +437,19 @@ export function WeChatSkin(p: SkinProps) {
   const posts = p.items.filter(
     (i) => i.folder === "朋友圈" || i.kind === "post",
   );
+  if (!profileReady || !profileName.trim() || !profileAvatar) {
+    return (
+      <div
+        className="wechat-ui independent-skin wx-first-setup"
+        data-tab="微信"
+      >
+        <div className="app-nav wx-nav">
+          <strong>設定微信個人資料</strong>
+        </div>
+        <div className="wx-first-setup-content">{profileSetup}</div>
+      </div>
+    );
+  }
   return (
     <div
       className="wechat-ui independent-skin"
@@ -572,9 +643,9 @@ export function WeChatSkin(p: SkinProps) {
               className="wx-moment-post"
               onClick={() => p.onItem(i)}
             >
-              <Avatar name={i.sender} src={isPlayerSender(i.sender) ? PLAYER_AVATAR : wechatAvatar(i.sender, i.avatar)} />
+              <Avatar name={i.sender} src={isPlayerSender(i.sender) ? profileAvatar : wechatAvatar(i.sender, i.avatar)} />
               <div>
-                <strong>{i.sender}</strong>
+                <strong>{isPlayerSender(i.sender) ? displayName : i.sender}</strong>
                 <p>{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
                 {i.comments.map((comment, index) => (
@@ -705,9 +776,8 @@ export function WeChatSkin(p: SkinProps) {
             </div>
           ) : (
             <>
-              {!profileReady && profileSetup}
-                  <div className="wx-profile">
-                    <Avatar name={displayName} src={PLAYER_AVATAR} />
+              <div className="wx-profile">
+                    <Avatar name={displayName} src={profileAvatar} />
                     <div>
                       <h2>{displayName}</h2>
                       <small>微信號：未設定</small>
