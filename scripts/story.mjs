@@ -135,6 +135,29 @@ try {
         ids.add(item.id);
       }
     }
+    // Prefer the author's actual JPEG file, byte for byte, whenever it is
+    // present in the repository. Unlike an AI rendering or a canvas export,
+    // this preserves the uploaded JPEG without re-encoding or blurring it.
+    const originalPiggyPath = "stories/template/photos/17-piggy-original.jpg";
+    let originalPiggy = null;
+    try {
+      originalPiggy = await readFile(originalPiggyPath);
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
+    if (originalPiggy) {
+      if (originalPiggy.length < 100_000 ||
+          originalPiggy[0] !== 0xff || originalPiggy[1] !== 0xd8) {
+        throw Error("朋友圈原圖必須是完整的 JPG 檔案（不可使用縮圖）");
+      }
+      const piggyPost = contentItems.find(
+        (item) => item.id === "wx-moments-piggy-20261029",
+      );
+      if (piggyPost) {
+        piggyPost.media =
+          "data:image/jpeg;base64," + originalPiggy.toString("base64");
+      }
+    }
     raw.content = { ...(raw.content || {}), wechat: contentItems };
     raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
   }
