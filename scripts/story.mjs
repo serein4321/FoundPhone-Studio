@@ -138,7 +138,7 @@ try {
     // Prefer the author's actual JPEG file, byte for byte, whenever it is
     // present in the repository. Unlike an AI rendering or a canvas export,
     // this preserves the uploaded JPEG without re-encoding or blurring it.
-    const originalPiggyPath = "stories/template/photos/17-piggy-original.jpg";
+    const originalPiggyPath = "stories/template/photos/IMG_20260706_235747_930.jpg";
     let originalPiggy = null;
     try {
       originalPiggy = await readFile(originalPiggyPath);
