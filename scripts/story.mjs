@@ -146,9 +146,13 @@ try {
       if (error?.code !== "ENOENT") throw error;
     }
     if (originalPiggy) {
-      if (originalPiggy.length < 100_000 ||
-          originalPiggy[0] !== 0xff || originalPiggy[1] !== 0xd8) {
-        throw Error("朋友圈原圖必須是完整的 JPG 檔案（不可使用縮圖）");
+      // Validate JPEG structure rather than applying an arbitrary file-size
+      // threshold: legitimate JPEGs can be quite small. Do not recompress.
+      const last = originalPiggy.length - 1;
+      if (originalPiggy.length < 4 ||
+          originalPiggy[0] !== 0xff || originalPiggy[1] !== 0xd8 ||
+          originalPiggy[last - 1] !== 0xff || originalPiggy[last] !== 0xd9) {
+        throw Error("朋友圈照片 JPEG 檔案不完整，請使用有效原始照片");
       }
       const piggyPost = contentItems.find(
         (item) => item.id === "wx-moments-piggy-20261029",
