@@ -16,6 +16,7 @@ import {
   Video,
   Settings,
   Heart,
+  ThumbsUp,
   Send,
   Home,
   Play,
@@ -646,16 +647,33 @@ export function WeChatSkin(p: SkinProps) {
               onClick={() => p.onItem(i)}
             >
               <Avatar name={i.sender} src={isPlayerSender(i.sender) ? profileAvatar : wechatAvatar(i.sender, i.avatar)} />
-              <div>
+              <div className="wx-moment-content">
                 <strong>{isPlayerSender(i.sender) ? displayName : i.sender}</strong>
-                <p>{i.body}</p>
+                <p className="wx-moment-body">{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
-                {i.comments.map((comment, index) => (
-                  <p className="wx-moment-comment" key={`${i.id}-comment-${index}`}>
-                    {comment}
-                  </p>
-                ))}
-                <small>{i.time}</small>
+                <div className="wx-moment-post-meta">
+                  <small>{i.time}</small>
+                  <span className="wx-moment-more" aria-hidden="true">•••</span>
+                </div>
+                {(i.likes > 0 || i.comments.length > 0) && (
+                  <div className="wx-moment-feedback">
+                    {i.likes > 0 && (
+                      <div className="wx-moment-likes">
+                        <ThumbsUp size={13} aria-hidden="true" />
+                        <span>{i.likes} 個讚</span>
+                      </div>
+                    )}
+                    {i.comments.length > 0 && (
+                      <div className="wx-moment-comments">
+                        {i.comments.map((comment, index) => (
+                          <p className="wx-moment-comment" key={`${i.id}-comment-${index}`}>
+                            {comment}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </button>
           ))}

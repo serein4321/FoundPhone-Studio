@@ -5218,3 +5218,69 @@ label {
 .incoming-call-screen.is-wechat-video-answered .incoming-actions > .decline-call > svg {
   background: #fa3d45;
 }
+
+
+/* WeChat Moments: realistic post metadata, likes and comment panel */
+.wx-moment-content {
+  min-width: 0;
+}
+.wx-moment-post .wx-moment-body {
+  margin: 8px 0 0;
+}
+.wx-moment-post-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.wx-moment-post-meta small {
+  margin-top: 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.wx-moment-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 20px;
+  border-radius: 3px;
+  background: #f0f1f4;
+  color: #60769a;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.wx-moment-feedback {
+  margin-top: 8px;
+  padding: 7px 9px;
+  border-radius: 3px;
+  background: #f5f6f8;
+}
+.wx-moment-likes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 5px;
+  color: #576b95;
+  font-size: 11px;
+  font-weight: 600;
+}
+.wx-moment-likes svg {
+  flex: 0 0 auto;
+}
+.wx-moment-comments {
+  border-top: 1px solid rgba(90, 105, 130, 0.12);
+  padding-top: 5px;
+}
+.wx-moment-post .wx-moment-comment {
+  margin: 3px 0 0;
+  color: #576b95;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.wx-moment-post .wx-moment-comments .wx-moment-comment:first-child {
+  margin-top: 0;
+}
