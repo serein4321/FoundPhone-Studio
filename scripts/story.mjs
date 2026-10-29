@@ -122,6 +122,22 @@ try {
     }
     raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
   }
+  // Merge a versioned WeChat Moments post without rewriting the large story file.
+  if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
+    const continuation = JSON.parse(
+      await readFile("stories/template/wechat-moments-piggy.json", "utf8"),
+    );
+    const contentItems = raw.content?.wechat || [];
+    const ids = new Set(contentItems.map((item) => item.id));
+    for (const item of continuation.content?.wechat || []) {
+      if (!ids.has(item.id)) {
+        contentItems.push(item);
+        ids.add(item.id);
+      }
+    }
+    raw.content = { ...(raw.content || {}), wechat: contentItems };
+    raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
+  }
   // Attach original, unmodified JPEG files only for the authored family story;
   // This keeps the existing multi-megabyte story.json and all player data intact.
   if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
