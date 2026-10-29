@@ -5005,3 +5005,52 @@ label {
   font-size: 12px;
   line-height: 1.45;
 }
+
+
+/* 微信朋友圈背景图片：玩家自定义并在存档中持久保留 */
+.wx-moment-cover {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.wx-moment-cover.has-custom-cover {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 12px;
+}
+.wx-moment-cover.has-custom-cover .wx-moment-cover-title {
+  font-size: 13px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+}
+.wx-cover-change {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.wx-cover-change span {
+  font-size: 10px;
+}
+.wx-cover-change svg {
+  flex-shrink: 0;
+}
+.wx-cover-change input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}

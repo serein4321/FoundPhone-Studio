@@ -33,6 +33,7 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import { makeItem, safeMedia, type Item, type UiValue } from "./schema";
+import { PLAYER_AVATAR } from "./playerAvatar";
 export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
@@ -246,6 +247,23 @@ export function WeChatSkin(p: SkinProps) {
   );
   const wechatAvatar = (name: string, fallback = "") =>
     wechatContactAvatars.get(name) || fallback;
+  const [profileName, setProfileName] = useSkinState<string>(
+    p,
+    "wechatProfileName",
+    "",
+  );
+  const [profileReady, setProfileReady] = useSkinState<boolean>(
+    p,
+    "wechatProfileReady",
+    false,
+  );
+  const [draftName, setDraftName] = useState(profileName);
+  const displayName = profileName || p.owner || "機主";
+  const isPlayerSender = (name: string) =>
+    name === displayName ||
+    name === (p.owner || "機主") ||
+    name === "我" ||
+    name === "機主";
   const fixedWechatTimeline = (thread: string) =>
     wechatTimeline(
       p.items,
@@ -255,33 +273,36 @@ export function WeChatSkin(p: SkinProps) {
       p.creator,
       revealAfterCall,
     ).map((item) => {
+      if (item.outgoing || isPlayerSender(item.sender)) {
+        return { ...item, avatar: PLAYER_AVATAR };
+      }
       const avatar = wechatAvatar(item.sender, item.avatar);
       return avatar && avatar !== item.avatar ? { ...item, avatar } : item;
     });
-  const [profileName, setProfileName] = useSkinState<string>(
+  const [momentsCover, setMomentsCover] = useSkinState<string>(
     p,
-    "wechatProfileName",
+    "wechatMomentsCover",
     "",
   );
-  const [profileAvatar, setProfileAvatar] = useSkinState<string>(
-    p,
-    "wechatProfileAvatar",
-    "",
-  );
-  const [profileReady, setProfileReady] = useSkinState<boolean>(
-    p,
-    "wechatProfileReady",
-    false,
-  );
-  const [draftName, setDraftName] = useState(profileName);
-  const [draftAvatar, setDraftAvatar] = useState(profileAvatar);
-  const displayName = profileName || p.owner || "機主";
-  const chooseAvatar = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || file.size > 2_000_000) return;
+  const chooseMomentsCover = (event: ChangeEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    input.value = "";
+    if (
+      !file ||
+      file.size > 3_000_000 ||
+      !/^image\/(png|jpeg|webp|gif)$/.test(file.type)
+    ) {
+      return;
+    }
     const reader = new FileReader();
     reader.onload = () => {
-      if (typeof reader.result === "string") setDraftAvatar(reader.result);
+      if (
+        typeof reader.result === "string" &&
+        /^data:image\/(png|jpeg|webp|gif);base64,/.test(reader.result)
+      ) {
+        setMomentsCover(reader.result);
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -289,7 +310,6 @@ export function WeChatSkin(p: SkinProps) {
     const name = draftName.trim();
     if (!name) return;
     setProfileName(name);
-    setProfileAvatar(draftAvatar);
     setProfileReady(true);
   };
   const [readThreads, setReadThreads] = useSkinState<string[]>(
@@ -299,7 +319,7 @@ export function WeChatSkin(p: SkinProps) {
   );
   const profileSetup = (
     <div className="wx-profile-setup">
-      <Avatar name={draftName || "我"} src={draftAvatar} />
+      <Avatar name={draftName || "我"} src={PLAYER_AVATAR} />
       <label>
         微信名稱
         <input
@@ -308,15 +328,6 @@ export function WeChatSkin(p: SkinProps) {
           maxLength={20}
           placeholder="輸入微信名稱"
           onChange={(event) => setDraftName(event.target.value)}
-        />
-      </label>
-      <label>
-        微信頭像
-        <input
-          aria-label="微信頭像"
-          type="file"
-          accept="image/png,image/jpeg,image/webp,image/gif"
-          onChange={chooseAvatar}
         />
       </label>
       <button
@@ -511,9 +522,32 @@ export function WeChatSkin(p: SkinProps) {
         </>
       ) : moments ? (
         <div className="wx-moments">
-          <div className="wx-moment-cover">
-            <Camera size={32} />
-            <span>朋友圈</span>
+          <div
+            className={`wx-moment-cover ${momentsCover ? "has-custom-cover" : ""}`}
+            style={
+              momentsCover
+                ? { backgroundImage: `url("${momentsCover}")` }
+                : undefined
+            }
+          >
+            {momentsCover ? (
+              <span className="wx-moment-cover-title">朋友圈</span>
+            ) : (
+              <>
+                <Camera size={32} />
+                <span className="wx-moment-cover-title">朋友圈</span>
+              </>
+            )}
+            <label className="wx-cover-change">
+              <Camera size={14} />
+              <span>更換背景</span>
+              <input
+                aria-label="更換朋友圈背景圖片"
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                onChange={chooseMomentsCover}
+              />
+            </label>
           </div>
           {posts.map((i) => (
             <button
@@ -521,7 +555,7 @@ export function WeChatSkin(p: SkinProps) {
               className="wx-moment-post"
               onClick={() => p.onItem(i)}
             >
-              <Avatar name={i.sender} src={wechatAvatar(i.sender, i.avatar)} />
+              <Avatar name={i.sender} src={isPlayerSender(i.sender) ? PLAYER_AVATAR : wechatAvatar(i.sender, i.avatar)} />
               <div>
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
@@ -656,7 +690,7 @@ export function WeChatSkin(p: SkinProps) {
             <>
               {!profileReady && profileSetup}
                   <div className="wx-profile">
-                    <Avatar name={displayName} src={profileAvatar} />
+                    <Avatar name={displayName} src={PLAYER_AVATAR} />
                     <div>
                       <h2>{displayName}</h2>
                       <small>微信號：未設定</small>
