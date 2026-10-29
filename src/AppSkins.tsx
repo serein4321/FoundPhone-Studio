@@ -342,6 +342,7 @@ export function WeChatSkin(p: SkinProps) {
         displayName,
         halloweenReady,
         p.creator,
+        halloweenDadOpened || p.thread === HALLOWEEN_DAD,
       ),
     ].map((item) => {
       if (item.outgoing || isPlayerSender(item.sender)) {

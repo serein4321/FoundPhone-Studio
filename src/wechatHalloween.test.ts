@@ -63,10 +63,12 @@ describe("staged Halloween WeChat chapter", () => {
     expect(halloweenTimeline(script, [], HALLOWEEN_DAD, "我", true)).toEqual([]);
     const replies = [msg(HALLOWEEN_MOM, "出去"), msg(HALLOWEEN_DAD, "媽媽告訴我的"), msg(HALLOWEEN_DAD, "哈哈")];
     expect(halloweenTimeline(script, replies.slice(0, 1), HALLOWEEN_DAD, "我", true).map((i) => i.body))
+      .toEqual(["萬聖節你要是出去玩記得要早點回來"]);
+    expect(halloweenTimeline(script, replies.slice(0, 1), HALLOWEEN_DAD, "我", true, false, true).map((i) => i.body))
       .toEqual(["萬聖節你要是出去玩記得要早點回來", "你和我媽要看電影？", "你怎麼知道的，阿信告訴你了？"]);
-    expect(halloweenTimeline(script, replies.slice(0, 2), HALLOWEEN_DAD, "我", true).map((i) => i.body).at(-1))
+    expect(halloweenTimeline(script, replies.slice(0, 2), HALLOWEEN_DAD, "我", true, false, true).map((i) => i.body).at(-1))
       .toBe("因為我有點害怕那個，我就喊他陪我一起🤓");
-    expect(halloweenTimeline(script, replies, HALLOWEEN_DAD, "我", true).map((i) => i.body).at(-1))
+    expect(halloweenTimeline(script, replies, HALLOWEEN_DAD, "我", true, false, true).map((i) => i.body).at(-1))
       .toBe("不過我們給你準備好了禮物🤫");
   });
 });

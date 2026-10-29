@@ -62,6 +62,7 @@ export function halloweenTimeline(
   playerName: string,
   canStart: boolean,
   creator = false,
+  dadOpened = false,
 ): Item[] {
   const halloween = new Map(
     items
@@ -108,16 +109,20 @@ export function halloweenTimeline(
     (creator || halloweenReplied(replies, HALLOWEEN_MOM))
   ) {
     append("dad-warning");
-    append("dad-my-question");
-    append("dad-asked");
-    if (threadReplies.length >= 1 || creator) {
-      if (threadReplies[0]) result.push(threadReplies[0]);
-      append("dad-fear");
-    }
-    if (threadReplies.length >= 2 || creator) {
-      if (threadReplies[1]) result.push(threadReplies[1]);
-      append("dad-gift");
-      result.push(...threadReplies.slice(2));
+    // The notification is visible in the chat list; the following messages
+    // become visible only when the player chooses to open Dad's conversation.
+    if (dadOpened || creator) {
+      append("dad-my-question");
+      append("dad-asked");
+      if (threadReplies.length >= 1 || creator) {
+        if (threadReplies[0]) result.push(threadReplies[0]);
+        append("dad-fear");
+      }
+      if (threadReplies.length >= 2 || creator) {
+        if (threadReplies[1]) result.push(threadReplies[1]);
+        append("dad-gift");
+        result.push(...threadReplies.slice(2));
+      }
     }
   }
   return result;
