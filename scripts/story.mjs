@@ -84,7 +84,7 @@ try {
   const raw = JSON.parse(json);
   // Merge the small, versioned continuation patch into the large family story at build time.
   // This keeps the original photo-heavy story.json and all embedded media byte-for-byte intact.
-  if (file.replace(/\\\\/g, "/").replace(/^\\.\\//, "") === "stories/template/story.json") {
+  if (file.split("\\").join("/").replace("./", "") === "stories/template/story.json") {
     const continuation = JSON.parse(
       await readFile("stories/template/rose20-kkt.json", "utf8"),
     );
