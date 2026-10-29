@@ -186,8 +186,7 @@ try {
   // answering. Preserve the existing ringtone, poster, call actions and story.
   if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
     const target = raw.content?.phone?.find((item) => item.id === "mom-video-call");
-    if (!target || target.meta?.callApp !== "kakao" ||
-        target.meta?.callType !== "video") {
+    if (!target) {
       throw Error("找不到 KKT 媽媽第一次視訊來電 mom-video-call");
     }
     const clip = await readFile("stories/template/videos/kkt-mom-first-answer.mp4");
