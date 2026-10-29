@@ -1,0 +1,101 @@
+{
+  "revision": 35,
+  "chats": [
+    {
+      "id": "perfect-family-kkt",
+      "messages": [
+        {
+          "id": "perfect-kkt-20-rose20",
+          "senderId": "guanyou",
+          "body": "好快哦小玫瑰都已经二十岁了。",
+          "time": "2026-10-29 12:14",
+          "meta": {
+            "afterReplies": "4"
+          }
+        },
+        {
+          "id": "perfect-kkt-21-mom-rose20",
+          "senderId": "mom",
+          "body": "🫣你干嘛…干嘛",
+          "time": "2026-10-29 12:18",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "mom-notice",
+            "rose20Order": "mom-notice"
+          }
+        },
+        {
+          "id": "perfect-kkt-22-masha-rose20",
+          "senderId": "masha",
+          "body": "啊就我猜温尚翊这个人肯定要来说但是你十七岁的时候遇到我了是不是🙄",
+          "time": "2026-10-29 12:19",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "masha-after-open",
+            "rose20Order": "mom-notice"
+          }
+        },
+        {
+          "id": "perfect-kkt-23-stone-rose20",
+          "senderId": "stone",
+          "body": "把我们学弟又忘记了呀",
+          "time": "2026-10-29 12:20",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "group-after-masha-reply",
+            "rose20Order": "group-after-masha-reply"
+          }
+        },
+        {
+          "id": "perfect-kkt-24-dad-rose20",
+          "senderId": "dad",
+          "body": "你们今天这又是要怎样……",
+          "time": "2026-10-29 12:21",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "group-after-masha-reply",
+            "rose20Order": "group-after-masha-reply"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dad-kkt-direct",
+      "messages": [
+        {
+          "id": "dad-kkt-rose20-notice",
+          "senderId": "dad",
+          "body": "你看了那个花絮喔，不要亏你妈妈啦",
+          "time": "2026-10-29 12:15",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "dad-notice",
+            "rose20Order": "dad-notice"
+          }
+        },
+        {
+          "id": "dad-kkt-rose20-reply-1",
+          "senderId": "dad",
+          "body": "但是他17岁的时候就遇到我了😎",
+          "time": "2026-10-29 12:16",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "dad-replies",
+            "rose20Order": "dad-replies"
+          }
+        },
+        {
+          "id": "dad-kkt-rose20-reply-2",
+          "senderId": "dad",
+          "body": "我给你讲当时第一眼看见阿信时……",
+          "time": "2026-10-29 12:17",
+          "meta": {
+            "afterReplies": "0",
+            "rose20Gate": "dad-replies",
+            "rose20Order": "dad-replies"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -51,6 +51,35 @@ export function messageRun(items: Item[], index: number) {
 }
 const read = (p: SkinProps, i: Item) =>
   p.creator || i.password ? p.onItem(i) : p.onRead(i.id);
+
+const ROSE20_GROUP_TITLE = "這是全天下最完美的陣容（6）";
+const ROSE20_DAD_TITLE = "爸爸🐈‍⬛";
+const ROSE20_TRIGGER = "20岁，我还没遇到你爸呢";
+const ROSE20_AUTO_REPLY = "拜托我都还没说什么呢";
+const ROSE20_DAD_NOTICE = "你看了那个花絮喔，不要亏你妈妈啦";
+const ROSE20_MOM_NOTICE = "🫣你干嘛…干嘛";
+function parseKktSent(raw: string): [string, string, string] | null {
+  try {
+    const value: unknown = JSON.parse(raw);
+    if (
+      Array.isArray(value) &&
+      value.length === 3 &&
+      typeof value[0] === "string" &&
+      typeof value[1] === "string" &&
+      typeof value[2] === "string"
+    ) return [value[0], value[1], value[2]];
+  } catch { /* Ignore malformed saved replies. */ }
+  return null;
+}
+function normalizeRose20Trigger(value: string) {
+  return value.trim()
+    .replace(/[，,。.!！?？]/g, "")
+    .replaceAll(" ", "")
+    .replaceAll("　", "")
+    .replace(/[歲]/g, "岁")
+    .replace(/[還]/g, "还")
+    .replace(/[沒]/g, "没");
+}
 function Blank() {
   return <p className="mymy-empty">暫無內容</p>;
 }
@@ -74,16 +103,27 @@ export function kktTimeline(
   creator = false,
   visibleStageCount = Number.POSITIVE_INFINITY,
   callActive = false,
+  rose20DadAutoReplyIndex = -1,
+  rose20GroupRepliesAtNotice = -1,
 ) {
   const replies: Item[] = [];
   for (const raw of sent) {
-    try {
-      const entry: unknown = JSON.parse(raw);
-      if (!Array.isArray(entry) || entry.length !== 3 || !entry.every((v) => typeof v === "string") || entry[0] !== thread) continue;
-      replies.push(makeItem({ id: "local-kkt-" + replies.length, title: thread, body: entry[1],
-        time: entry[2], sender: owner, outgoing: true, meta: { local: "true" } }));
-    } catch { /* Ignore invalid saved entries. */ }
+    const entry = parseKktSent(raw);
+    if (!entry || entry[0] !== thread) continue;
+    replies.push(makeItem({
+      id: "local-kkt-" + replies.length,
+      title: thread,
+      body: entry[1],
+      time: entry[2],
+      sender: owner,
+      outgoing: true,
+      meta: { local: "true" },
+    }));
   }
+  const autoReplyThreadIndex = rose20DadAutoReplyIndex < 0
+    ? -1
+    : sent.slice(0, rose20DadAutoReplyIndex + 1)
+        .filter((raw) => parseKktSent(raw)?.[0] === ROSE20_DAD_TITLE).length - 1;
   const authored = items.filter(
     (m) =>
       m.title === thread &&
@@ -93,9 +133,30 @@ export function kktTimeline(
         (Number(m.meta.afterReplies || 0) === replies.length &&
           stageVisible(items, thread, replies.length, visibleStageCount, m.id))),
   );
-  return [...authored.map((m) => ({ item: m, order: Number(m.meta.afterReplies || 0) * 2 })),
-    ...replies.map((m, i) => ({ item: m, order: i * 2 + 1 }))]
-    .sort((a, b) => a.order - b.order).map((v) => v.item);
+  const authoredOrder = (m: Item) => {
+    switch (m.meta.rose20Order) {
+      case "dad-notice":
+        return Math.max(0, autoReplyThreadIndex >= 0 ? autoReplyThreadIndex : replies.length) * 2;
+      case "dad-replies":
+        return autoReplyThreadIndex >= 0 ? autoReplyThreadIndex * 2 + 1.5 : Number.POSITIVE_INFINITY;
+      case "mom-notice":
+        return rose20GroupRepliesAtNotice >= 0
+          ? rose20GroupRepliesAtNotice * 2
+          : Number.POSITIVE_INFINITY;
+      case "group-after-masha-reply":
+        return rose20GroupRepliesAtNotice >= 0
+          ? rose20GroupRepliesAtNotice * 2 + 2
+          : Number.POSITIVE_INFINITY;
+      default:
+        return Number(m.meta.afterReplies || 0) * 2;
+    }
+  };
+  return [
+    ...authored.map((item) => ({ item, order: authoredOrder(item) })),
+    ...replies.map((item, index) => ({ item, order: index * 2 + 1 })),
+  ]
+    .sort((a, b) => a.order - b.order)
+    .map((entry) => entry.item);
 }
 export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
@@ -104,22 +165,120 @@ export function MymyKakao(p: SkinProps) {
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false),
     [stagedVisible, setStagedVisible] = useState<number | null>(null);
-  const replyCount = (title: string) => sent.filter((raw) => {
-    try { const v = JSON.parse(raw); return Array.isArray(v) && v.length === 3 && v.every((x) => typeof x === "string") && v[0] === title; }
-    catch { return false; }
-  }).length;
-  const list = grouped(p.items.filter((m) => p.creator || Number(m.meta.afterReplies || 0) <= replyCount(m.title))),
+  const [rose20DadAutoReplyIndex, setRose20DadAutoReplyIndex] =
+    useSkinState<number>(p, "mymyRose20DadAutoReplyIndex", -1);
+  const [rose20GroupRepliesAtNotice, setRose20GroupRepliesAtNotice] =
+    useSkinState<number>(p, "mymyRose20GroupRepliesAtNotice", -1);
+  const [rose20GroupOpened, setRose20GroupOpened] =
+    useSkinState<boolean>(p, "mymyRose20GroupOpened", false);
+  const [rose20DadNoticeDismissed, setRose20DadNoticeDismissed] =
+    useSkinState<boolean>(p, "mymyRose20DadNoticeDismissed", false);
+  const [rose20MomNoticeDismissed, setRose20MomNoticeDismissed] =
+    useSkinState<boolean>(p, "mymyRose20MomNoticeDismissed", false);
+  const rose20AutoReplyGuard = useRef(false);
+  const replyCount = (title: string) =>
+    sent.filter((raw) => parseKktSent(raw)?.[0] === title).length;
+  const rose20Triggered = sent.some((raw) => {
+    const entry = parseKktSent(raw);
+    return Boolean(
+      entry &&
+      entry[0] === ROSE20_GROUP_TITLE &&
+      normalizeRose20Trigger(entry[1]) === normalizeRose20Trigger(ROSE20_TRIGGER),
+    );
+  });
+  const rose20UserRepliedToDad =
+    rose20DadAutoReplyIndex >= 0 &&
+    sent.slice(rose20DadAutoReplyIndex + 1).some(
+      (raw) => parseKktSent(raw)?.[0] === ROSE20_DAD_TITLE,
+    );
+  const rose20GroupReplyAfterMasha =
+    rose20UserRepliedToDad &&
+    rose20GroupOpened &&
+    rose20GroupRepliesAtNotice >= 0 &&
+    replyCount(ROSE20_GROUP_TITLE) > rose20GroupRepliesAtNotice;
+  const visibleItems = p.items.filter((item) => {
+    if (p.creator) return true;
+    switch (item.meta.rose20Gate) {
+      case "dad-notice":
+        return rose20Triggered;
+      case "dad-replies":
+        return rose20DadAutoReplyIndex >= 0;
+      case "mom-notice":
+        return rose20UserRepliedToDad && rose20GroupRepliesAtNotice >= 0;
+      case "masha-after-open":
+        return rose20UserRepliedToDad && rose20GroupRepliesAtNotice >= 0 && rose20GroupOpened;
+      case "group-after-masha-reply":
+        return rose20GroupReplyAfterMasha;
+      default:
+        return true;
+    }
+  });
+  const openThread = (title: string) => {
+    if (title === ROSE20_DAD_TITLE && rose20Triggered) {
+      setRose20DadNoticeDismissed(true);
+    }
+    if (title === ROSE20_GROUP_TITLE && rose20UserRepliedToDad) {
+      setRose20MomNoticeDismissed(true);
+      setRose20GroupOpened(true);
+    }
+    p.onThread(title);
+  };
+  const activeStoryNotice =
+    !p.creator && rose20Triggered && !rose20DadNoticeDismissed && p.thread !== ROSE20_DAD_TITLE
+      ? { kind: "dad" as const, target: ROSE20_DAD_TITLE, title: ROSE20_DAD_TITLE, body: ROSE20_DAD_NOTICE }
+      : !p.creator &&
+          rose20UserRepliedToDad &&
+          rose20GroupRepliesAtNotice >= 0 &&
+          !rose20MomNoticeDismissed &&
+          p.thread !== ROSE20_GROUP_TITLE
+        ? { kind: "mom" as const, target: ROSE20_GROUP_TITLE, title: ROSE20_GROUP_TITLE, body: ROSE20_MOM_NOTICE }
+        : null;
+  const list = grouped(visibleItems.filter(
+    (m) => p.creator || Number(m.meta.afterReplies || 0) <= replyCount(m.title),
+  )),
     messages = kktTimeline(
-      p.items,
+      visibleItems,
       sent,
       p.thread,
       p.owner || "機主",
       p.creator,
       stagedVisible ?? Number.POSITIVE_INFINITY,
       Boolean(p.incomingCall),
+      rose20DadAutoReplyIndex,
+      rose20GroupRepliesAtNotice,
     ),
     scroll = useRef<HTMLDivElement>(null),
     wasInCall = useRef(Boolean(p.incomingCall));
+  useEffect(() => {
+    if (
+      p.creator ||
+      p.thread !== ROSE20_DAD_TITLE ||
+      !rose20Triggered ||
+      rose20DadAutoReplyIndex >= 0 ||
+      rose20AutoReplyGuard.current
+    ) return;
+    rose20AutoReplyGuard.current = true;
+    setRose20DadNoticeDismissed(true);
+    setRose20DadAutoReplyIndex(sent.length);
+    setSent([
+      ...sent,
+      JSON.stringify([
+        ROSE20_DAD_TITLE,
+        ROSE20_AUTO_REPLY,
+        p.virtualTime || "09:41",
+      ]),
+    ]);
+  }, [
+    p.creator,
+    p.thread,
+    p.virtualTime,
+    rose20Triggered,
+    rose20DadAutoReplyIndex,
+    sent,
+    setRose20DadNoticeDismissed,
+    setRose20DadAutoReplyIndex,
+    setSent,
+  ]);
   useEffect(() => {
     const active = Boolean(p.incomingCall);
     const ended = wasInCall.current && !active;
@@ -241,12 +400,21 @@ export function MymyKakao(p: SkinProps) {
             onSubmit={(e) => {
               e.preventDefault();
               if (draft.trim()) {
+                const value = draft.trim();
+                if (
+                  p.thread === ROSE20_DAD_TITLE &&
+                  rose20Triggered &&
+                  rose20DadAutoReplyIndex >= 0 &&
+                  rose20GroupRepliesAtNotice < 0
+                ) {
+                  setRose20GroupRepliesAtNotice(replyCount(ROSE20_GROUP_TITLE));
+                }
                 setStagedVisible(0);
                 setSent([
                   ...sent,
                   JSON.stringify([
                     p.thread,
-                    draft.trim(),
+                    value,
                     p.virtualTime || "09:41",
                   ]),
                 ]);
@@ -349,7 +517,7 @@ export function MymyKakao(p: SkinProps) {
                   <button
                     className="kzkr kzkcr"
                     key={g.title}
-                    onClick={() => p.onThread(g.title)}
+                    onClick={() => openThread(g.title)}
                   >
                     <Avatar name={last.sender || g.title} src={last.avatar} />
                     <span className="kzkn">
@@ -390,6 +558,34 @@ export function MymyKakao(p: SkinProps) {
               <button onClick={() => setMenu(false)}>完成</button>
             </div>
           )}
+        </div>
+      )}
+      {activeStoryNotice && (
+        <div className="mymy-story-notice" role="status">
+          <button
+            className="mymy-story-notice-main"
+            onClick={() => openThread(activeStoryNotice.target)}
+          >
+            <Avatar
+              name={activeStoryNotice.title}
+              src={p.items.find((item) => item.title === activeStoryNotice.target)?.avatar}
+            />
+            <span className="mymy-story-notice-copy">
+              <strong>{activeStoryNotice.title}</strong>
+              <small>{activeStoryNotice.body}</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            className="mymy-story-notice-close"
+            aria-label="忽略這則訊息通知"
+            onClick={() => {
+              if (activeStoryNotice.kind === "dad") setRose20DadNoticeDismissed(true);
+              else setRose20MomNoticeDismissed(true);
+            }}
+          >
+            <X size={17} />
+          </button>
         </div>
       )}
     </div>

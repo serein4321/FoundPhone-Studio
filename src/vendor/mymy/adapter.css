@@ -628,3 +628,75 @@
   width: 25px;
   height: 25px;
 }
+
+
+/* KKT 劇情通知：可點入對應聊天室，也可關閉後稍後再看 */
+.mymy-kakao {
+  position: relative;
+}
+.mymy-story-notice {
+  position: absolute;
+  z-index: 80;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #202124;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.mymy-story-notice-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 8px 12px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+.mymy-story-notice-main .avatar {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+}
+.mymy-story-notice-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mymy-story-notice-copy strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mymy-story-notice-copy small {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #4f5257;
+  font-size: 12px;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.mymy-story-notice-close {
+  flex: 0 0 34px;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #777b82;
+}

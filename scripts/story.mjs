@@ -82,6 +82,26 @@ try {
         .length - 1;
   }
   const raw = JSON.parse(json);
+  // Merge the small, versioned continuation patch into the large family story at build time.
+  // This keeps the original photo-heavy story.json and all embedded media byte-for-byte intact.
+  if (file.replace(/\\\\/g, "/").replace(/^\\.\\//, "") === "stories/template/story.json") {
+    const continuation = JSON.parse(
+      await readFile("stories/template/rose20-kkt.json", "utf8"),
+    );
+    const chats = new Map((raw.chats || []).map((chat) => [chat.id, chat]));
+    for (const addition of continuation.chats || []) {
+      const chat = chats.get(addition.id);
+      if (!chat) throw Error("續篇引用了不存在的聊天：" + addition.id);
+      const ids = new Set(chat.messages.map((message) => message.id));
+      for (const message of addition.messages || []) {
+        if (!ids.has(message.id)) {
+          chat.messages.push(message);
+          ids.add(message.id);
+        }
+      }
+    }
+    raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
+  }
   // Attach original, unmodified JPEG files only for the authored family story.
   // This keeps the existing multi-megabyte story.json and all player data intact.
   if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
