@@ -1,5 +1,12 @@
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
+import {
+  HALLOWEEN_DAD,
+  HALLOWEEN_MOM,
+  halloweenCanStart,
+  halloweenReplied,
+  halloweenTimeline,
+} from "./wechatHalloween";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import {
@@ -188,6 +195,7 @@ function wechatTimeline(
   const authored = items.filter(
     (item) =>
       item.title === thread &&
+      !item.meta.halloweenStep &&
       (creator ||
         ((item.meta.afterCall !== "true" || revealAfterCall) &&
           Number(item.meta.afterReplies || 0) <= replies.length)),
@@ -230,9 +238,15 @@ export function WeChatSkin(p: SkinProps) {
     [searchOpen, setSearchOpen] = useState(false),
     [utility, setUtility] = useState("");
   const [sent, setSent] = useSkinState<string[]>(p, "wechatSent", []);
+  const [halloweenSent, setHalloweenSent] = useSkinState<string[]>(p, "wechatHalloweenSent", []);
+  const [halloweenDadOpened, setHalloweenDadOpened] = useSkinState<boolean>(p, "wechatHalloweenDadOpened", false);
+  const [halloweenDadDismissed, setHalloweenDadDismissed] = useSkinState<boolean>(p, "wechatHalloweenDadDismissed", false);
   const [draft, setDraft] = useState("");
   const momVideoReplySent = hasMomWechatReply(sent);
   const revealAfterCall = p.creator || (momVideoReplySent && !p.incomingCall);
+  const halloweenReady = p.creator || halloweenCanStart(sent, p.items, revealAfterCall);
+  const halloweenMomComplete = halloweenReady && halloweenReplied(halloweenSent, HALLOWEEN_MOM);
+  const halloweenDadWaiting = halloweenMomComplete && !halloweenDadOpened && !p.creator;
   const wechatContactNames = [
     "媽媽🐈",
     "爸爸🐈‍⬛",
@@ -312,14 +326,24 @@ export function WeChatSkin(p: SkinProps) {
     reader.readAsDataURL(file);
   };
   const fixedWechatTimeline = (thread: string) =>
-    wechatTimeline(
-      p.items,
-      sent,
-      thread,
-      displayName,
-      p.creator,
-      revealAfterCall,
-    ).map((item) => {
+    [
+      ...wechatTimeline(
+        p.items,
+        sent,
+        thread,
+        displayName,
+        p.creator,
+        revealAfterCall,
+      ),
+      ...halloweenTimeline(
+        p.items,
+        halloweenSent,
+        thread,
+        displayName,
+        halloweenReady,
+        p.creator,
+      ),
+    ].map((item) => {
       if (item.outgoing || isPlayerSender(item.sender)) {
         return { ...item, avatar: profileAvatar };
       }
@@ -418,7 +442,10 @@ export function WeChatSkin(p: SkinProps) {
     </div>
   );
   const visibleItems = p.items.filter(
-    (i) => p.creator || i.meta.afterCall !== "true" || revealAfterCall,
+    (i) =>
+      p.creator ||
+      ((!i.meta.halloweenStep || halloweenReady) &&
+        (i.meta.afterCall !== "true" || revealAfterCall)),
   );
   const sentThreads = sent
     .map(parseWechatReply)
@@ -498,6 +525,24 @@ export function WeChatSkin(p: SkinProps) {
           {p.thread ? <MoreHorizontal size={22} /> : <CirclePlus size={22} />}
         </button>
       </div>
+      {halloweenDadWaiting && !halloweenDadDismissed && p.thread !== HALLOWEEN_DAD && (
+        <div className="wx-halloween-notice" role="status">
+          <div className="wx-halloween-notice-copy">
+            <strong>爸爸🐈‍⬛ · 微信</strong>
+            <span>萬聖節你要是出去玩記得要早點回來</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setHalloweenDadOpened(true);
+              setReadThreads((value) => (value.includes(HALLOWEEN_DAD) ? value : [...value, HALLOWEEN_DAD]));
+              p.onThread(HALLOWEEN_DAD);
+              p.onRead(HALLOWEEN_DAD);
+            }}
+          >查看</button>
+          <button type="button" aria-label="稍後查看爸爸訊息" onClick={() => setHalloweenDadDismissed(true)}>稍後</button>
+        </div>
+      )}
       {menu && (
         <div className="wx-popup-menu" role="menu">
           {["搜尋", "發起群聊", "新增朋友", "掃一掃", "收付款"].map((label) => (
@@ -573,14 +618,20 @@ export function WeChatSkin(p: SkinProps) {
                 p.onAdd();
                 return;
               }
-              setSent([
-                ...sent,
-                JSON.stringify([
-                  p.thread,
-                  value,
-                  p.virtualTime || "09:41",
-                ]),
+              const message = JSON.stringify([
+                p.thread,
+                value,
+                p.virtualTime || "2026-10-29 18:35",
               ]);
+              if (
+                halloweenReady &&
+                (p.thread === HALLOWEEN_MOM ||
+                  (p.thread === HALLOWEEN_DAD && halloweenMomComplete))
+              ) {
+                setHalloweenSent((previous) => [...previous, message]);
+              } else {
+                setSent((previous) => [...previous, message]);
+              }
               setDraft("");
             }}
           >
@@ -716,6 +767,7 @@ export function WeChatSkin(p: SkinProps) {
                       className="wx-chat-row"
                       key={t}
                       onClick={() => {
+                        if (t === HALLOWEEN_DAD && halloweenMomComplete) setHalloweenDadOpened(true);
                         setReadThreads((v) => (v.includes(t) ? v : [...v, t]));
                         p.onThread(t);
                         p.onRead(t);
@@ -726,10 +778,13 @@ export function WeChatSkin(p: SkinProps) {
                           name={t}
                           src={wechatAvatar(t, last.avatar)}
                         />
-                        {!readThreads.includes(t) &&
-                          list.some((i) => !i.read) && (
+                        {((t === HALLOWEEN_DAD && halloweenDadWaiting) ||
+                          (!readThreads.includes(t) &&
+                            list.some((i) => !i.read))) && (
                             <b className="wx-unread">
-                              {list.filter((i) => !i.read).length}
+                              {t === HALLOWEEN_DAD && halloweenDadWaiting
+                                ? 1
+                                : list.filter((i) => !i.read).length}
                             </b>
                           )}
                       </span>
@@ -753,6 +808,7 @@ export function WeChatSkin(p: SkinProps) {
                   onClick={() => {
                     const item = p.items.find((i) => i.sender === c);
                     if (item) {
+                      if (item.title === HALLOWEEN_DAD && halloweenMomComplete) setHalloweenDadOpened(true);
                       p.onThread(item.title);
                       p.onRead(item.title);
                     }

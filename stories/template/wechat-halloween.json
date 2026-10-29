@@ -1,0 +1,137 @@
+{
+  "revision": 40,
+  "content": {
+    "wechat": [
+      {
+        "id": "wx-halloween-mom-question",
+        "title": "媽媽🐈",
+        "sender": "媽媽🐈",
+        "body": "過幾天萬聖節你要和朋友出去玩嗎",
+        "time": "2026-10-29 18:30",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "mom-question"
+        }
+      },
+      {
+        "id": "wx-halloween-mom-film",
+        "title": "媽媽🐈",
+        "sender": "媽媽🐈",
+        "body": "我要來看之前找的一部恐怖電影啦",
+        "time": "2026-10-29 18:32",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "mom-film"
+        }
+      },
+      {
+        "id": "wx-halloween-mom-fear",
+        "title": "媽媽🐈",
+        "sender": "媽媽🐈",
+        "body": "但是我喊了阿翊陪我一起，我害怕餒",
+        "time": "2026-10-29 18:32",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "mom-fear"
+        }
+      },
+      {
+        "id": "wx-halloween-mom-my-reaction",
+        "title": "媽媽🐈",
+        "sender": "我",
+        "body": "我怎麼不記得你怕這些東西😳",
+        "time": "2026-10-29 18:33",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": true,
+        "meta": {
+          "halloweenStep": "mom-my-reaction"
+        }
+      },
+      {
+        "id": "wx-halloween-mom-emojis",
+        "title": "媽媽🐈",
+        "sender": "媽媽🐈",
+        "body": "🫣🫣🫣",
+        "time": "2026-10-29 18:33",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "mom-emojis"
+        }
+      },
+      {
+        "id": "wx-halloween-dad-warning",
+        "title": "爸爸🐈‍⬛",
+        "sender": "爸爸🐈‍⬛",
+        "body": "萬聖節你要是出去玩記得要早點回來",
+        "time": "2026-10-29 18:35",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "dad-warning"
+        }
+      },
+      {
+        "id": "wx-halloween-dad-my-question",
+        "title": "爸爸🐈‍⬛",
+        "sender": "我",
+        "body": "你和我媽要看電影？",
+        "time": "2026-10-29 18:36",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": true,
+        "meta": {
+          "halloweenStep": "dad-my-question"
+        }
+      },
+      {
+        "id": "wx-halloween-dad-asked",
+        "title": "爸爸🐈‍⬛",
+        "sender": "爸爸🐈‍⬛",
+        "body": "你怎麼知道的，阿信告訴你了？",
+        "time": "2026-10-29 18:36",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "dad-asked"
+        }
+      },
+      {
+        "id": "wx-halloween-dad-fear",
+        "title": "爸爸🐈‍⬛",
+        "sender": "爸爸🐈‍⬛",
+        "body": "因為我有點害怕那個，我就喊他陪我一起🤓",
+        "time": "2026-10-29 18:38",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "dad-fear"
+        }
+      },
+      {
+        "id": "wx-halloween-dad-gift",
+        "title": "爸爸🐈‍⬛",
+        "sender": "爸爸🐈‍⬛",
+        "body": "不過我們給你準備好了禮物🤫",
+        "time": "2026-10-29 18:40",
+        "folder": "聊天",
+        "kind": "text",
+        "outgoing": false,
+        "meta": {
+          "halloweenStep": "dad-gift"
+        }
+      }
+    ]
+  }
+}
