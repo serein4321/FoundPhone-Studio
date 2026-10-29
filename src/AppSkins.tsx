@@ -290,19 +290,36 @@ export function WeChatSkin(p: SkinProps) {
     input.value = "";
     if (
       !file ||
-      file.size > 3_000_000 ||
+      file.size > 12_000_000 ||
       !/^image\/(png|jpeg|webp|gif)$/.test(file.type)
     ) {
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
-      if (
-        typeof reader.result === "string" &&
-        /^data:image\/(png|jpeg|webp|gif);base64,/.test(reader.result)
-      ) {
-        setMomentsCover(reader.result);
-      }
+      if (typeof reader.result !== "string") return;
+      const image = new Image();
+      image.onload = () => {
+        const sourceWidth = image.naturalWidth || image.width;
+        const sourceHeight = image.naturalHeight || image.height;
+        if (!sourceWidth || !sourceHeight) return;
+        const scale = Math.min(
+          1,
+          1600 / Math.max(sourceWidth, sourceHeight),
+        );
+        const width = Math.max(1, Math.round(sourceWidth * scale));
+        const height = Math.max(1, Math.round(sourceHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d");
+        if (!context) return;
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, width, height);
+        context.drawImage(image, 0, 0, width, height);
+        setMomentsCover(canvas.toDataURL("image/jpeg", 0.84));
+      };
+      image.src = reader.result;
     };
     reader.readAsDataURL(file);
   };
