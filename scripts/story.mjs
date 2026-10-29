@@ -182,6 +182,22 @@ try {
     raw.content = { ...(raw.content || {}), wechat: contentItems };
     raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
   }
+  // KKT's first video call from Mom: change only the image displayed after
+  // answering. Preserve the existing ringtone, poster, call actions and story.
+  if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
+    const target = raw.content?.phone?.find((item) => item.id === "mom-video-call");
+    if (!target || target.meta?.callApp !== "kakao" ||
+        target.meta?.callType !== "video") {
+      throw Error("找不到 KKT 媽媽第一次視訊來電 mom-video-call");
+    }
+    const clip = await readFile("stories/template/videos/kkt-mom-first-answer.mp4");
+    if (clip.length < 32 ||
+        clip.toString("ascii", 4, 8) !== "ftyp") {
+      throw Error("KKT 媽媽視訊畫面不是有效 MP4");
+    }
+    // videoMedia is used only when answered; the ringing media is untouched.
+    target.videoMedia = "data:video/mp4;base64," + clip.toString("base64");
+  }
   // Attach original, unmodified JPEG files only for the authored family story;
   // This keeps the existing multi-megabyte story.json and all player data intact.
   if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
