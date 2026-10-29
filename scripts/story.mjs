@@ -182,6 +182,23 @@ try {
     raw.content = { ...(raw.content || {}), wechat: contentItems };
     raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
   }
+  // Add the authored 10/29 guinea-pig memo to the native Notes app.
+  // This versioned patch leaves the large, media-heavy story file untouched.
+  if (file === "stories/template/story.json") {
+    const continuation = JSON.parse(
+      await readFile("stories/template/notes-guinea-pig.json", "utf8"),
+    );
+    const noteItems = raw.content?.notes || [];
+    const ids = new Set(noteItems.map((item) => item.id));
+    for (const item of continuation.content?.notes || []) {
+      if (!ids.has(item.id)) {
+        noteItems.push(item);
+        ids.add(item.id);
+      }
+    }
+    raw.content = { ...(raw.content || {}), notes: noteItems };
+    raw.revision = Math.max(raw.revision || 1, continuation.revision || 1);
+  }
   // KKT's first video call from Mom: change only the image displayed after
   // answering. Preserve the existing ringtone, poster, call actions and story.
   if (file.replace(/\\/g, "/").replace(/^\.\//, "") === "stories/template/story.json") {
