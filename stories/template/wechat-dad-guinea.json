@@ -1,0 +1,57 @@
+{
+  "revision": 35,
+  "chats": [
+    {
+      "id": "wx-dad-evening-20261028",
+      "messages": [
+        {
+          "id": "wx-dad-guinea-01-text",
+          "senderId": "owner",
+          "body": "我想養一隻天竺鼠……",
+          "time": "2026-10-29 12:25",
+          "meta": {
+            "afterReplies": "0"
+          }
+        },
+        {
+          "id": "wx-dad-guinea-02-image",
+          "senderId": "owner",
+          "body": "天竺鼠照片",
+          "time": "2026-10-29 12:25",
+          "kind": "image",
+          "media": "data:image/jpeg;base64,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",
+          "meta": {
+            "afterReplies": "0"
+          }
+        },
+        {
+          "id": "wx-dad-guinea-03-dad-cute",
+          "senderId": "dad",
+          "body": "這個真的好可愛喔",
+          "time": "2026-10-29 12:26",
+          "meta": {
+            "afterReplies": "0"
+          }
+        },
+        {
+          "id": "wx-dad-guinea-04-dad-piggy",
+          "senderId": "dad",
+          "body": "豬豬的，跟阿信一樣",
+          "time": "2026-10-29 12:28",
+          "meta": {
+            "afterReplies": "1"
+          }
+        },
+        {
+          "id": "wx-dad-guinea-05-dad-one-pig",
+          "senderId": "dad",
+          "body": "但是我們家養一隻小豬就夠了💪🏻",
+          "time": "2026-10-29 12:30",
+          "meta": {
+            "afterReplies": "2"
+          }
+        }
+      ]
+    }
+  ]
+}

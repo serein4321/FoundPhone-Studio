@@ -187,7 +187,9 @@ function wechatTimeline(
   const authored = items.filter(
     (item) =>
       item.title === thread &&
-      (creator || item.meta.afterCall !== "true" || revealAfterCall),
+      (creator ||
+        ((item.meta.afterCall !== "true" || revealAfterCall) &&
+          Number(item.meta.afterReplies || 0) <= replies.length)),
   );
   return [
     ...authored.map((item) => ({
