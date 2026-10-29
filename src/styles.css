@@ -5107,3 +5107,114 @@ label {
 .wx-first-setup .wx-nav strong {
   font-size: 15px;
 }
+
+
+/* 微信視訊接通後：影片全螢幕，通話資訊與操作列浮在影片上 */
+.incoming-call-screen.is-wechat-video-answered {
+  inset: 0;
+  z-index: 58;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  background: #000;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.phone-screen:has(.incoming-call-screen.is-wechat-video-answered) .status-bar {
+  z-index: 61;
+  color: #fff;
+  background: transparent;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-video-player {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+  box-shadow: none;
+  object-fit: cover;
+  object-position: center;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-video-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-video-preview img {
+  object-fit: cover;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-call-meta {
+  position: absolute;
+  z-index: 2;
+  top: 53px;
+  left: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.5;
+  text-shadow: 0 1px 8px #000b;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-avatar {
+  display: none;
+}
+.incoming-call-screen.is-wechat-video-answered > h2 {
+  position: absolute;
+  z-index: 2;
+  top: 76px;
+  left: 20px;
+  right: 20px;
+  margin: 0;
+  color: #fff;
+  font-size: 21px;
+  font-weight: 600;
+  text-shadow: 0 1px 10px #000c;
+}
+.incoming-call-screen.is-wechat-video-answered > p {
+  display: none;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-actions {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 0;
+  padding: 24px 22px calc(34px + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  gap: 22px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.24) 28%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-actions > button {
+  min-width: 72px;
+  position: relative;
+  z-index: 1;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-actions > .wechat-call-audio > svg {
+  background: rgba(255, 255, 255, 0.2);
+  transform: none;
+}
+.incoming-call-screen.is-wechat-video-answered .incoming-actions > .decline-call > svg {
+  background: #fa3d45;
+}

@@ -53,6 +53,8 @@ import {
   ArrowUp,
   Folder,
   Phone as PhoneIcon,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { getApp, type AppPlugin } from "./registry";
 import {
@@ -134,6 +136,7 @@ function PhoneRuntime({
   onRuntime?: (s: Runtime) => void;
 }) {
   const [app, setApp] = useState("");
+  const [callSpeaker, setCallSpeaker] = useState(true);
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
@@ -190,6 +193,9 @@ function PhoneRuntime({
     };
   }, [creator, ready]);
   const s = external ?? own;
+  useEffect(() => {
+    setCallSpeaker(true);
+  }, [s.incomingCall?.target]);
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
   const update = (next: Runtime) => {
@@ -618,7 +624,19 @@ function PhoneRuntime({
             </div>
           )}
           {!creator && s.incomingCall && (
-            <div className="incoming-call-screen">
+            <div
+              className={`incoming-call-screen ${
+                s.incomingCall.status === "answered" &&
+                work.data.phone?.some(
+                  (record) =>
+                    record.id === s.incomingCall?.target &&
+                    record.meta.callType === "video" &&
+                    record.meta.callApp === "wechat",
+                )
+                  ? "is-wechat-video-answered"
+                  : ""
+              }`}
+            >
               {(() => {
                 const record = work.data.phone?.find(
                   (i) => i.id === s.incomingCall?.target,
@@ -639,7 +657,7 @@ function PhoneRuntime({
                   />
                 ) : null;
               })()}
-              <small>
+              <small className="incoming-call-meta">
                 {(() => {
                   const record = work.data.phone?.find(
                     (i) => i.id === s.incomingCall?.target,
@@ -654,8 +672,9 @@ function PhoneRuntime({
                     ? `${service ? service + " " : ""}視訊通話 · `
                     : "";
                 })()}
-                {s.incomingCall.status === "ringing" ? "來電" : "通話中"} ·
-                作品內模擬
+                {s.incomingCall.status === "ringing"
+                  ? "來電 · 作品內模擬"
+                  : "通話中"}
               </small>
               <div className="incoming-avatar">
                 {(() => {
@@ -692,11 +711,12 @@ function PhoneRuntime({
                       {safeMedia(record.videoMedia) ? (
                         <video
                           className="incoming-video-player"
-                          controls
+                          controls={record.meta.callApp !== "wechat"}
                           autoPlay
                           loop
                           playsInline
                           preload="auto"
+                          muted={record.meta.callApp === "wechat" && !callSpeaker}
                           poster={safeMedia(record.videoImage) || undefined}
                           src={safeMedia(record.videoMedia)}
                           onCanPlay={(event) => {
@@ -720,6 +740,24 @@ function PhoneRuntime({
                   );
                 })()}
               <div className="incoming-actions">
+                {s.incomingCall.status === "answered" &&
+                  work.data.phone?.some(
+                    (record) =>
+                      record.id === s.incomingCall?.target &&
+                      record.meta.callType === "video" &&
+                      record.meta.callApp === "wechat",
+                  ) && (
+                    <button
+                      type="button"
+                      className="wechat-call-audio"
+                      aria-pressed={callSpeaker}
+                      aria-label={callSpeaker ? "關閉影片聲音" : "開啟影片聲音"}
+                      onClick={() => setCallSpeaker((value) => !value)}
+                    >
+                      {callSpeaker ? <Volume2 size={25} /> : <VolumeX size={25} />}
+                      <span>{callSpeaker ? "聲音開啟" : "聲音關閉"}</span>
+                    </button>
+                  )}
                 <button
                   className="decline-call"
                   onClick={() => {
